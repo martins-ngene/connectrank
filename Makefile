@@ -3,7 +3,7 @@
 PYTHON ?= ./venv/bin/python
 
 help:
-	@echo "LinkedIn Cold DM Recommender Monorepo"
+	@echo "ConnectRank Monorepo"
 	@echo "======================================"
 	@echo "make setup      - Install Node and Python dependencies"
 	@echo "make dev        - Run both API and Web in development mode"

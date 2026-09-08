@@ -1,6 +1,6 @@
 # Contributing Guidelines
 
-Thank you for contributing to the **LinkedIn Cold DM Recommender** project. Follow these guidelines to maintain high architectural quality, safety, and privacy compliance.
+Thank you for contributing to the **ConnectRank** project. Follow these guidelines to maintain high architectural quality, safety, and privacy compliance.
 
 ---
 

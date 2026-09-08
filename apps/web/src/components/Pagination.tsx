@@ -52,12 +52,12 @@ export const Pagination: React.FC<PaginationProps> = ({
   const pageNumbers = getPageNumbers();
 
   return (
-    <div className="flex flex-col sm:flex-row items-center justify-between gap-3 sm:gap-4 p-3.5 sm:p-4 rounded-2xl bg-slate-900/60 border border-slate-800/80 glass-panel">
+    <div className="flex flex-col sm:flex-row items-center justify-between gap-3 sm:gap-4 p-3.5 sm:p-4 rounded-2xl bg-white/80 dark:bg-slate-900/60 border border-slate-200 dark:border-slate-800/80 glass-panel">
       {/* Items range indicator */}
-      <div className="text-xs text-slate-400 text-center sm:text-left">
-        Showing <span className="font-semibold text-slate-200">{startItem}</span>–
-        <span className="font-semibold text-slate-200">{endItem}</span> of{' '}
-        <span className="font-semibold text-indigo-300">{totalItems}</span> connections
+      <div className="text-xs text-slate-500 dark:text-slate-400 text-center sm:text-left">
+        Showing <span className="font-semibold text-slate-800 dark:text-slate-200">{startItem}</span>–
+        <span className="font-semibold text-slate-800 dark:text-slate-200">{endItem}</span> of{' '}
+        <span className="font-semibold text-indigo-600 dark:text-indigo-300">{totalItems}</span> connections
       </div>
 
       {/* Page navigation controls */}
@@ -67,7 +67,7 @@ export const Pagination: React.FC<PaginationProps> = ({
           onClick={() => onPageChange(1)}
           disabled={currentPage === 1}
           aria-label="Go to first page"
-          className="w-7 h-7 sm:w-8 sm:h-8 flex items-center justify-center rounded-lg border border-slate-800 bg-slate-900/80 text-slate-400 hover:text-white hover:bg-slate-800 disabled:opacity-30 disabled:cursor-not-allowed transition-all cursor-pointer"
+          className="w-7 h-7 sm:w-8 sm:h-8 flex items-center justify-center rounded-lg border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900/80 text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white hover:bg-slate-100 dark:hover:bg-slate-800 disabled:opacity-30 disabled:cursor-not-allowed transition-all cursor-pointer"
         >
           <ChevronsLeft className="w-3.5 h-3.5 sm:w-4 sm:h-4" />
         </button>
@@ -77,7 +77,7 @@ export const Pagination: React.FC<PaginationProps> = ({
           onClick={() => onPageChange(currentPage - 1)}
           disabled={currentPage === 1}
           aria-label="Go to previous page"
-          className="flex items-center justify-center gap-1 px-2 sm:px-2.5 h-7 sm:h-8 rounded-lg border border-slate-800 bg-slate-900/80 text-xs font-medium text-slate-300 hover:text-white hover:bg-slate-800 disabled:opacity-30 disabled:cursor-not-allowed transition-all cursor-pointer"
+          className="flex items-center justify-center gap-1 px-2 sm:px-2.5 h-7 sm:h-8 rounded-lg border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900/80 text-xs font-medium text-slate-700 dark:text-slate-300 hover:text-slate-900 dark:hover:text-white hover:bg-slate-100 dark:hover:bg-slate-800 disabled:opacity-30 disabled:cursor-not-allowed transition-all cursor-pointer"
         >
           <ChevronLeft className="w-3.5 h-3.5" />
           <span className="hidden sm:inline">Prev</span>
@@ -88,7 +88,7 @@ export const Pagination: React.FC<PaginationProps> = ({
           {pageNumbers.map((num, i) => {
             if (num === '...') {
               return (
-                <span key={`ellipsis-${i}`} className="px-1 sm:px-2 text-xs text-slate-600 select-none">
+                <span key={`ellipsis-${i}`} className="px-1 sm:px-2 text-xs text-slate-400 dark:text-slate-600 select-none">
                   …
                 </span>
               );
@@ -105,8 +105,8 @@ export const Pagination: React.FC<PaginationProps> = ({
                 aria-label={`Page ${pageNumber}`}
                 className={`w-7 h-7 sm:w-8 sm:h-8 rounded-lg text-xs font-semibold transition-all cursor-pointer flex items-center justify-center ${
                   isActive
-                    ? 'bg-indigo-600 text-white shadow-md shadow-indigo-600/30 border border-indigo-500'
-                    : 'bg-slate-900/80 border border-slate-800 text-slate-400 hover:text-slate-200 hover:bg-slate-800/80'
+                    ? 'bg-gradient-to-r from-indigo-600 to-violet-600 text-white shadow-md shadow-indigo-600/30 border border-indigo-500'
+                    : 'bg-white dark:bg-slate-900/80 border border-slate-200 dark:border-slate-800 text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-slate-200 hover:bg-slate-100 dark:hover:bg-slate-800/80'
                 }`}
               >
                 {pageNumber}
@@ -120,7 +120,7 @@ export const Pagination: React.FC<PaginationProps> = ({
           onClick={() => onPageChange(currentPage + 1)}
           disabled={currentPage === totalPages}
           aria-label="Go to next page"
-          className="flex items-center justify-center gap-1 px-2 sm:px-2.5 h-7 sm:h-8 rounded-lg border border-slate-800 bg-slate-900/80 text-xs font-medium text-slate-300 hover:text-white hover:bg-slate-800 disabled:opacity-30 disabled:cursor-not-allowed transition-all cursor-pointer"
+          className="flex items-center justify-center gap-1 px-2 sm:px-2.5 h-7 sm:h-8 rounded-lg border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900/80 text-xs font-medium text-slate-700 dark:text-slate-300 hover:text-slate-900 dark:hover:text-white hover:bg-slate-100 dark:hover:bg-slate-800 disabled:opacity-30 disabled:cursor-not-allowed transition-all cursor-pointer"
         >
           <span className="hidden sm:inline">Next</span>
           <ChevronRight className="w-3.5 h-3.5" />
@@ -131,7 +131,7 @@ export const Pagination: React.FC<PaginationProps> = ({
           onClick={() => onPageChange(totalPages)}
           disabled={currentPage === totalPages}
           aria-label="Go to last page"
-          className="w-7 h-7 sm:w-8 sm:h-8 flex items-center justify-center rounded-lg border border-slate-800 bg-slate-900/80 text-slate-400 hover:text-white hover:bg-slate-800 disabled:opacity-30 disabled:cursor-not-allowed transition-all cursor-pointer"
+          className="w-7 h-7 sm:w-8 sm:h-8 flex items-center justify-center rounded-lg border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900/80 text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white hover:bg-slate-100 dark:hover:bg-slate-800 disabled:opacity-30 disabled:cursor-not-allowed transition-all cursor-pointer"
         >
           <ChevronsRight className="w-3.5 h-3.5 sm:w-4 sm:h-4" />
         </button>

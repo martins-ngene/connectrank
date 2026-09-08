@@ -1,4 +1,4 @@
-# LinkedIn Opportunity & Cold DM Recommender
+# ConnectRank
 
 [![Turborepo](https://img.shields.io/badge/Orchestration-Turborepo-ef4444.svg?style=flat-square&logo=turborepo)](https://turbo.build)
 [![FastAPI](https://img.shields.io/badge/Backend-FastAPI_0.110+-009688.svg?style=flat-square&logo=fastapi)](https://fastapi.tiangolo.com)
@@ -52,8 +52,12 @@ flowchart LR
 ## Key Features
 
 * 🔒 **Zero-Persistence Privacy (GDPR Article 17 Compliant):** Upload your `Connections.csv` directly in the browser. Tabular data and vectors exist **strictly in volatile RAM**. No PII is written to disk or databases, and sessions auto-purge after 30 minutes of inactivity or immediately upon clicking **'Purge My Data'**.
+* 🌓 **Persistent Dual-Theme Engine (Light & Dark Mode):** Instant, zero-flicker theme switching persisted in `localStorage` using Tailwind CSS v4 custom variants, featuring sleek ambient radial glows in dark mode and high-contrast clarity in light mode.
+* 🚀 **Modern SaaS Landing Page & Capabilities Matrix:** High-converting landing page elements inspired by modern AI apps, including live proof metrics, real tech ecosystem integration, targeted professional personas, and transparent open-source model disclosures.
+* 🐙 **Open-Source & GitHub Integrated:** Fully open source under the MIT License with direct repository navigation to [github.com/martins-ngene/connectrank](https://github.com/martins-ngene/connectrank).
 * ⚡ **Preloaded Demo Mode:** Instant exploratory testing on hundreds of anonymized connection profiles without needing an account or an initial CSV upload.
 * 🎛️ **Interactive Scoring Sliders:** Fine-tune the balance between skill relevance (Semantic Cosine Similarity) and hiring authority (CTOs, VPs, Heads of Talent) in real time.
+* 🌍 **Remote / Worldwide Classifier:** 3-tier heuristic filter isolating 70+ remote-first organizations and distributed positions.
 * ✉️ **1-Click Cold DM Generator:** Generates personalized outreach copy tailored to the candidate's exact seniority tier (Direct Pitch, Referral Inquiry, Consulting/Freelance) with one-click clipboard copy.
 * 📦 **Production Monorepo Tooling:** Polyglot pipeline managed by **Turborepo** and **pnpm workspaces** with single-command developer workflows (`pnpm dev`, `pnpm test`, `pnpm build`).
 

@@ -1,6 +1,6 @@
 # System Architecture & Technical Specification
 
-This document provides a comprehensive technical overview of the **LinkedIn Cold DM Recommender Engine**, covering system design, ephemeral memory management, the composite scoring model, and cloud deployment topology.
+This document provides a comprehensive technical overview of **ConnectRank**, covering system design, ephemeral memory management, the composite scoring model, and cloud deployment topology.
 
 ---
 

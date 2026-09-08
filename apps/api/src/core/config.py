@@ -1,16 +1,17 @@
 import os
 from pathlib import Path
 from typing import List
+# pyrefly: ignore [missing-import]
 from pydantic import BaseModel
 
 BASE_DIR = Path(__file__).resolve().parent.parent.parent
 DEFAULT_DEMO_PARQUET = BASE_DIR / "data" / "demo_connections.parquet"
 
 class Settings(BaseModel):
-    app_name: str = "LinkedIn Cold DM Recommender Engine"
+    app_name: str = "ConnectRank"
     app_version: str = "1.0.0"
     app_description: str = (
-        "High-performance semantic match and heuristic decision engine for LinkedIn network recommendations. "
+        "High-performance semantic match and heuristic decision engine for ConnectRank network recommendations. "
         "Engineered with strict zero-persistence in-memory storage for GDPR compliance."
     )
     model_name: str = os.getenv("MODEL_NAME", "sentence-transformers/all-MiniLM-L6-v2")

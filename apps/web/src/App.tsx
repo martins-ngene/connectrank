@@ -8,13 +8,23 @@ import { DMModal } from './components/DMModal';
 import { CSVUploadModal } from './components/CSVUploadModal';
 import { TermsModal } from './components/TermsModal';
 import { StatBanner } from './components/StatBanner';
+import { HeroSection } from './components/HeroSection';
+import { EcosystemBar } from './components/EcosystemBar';
+import { FeatureGrid } from './components/FeatureGrid';
+import { HowItWorks } from './components/HowItWorks';
+import { PersonasSection } from './components/PersonasSection';
+import { ComparisonSection } from './components/ComparisonSection';
+import { FAQSection } from './components/FAQSection';
+import { WatermarkFooter } from './components/WatermarkFooter';
+import { useTheme } from './hooks/useTheme';
 import { Candidate, UploadResponse } from './types';
 import { fetchHealth, fetchRecommendations, purgeSessionData } from './services/api';
-import { Sparkles, AlertCircle, RefreshCw, ShieldCheck, Heart, Upload } from 'lucide-react';
+import { Sparkles, AlertCircle, RefreshCw, ShieldCheck, Upload } from 'lucide-react';
 
 const PAGE_SIZE = 15;
 
 export function App() {
+  const { theme, toggleTheme, isDark } = useTheme();
   const [pitch, setPitch] = useState('Senior Backend Engineer Python AWS');
   const [candidates, setCandidates] = useState<Candidate[]>([]);
   const [isLoading, setIsLoading] = useState(false);
@@ -44,6 +54,13 @@ export function App() {
   const showToast = (msg: string) => {
     setToastMessage(msg);
     setTimeout(() => setToastMessage(null), 4000);
+  };
+
+  const scrollToRecommender = () => {
+    const el = document.getElementById('recommender');
+    if (el) {
+      el.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    }
   };
 
   // 1. Initial health check & demo profile count
@@ -111,7 +128,7 @@ export function App() {
     showToast(`Uploaded & indexed ${res.profiles_indexed} profiles in RAM session!`);
     // Automatically query and render recommendations using the new session ID immediately
     await executeSearch(pitch, remoteOnly, res.session_id);
-    // Smooth scroll down to the recommended connections section
+    // Smooth scroll down to the recommender results section
     setTimeout(() => {
       const el = document.getElementById('results-section');
       if (el) {
@@ -163,16 +180,19 @@ export function App() {
   };
 
   return (
-    <div className="min-h-screen bg-slate-950 flex flex-col selection:bg-indigo-500 selection:text-white">
+    <div className="min-h-screen bg-slate-50 dark:bg-slate-950 text-slate-900 dark:text-slate-100 flex flex-col selection:bg-indigo-500 selection:text-white transition-colors duration-200">
+      {/* Background Ambient Glows */}
+      <div className="fixed inset-0 pointer-events-none hero-glow-light dark:hero-glow-dark -z-10" />
+
       {/* Toast Notification */}
       {toastMessage && (
-        <div className="fixed bottom-4 left-4 right-4 sm:left-auto sm:right-6 sm:bottom-6 z-50 bg-slate-900 border border-indigo-500/40 text-indigo-200 px-4 py-3 rounded-xl shadow-2xl flex items-center gap-2.5 text-xs animate-in slide-in-from-bottom-5">
-          <ShieldCheck className="w-4 h-4 text-emerald-400 shrink-0" />
+        <div className="fixed bottom-4 left-4 right-4 sm:left-auto sm:right-6 sm:bottom-6 z-50 bg-white dark:bg-slate-900 border border-slate-200 dark:border-indigo-500/40 text-slate-900 dark:text-indigo-200 px-4 py-3 rounded-xl shadow-2xl flex items-center gap-2.5 text-xs animate-in slide-in-from-bottom-5">
+          <ShieldCheck className="w-4 h-4 text-emerald-500 shrink-0" />
           <span>{toastMessage}</span>
         </div>
       )}
 
-      {/* Header */}
+      {/* Global Header */}
       <Header
         sessionId={sessionId}
         profileCount={totalIndexed}
@@ -180,27 +200,46 @@ export function App() {
         onPurgeSession={handlePurgeSession}
         onOpenTerms={() => setIsTermsOpen(true)}
         isPurging={isPurging}
+        isDark={isDark}
+        onToggleTheme={toggleTheme}
       />
 
-      {/* Hero Section */}
-      <main className="grow max-w-7xl mx-auto px-3 sm:px-6 lg:px-8 pt-6 sm:pt-8 pb-12 sm:pb-16 w-full">
-        <div className="text-center max-w-3xl mx-auto mb-6 sm:mb-8">
-          <div className="inline-flex items-center gap-1.5 sm:gap-2 px-2.5 sm:px-3 py-1 rounded-full bg-indigo-500/10 border border-indigo-500/20 text-indigo-400 text-[11px] sm:text-xs font-semibold mb-3">
-            <Sparkles className="w-3.5 h-3.5 shrink-0" />
-            <span>AI Vector Search + Seniority Decision Engine</span>
+      {/* Landing Page Hero Section */}
+      <HeroSection
+        onOpenUpload={() => setIsUploadOpen(true)}
+        onScrollToRecommender={scrollToRecommender}
+      />
+
+      {/* Real Open-Source Tech Ecosystem Bar */}
+      <EcosystemBar />
+
+      {/* Interactive Recommender Hub */}
+      <section
+        id="recommender"
+        className="scroll-mt-20 max-w-7xl mx-auto px-3 sm:px-6 lg:px-8 py-8 sm:py-12 w-full"
+      >
+        <div className="flex flex-col sm:flex-row sm:items-end justify-between gap-4 mb-6 pb-4 border-b border-slate-200/80 dark:border-slate-800/80">
+          <div>
+            <div className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full bg-indigo-500/10 text-indigo-600 dark:text-indigo-400 text-[11px] font-semibold mb-2 border border-indigo-500/20">
+              <Sparkles className="w-3.5 h-3.5" />
+              <span>Interactive ConnectRank Hub</span>
+            </div>
+            <h2 className="font-display font-bold text-xl sm:text-2xl text-slate-900 dark:text-white tracking-tight">
+              Personalized Candidate Ranking Engine
+            </h2>
+            <p className="text-xs sm:text-sm text-slate-600 dark:text-slate-400 mt-1">
+              Search your network by target skills or job description. Our RAM engine calculates dense semantic cosine similarity alongside position seniority.
+            </p>
           </div>
-
-          <h1 className="font-display font-extrabold text-2xl sm:text-4xl md:text-5xl text-white tracking-tight leading-tight">
-            Turn Your LinkedIn Network Into{' '}
-            <span className="bg-gradient-to-r from-indigo-400 via-purple-400 to-amber-300 bg-clip-text text-transparent">
-              High-Yield Cold Outreach
-            </span>
-          </h1>
-
-          <p className="mt-2.5 sm:mt-3 text-slate-400 text-xs sm:text-base leading-relaxed">
-            Rank connections by combining <strong>dense semantic relevance</strong> (what they do) with{' '}
-            <strong>hiring authority</strong> (CTOs, Founders, Engineering Leads). 100% private, zero disk persistence.
-          </p>
+          <div className="flex items-center gap-2">
+            <button
+              onClick={() => setIsUploadOpen(true)}
+              className="px-3.5 py-2 rounded-xl bg-indigo-600 hover:bg-indigo-500 text-white text-xs font-semibold flex items-center gap-1.5 shadow-sm transition-all cursor-pointer"
+            >
+              <Upload className="w-3.5 h-3.5" />
+              <span>Upload CSV</span>
+            </button>
+          </div>
         </div>
 
         {/* Pitch Search Bar */}
@@ -243,14 +282,14 @@ export function App() {
         {/* Results Grid Header */}
         <div id="results-section" className="flex flex-col sm:flex-row sm:items-center justify-between gap-2.5 mb-4 scroll-mt-6">
           <div className="flex items-center gap-2 flex-wrap">
-            <h2 className="font-display font-bold text-base sm:text-lg text-white">
+            <h3 className="font-display font-bold text-base sm:text-lg text-slate-900 dark:text-white">
               Recommended Connections
-            </h2>
-            <span className="text-xs px-2 py-0.5 rounded-full bg-slate-800 text-slate-400 font-medium">
+            </h3>
+            <span className="text-xs px-2 py-0.5 rounded-full bg-slate-200 dark:bg-slate-800 text-slate-700 dark:text-slate-300 font-medium">
               {candidates.length} {candidates.length === 1 ? 'match' : 'matches'}
             </span>
             {Math.ceil(candidates.length / PAGE_SIZE) > 1 && (
-              <span className="text-xs px-2.5 py-0.5 rounded-full bg-indigo-500/10 text-indigo-300 border border-indigo-500/20 font-medium">
+              <span className="text-xs px-2.5 py-0.5 rounded-full bg-indigo-500/10 text-indigo-700 dark:text-indigo-300 border border-indigo-500/20 font-medium">
                 Page {currentPage} of {Math.ceil(candidates.length / PAGE_SIZE)}
               </span>
             )}
@@ -259,7 +298,7 @@ export function App() {
           <button
             onClick={() => executeSearch(pitch)}
             disabled={isLoading}
-            className="self-start sm:self-auto flex items-center gap-1.5 text-xs text-slate-400 hover:text-indigo-300 transition-colors cursor-pointer"
+            className="self-start sm:self-auto flex items-center gap-1.5 text-xs text-slate-500 dark:text-slate-400 hover:text-indigo-600 dark:hover:text-indigo-300 transition-colors cursor-pointer"
           >
             <RefreshCw className={`w-3.5 h-3.5 ${isLoading ? 'animate-spin' : ''}`} />
             <span>Refresh Ranking</span>
@@ -268,8 +307,8 @@ export function App() {
 
         {/* Error Alert */}
         {error && (
-          <div className="p-4 rounded-xl bg-rose-500/10 border border-rose-500/20 text-rose-300 text-xs flex items-center gap-2.5 mb-6">
-            <AlertCircle className="w-4 h-4 shrink-0 text-rose-400" />
+          <div className="p-4 rounded-xl bg-rose-500/10 border border-rose-500/20 text-rose-600 dark:text-rose-300 text-xs flex items-center gap-2.5 mb-6">
+            <AlertCircle className="w-4 h-4 shrink-0 text-rose-500" />
             <span>{error}</span>
           </div>
         )}
@@ -278,7 +317,7 @@ export function App() {
         {isLoading && candidates.length === 0 && (
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
             {[1, 2, 3, 4, 5, 6].map((n) => (
-              <div key={n} className="glass-card rounded-2xl p-5 animate-pulse h-48 bg-slate-900/40" />
+              <div key={n} className="glass-card rounded-2xl p-5 animate-pulse h-48 bg-slate-200/50 dark:bg-slate-900/40" />
             ))}
           </div>
         )}
@@ -322,12 +361,12 @@ export function App() {
         {/* Awaiting Upload State */}
         {!isLoading && candidates.length === 0 && !sessionId && totalIndexed === 0 && (
           <div className="glass-panel rounded-2xl p-6 sm:p-10 text-center max-w-lg mx-auto border border-indigo-500/30 shadow-2xl shadow-indigo-500/10">
-            <div className="w-12 h-12 sm:w-14 sm:h-14 rounded-2xl bg-indigo-600/20 border border-indigo-500/30 flex items-center justify-center text-indigo-400 mx-auto mb-4">
+            <div className="w-12 h-12 sm:w-14 sm:h-14 rounded-2xl bg-indigo-600/10 dark:bg-indigo-600/20 border border-indigo-500/30 flex items-center justify-center text-indigo-600 dark:text-indigo-400 mx-auto mb-4">
               <Upload className="w-6 h-6 sm:w-7 sm:h-7" />
             </div>
-            <h3 className="font-display font-bold text-white text-lg sm:text-xl">Upload Your LinkedIn Network</h3>
-            <p className="text-xs sm:text-sm text-slate-400 mt-2 leading-relaxed">
-              Upload your exported <code className="text-indigo-300 font-mono">Connections.csv</code> to begin ranking contacts by skill relevance and hiring authority. Your data is analyzed strictly in volatile RAM with zero disk persistence.
+            <h3 className="font-display font-bold text-slate-900 dark:text-white text-lg sm:text-xl">Upload Your LinkedIn Network</h3>
+            <p className="text-xs sm:text-sm text-slate-600 dark:text-slate-400 mt-2 leading-relaxed">
+              Upload your exported <code className="text-indigo-600 dark:text-indigo-300 font-mono">Connections.csv</code> to begin ranking contacts by skill relevance and hiring authority. Your data is analyzed strictly in volatile RAM with zero disk persistence.
             </p>
             <button
               onClick={() => setIsUploadOpen(true)}
@@ -342,40 +381,36 @@ export function App() {
         {/* Empty Search Results State */}
         {!isLoading && candidates.length === 0 && (sessionId || totalIndexed > 0) && !error && (
           <div className="glass-panel rounded-2xl p-6 sm:p-12 text-center max-w-md mx-auto">
-            <Sparkles className="w-7 h-7 sm:w-8 sm:h-8 text-indigo-400 mx-auto mb-3" />
-            <h3 className="font-display font-semibold text-white text-base">No matching connections found</h3>
-            <p className="text-xs text-slate-400 mt-1">
+            <Sparkles className="w-7 h-7 sm:w-8 sm:h-8 text-indigo-500 dark:text-indigo-400 mx-auto mb-3" />
+            <h3 className="font-display font-semibold text-slate-900 dark:text-white text-base">No matching connections found</h3>
+            <p className="text-xs text-slate-600 dark:text-slate-400 mt-1">
               Try adjusting your pitch query or relaxing the minimum authority filter.
             </p>
           </div>
         )}
-      </main>
+      </section>
 
-      {/* Footer */}
-      <footer className="glass-panel border-t border-slate-800/80 py-6 sm:py-8 mt-auto">
-        <div className="max-w-7xl mx-auto px-4 text-center text-xs text-slate-500 space-y-2">
-          <div className="flex items-center justify-center gap-2.5 sm:gap-4 flex-wrap text-slate-400">
-            <button
-              onClick={() => setIsTermsOpen(true)}
-              className="hover:text-indigo-400 transition-colors"
-            >
-              Terms of Service & GDPR Privacy Policy
-            </button>
-            <span>•</span>
-            <button
-              onClick={() => setIsUploadOpen(true)}
-              className="hover:text-indigo-400 transition-colors"
-            >
-              Upload Connections.csv
-            </button>
-            <span>•</span>
-            <span>Zero-Persistence RAM Architecture</span>
-          </div>
-          <p className="flex items-center justify-center gap-1">
-            Engineered with <Heart className="w-3.5 h-3.5 text-rose-500 inline" /> for high-impact professional outreach.
-          </p>
-        </div>
-      </footer>
+      {/* Feature Grid: Capabilities Matrix */}
+      <FeatureGrid />
+
+      {/* How It Works: 3-Step Pipeline */}
+      <HowItWorks onOpenUpload={() => setIsUploadOpen(true)} />
+
+      {/* Personas / Use Cases Section */}
+      <PersonasSection />
+
+      {/* Transparent Comparison / Pricing Section with Explicit Placeholders */}
+      <ComparisonSection onScrollToRecommender={scrollToRecommender} />
+
+      {/* FAQ Section */}
+      <FAQSection />
+
+      {/* Watermark Footer */}
+      <WatermarkFooter
+        onOpenUpload={() => setIsUploadOpen(true)}
+        onOpenTerms={() => setIsTermsOpen(true)}
+        onScrollToRecommender={scrollToRecommender}
+      />
 
       {/* Modals */}
       <DMModal

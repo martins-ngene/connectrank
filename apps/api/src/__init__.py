@@ -1,1 +1,1 @@
-"""LinkedIn Cold DM Recommender API package."""
+"""ConnectRank API package."""

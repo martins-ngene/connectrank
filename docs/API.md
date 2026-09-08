@@ -1,6 +1,6 @@
 # API Reference & OpenAPI Specification
 
-The LinkedIn Cold DM Recommender backend provides an OpenAPI 3.1 compliant REST interface built with FastAPI.
+The ConnectRank backend provides an OpenAPI 3.1 compliant REST interface built with FastAPI.
 
 * **Interactive Swagger UI:** `http://localhost:8080/docs`
 * **Interactive ReDoc:** `http://localhost:8080/redoc`

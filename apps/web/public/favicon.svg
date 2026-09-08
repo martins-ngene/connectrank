@@ -1,0 +1,32 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32" fill="none">
+  <defs>
+    <linearGradient id="cr-favicon-grad" x1="2" y1="2" x2="30" y2="30" gradientUnits="userSpaceOnUse">
+      <stop offset="0%" stop-color="#6366F1" />
+      <stop offset="50%" stop-color="#8B5CF6" />
+      <stop offset="100%" stop-color="#D946EF" />
+    </linearGradient>
+  </defs>
+
+  <!-- Modern rounded app emblem background -->
+  <rect x="1.5" y="1.5" width="29" height="29" rx="8" fill="#0B0F19" stroke="url(#cr-favicon-grad)" stroke-width="1.5" />
+
+  <!-- Ascending rank & connection path -->
+  <path d="M7 21L13 15L19 18L25 9" stroke="url(#cr-favicon-grad)" stroke-width="2.25" stroke-linecap="round" stroke-linejoin="round" />
+
+  <!-- Projection guides to baseline -->
+  <path d="M13 15V24M19 18V24" stroke="#818CF8" stroke-width="1.2" stroke-linecap="round" stroke-dasharray="1.5 2" stroke-opacity="0.6" />
+
+  <!-- Network Connection Nodes -->
+  <circle cx="7" cy="21" r="2.5" fill="#1E293B" stroke="#818CF8" stroke-width="1.5" />
+  <circle cx="7" cy="21" r="1" fill="#818CF8" />
+
+  <circle cx="13" cy="15" r="2.5" fill="#1E293B" stroke="#A855F7" stroke-width="1.5" />
+  <circle cx="13" cy="15" r="1" fill="#A855F7" />
+
+  <circle cx="19" cy="18" r="2.2" fill="#1E293B" stroke="#C084FC" stroke-width="1.5" />
+  <circle cx="19" cy="18" r="0.9" fill="#C084FC" />
+
+  <!-- Apex Authority Node (Top Rank Decision Maker) -->
+  <circle cx="25" cy="9" r="3.75" fill="url(#cr-favicon-grad)" />
+  <path d="M25 6.8L25.6 8.4L27.2 9L25.6 9.6L25 11.2L24.4 9.6L22.8 9L24.4 8.4Z" fill="#FFFFFF" />
+</svg>

@@ -1,5 +1,5 @@
 import React from 'react';
-import { Check, Sparkles, HelpCircle, ArrowRight } from 'lucide-react';
+import { Check, Sparkles, ArrowRight } from 'lucide-react';
 
 interface ComparisonSectionProps {
   onScrollToRecommender: () => void;
@@ -11,22 +11,22 @@ export const ComparisonSection: React.FC<ComparisonSectionProps> = ({ onScrollTo
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="text-center max-w-3xl mx-auto mb-12 sm:mb-16">
           <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-indigo-500/10 text-indigo-600 dark:text-indigo-400 text-xs font-semibold mb-3 border border-indigo-500/20">
-            <span>Open Source vs Commercial SaaS</span>
+            <span>Simple, Honest Model</span>
           </div>
           <h2 className="font-display font-extrabold text-2xl sm:text-4xl text-slate-900 dark:text-white tracking-tight">
-            Transparent Open-Source Model{' '}
+            Transparent Pricing{' '}
             <span className="bg-gradient-to-r from-indigo-600 via-violet-600 to-fuchsia-600 dark:from-indigo-400 dark:via-purple-300 dark:to-pink-400 bg-clip-text text-transparent">
               No Hidden Fees
             </span>
           </h2>
           <p className="mt-3 text-slate-600 dark:text-slate-400 text-sm sm:text-base leading-relaxed">
-            Unlike commercial sales CRMs that charge hundreds of dollars per seat while harvesting your connections, ConnectRank is 100% free and privacy-preserving.
+            Unlike commercial sales CRMs that charge hundreds of dollars per seat while harvesting your connections, ConnectRank provides a 100% free local engine with an optional pro cloud tier coming soon.
           </p>
         </div>
 
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-6 items-stretch">
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-6 sm:gap-8 max-w-4xl mx-auto items-stretch">
           {/* Card 1: ACTIVE / REAL FREE OPEN SOURCE */}
-          <div className="glass-card p-6 sm:p-8 rounded-2xl border-2 border-indigo-500/50 dark:border-indigo-500/60 shadow-xl shadow-indigo-500/10 flex flex-col justify-between relative bg-white/90 dark:bg-slate-900/90">
+          <div className="glass-card p-6 sm:p-8 rounded-2xl border-2 border-indigo-500/50 dark:border-indigo-500/60 shadow-xl shadow-indigo-500/10 flex flex-col justify-between relative bg-white/90 dark:bg-slate-900/90 hover:-translate-y-1.5 hover:shadow-2xl hover:shadow-indigo-500/20 transition-all duration-300">
             <div className="absolute -top-3 left-1/2 -translate-x-1/2 px-3 py-0.5 rounded-full bg-gradient-to-r from-indigo-600 to-violet-600 text-white text-[10px] font-bold uppercase tracking-wider shadow-sm">
               Active &amp; 100% Free
             </div>
@@ -80,99 +80,52 @@ export const ComparisonSection: React.FC<ComparisonSectionProps> = ({ onScrollTo
             </button>
           </div>
 
-          {/* Card 2: CONCEPTUAL PLACEHOLDER 1 */}
-          <div className="glass-card p-6 sm:p-8 rounded-2xl border border-dashed border-slate-300 dark:border-slate-700 flex flex-col justify-between opacity-80 hover:opacity-100 transition-opacity relative">
-            <div className="absolute -top-3 left-1/2 -translate-x-1/2 px-2.5 py-0.5 rounded-full bg-amber-500/20 text-amber-600 dark:text-amber-400 border border-amber-500/30 text-[9px] font-bold uppercase tracking-wider">
-              [Placeholder Tier]
+          {/* Card 2: CONNECTRANK PRO ($10/mo) - COMING SOON */}
+          <div className="glass-card p-6 sm:p-8 rounded-2xl border-2 border-violet-500/40 dark:border-violet-500/40 shadow-xl shadow-violet-500/5 flex flex-col justify-between relative bg-white/90 dark:bg-slate-900/90 hover:-translate-y-1.5 hover:shadow-2xl hover:shadow-violet-500/20 transition-all duration-300">
+            <div className="absolute -top-3 left-1/2 -translate-x-1/2 px-3 py-0.5 rounded-full bg-gradient-to-r from-violet-600 to-fuchsia-600 text-white text-[10px] font-bold uppercase tracking-wider shadow-sm flex items-center gap-1">
+              <Sparkles className="w-3 h-3" />
+              <span>Coming Soon</span>
             </div>
 
             <div>
-              <div className="text-xs font-bold uppercase tracking-wider text-slate-500 dark:text-slate-400 mb-1 flex items-center gap-1">
-                <span>Managed Cloud Vault</span>
-                <span title="Placeholder concept for future cloud exploration">
-                  <HelpCircle className="w-3.5 h-3.5 text-amber-500" />
-                </span>
+              <div className="text-xs font-bold uppercase tracking-wider text-violet-600 dark:text-violet-400 mb-1 flex items-center gap-1.5">
+                <span>ConnectRank Pro</span>
               </div>
               <div className="flex items-baseline gap-1 my-3">
-                <span className="text-3xl sm:text-4xl font-display font-extrabold text-slate-400 dark:text-slate-500">$19</span>
-                <span className="text-xs text-slate-400 font-medium">/ mo (Placeholder)</span>
+                <span className="text-3xl sm:text-4xl font-display font-extrabold text-slate-900 dark:text-white">$10</span>
+                <span className="text-xs text-slate-500 dark:text-slate-400 font-medium">/ month</span>
               </div>
-              <p className="text-xs text-slate-500 dark:text-slate-400 mb-6 leading-relaxed">
-                <em>Indicated placeholder concept:</em> Hosted serverless cloud instance with client-side encrypted session backups.
+              <p className="text-xs text-slate-600 dark:text-slate-400 mb-6 leading-relaxed">
+                Enhanced cloud capabilities for active networkers, job seekers, and recruiters.
               </p>
 
-              <div className="space-y-3 text-xs text-slate-500 dark:text-slate-400">
+              <div className="space-y-3 text-xs text-slate-700 dark:text-slate-300">
                 <div className="flex items-start gap-2">
-                  <span className="text-slate-400">•</span>
-                  <span>Everything in Community Free</span>
+                  <Check className="w-4 h-4 text-violet-500 shrink-0 mt-0.5" />
+                  <span><strong>Everything in Community Free</strong></span>
                 </div>
                 <div className="flex items-start gap-2">
-                  <span className="text-slate-400">•</span>
-                  <span>Browser-encrypted multi-device sync (Placeholder)</span>
+                  <Check className="w-4 h-4 text-violet-500 shrink-0 mt-0.5" />
+                  <span>Multi-Model AI Semantic Search (MiniLM + BGE-Large)</span>
                 </div>
                 <div className="flex items-start gap-2">
-                  <span className="text-slate-400">•</span>
-                  <span>Pre-warmed vector embedding microservice (Placeholder)</span>
+                  <Check className="w-4 h-4 text-violet-500 shrink-0 mt-0.5" />
+                  <span>AI-Enriched Candidate Summaries &amp; Match Highlights</span>
                 </div>
                 <div className="flex items-start gap-2">
-                  <span className="text-slate-400">•</span>
-                  <span>Automated monthly archive change diffing (Placeholder)</span>
-                </div>
-              </div>
-            </div>
-
-            <div className="mt-8 pt-4 border-t border-slate-200 dark:border-slate-800 text-center">
-              <span className="text-xs font-medium text-slate-400 dark:text-slate-500">
-                Concept Placeholder Only
-              </span>
-            </div>
-          </div>
-
-          {/* Card 3: CONCEPTUAL PLACEHOLDER 2 */}
-          <div className="glass-card p-6 sm:p-8 rounded-2xl border border-dashed border-slate-300 dark:border-slate-700 flex flex-col justify-between opacity-80 hover:opacity-100 transition-opacity relative">
-            <div className="absolute -top-3 left-1/2 -translate-x-1/2 px-2.5 py-0.5 rounded-full bg-amber-500/20 text-amber-600 dark:text-amber-400 border border-amber-500/30 text-[9px] font-bold uppercase tracking-wider">
-              [Placeholder Tier]
-            </div>
-
-            <div>
-              <div className="text-xs font-bold uppercase tracking-wider text-slate-500 dark:text-slate-400 mb-1 flex items-center gap-1">
-                <span>Enterprise Team Hub</span>
-                <span title="Placeholder concept for organization deployments">
-                  <HelpCircle className="w-3.5 h-3.5 text-amber-500" />
-                </span>
-              </div>
-              <div className="flex items-baseline gap-1 my-3">
-                <span className="text-3xl sm:text-4xl font-display font-extrabold text-slate-400 dark:text-slate-500">Custom</span>
-                <span className="text-xs text-slate-400 font-medium">(Placeholder)</span>
-              </div>
-              <p className="text-xs text-slate-500 dark:text-slate-400 mb-6 leading-relaxed">
-                <em>Indicated placeholder concept:</em> Dedicated on-premises deployment for agencies and executive search firms.
-              </p>
-
-              <div className="space-y-3 text-xs text-slate-500 dark:text-slate-400">
-                <div className="flex items-start gap-2">
-                  <span className="text-slate-400">•</span>
-                  <span>Multi-team shared talent pools (Placeholder)</span>
+                  <Check className="w-4 h-4 text-violet-500 shrink-0 mt-0.5" />
+                  <span>Zero-Knowledge Encrypted Session Cloud Vault</span>
                 </div>
                 <div className="flex items-start gap-2">
-                  <span className="text-slate-400">•</span>
-                  <span>SAML / Okta Single Sign-On (Placeholder)</span>
-                </div>
-                <div className="flex items-start gap-2">
-                  <span className="text-slate-400">•</span>
-                  <span>Custom private model fine-tuning (Placeholder)</span>
-                </div>
-                <div className="flex items-start gap-2">
-                  <span className="text-slate-400">•</span>
-                  <span>SOC2 Type II isolation guarantee (Placeholder)</span>
+                  <Check className="w-4 h-4 text-violet-500 shrink-0 mt-0.5" />
+                  <span>Custom Persona Tone &amp; Cold DM Style Tuning</span>
                 </div>
               </div>
             </div>
 
-            <div className="mt-8 pt-4 border-t border-slate-200 dark:border-slate-800 text-center">
-              <span className="text-xs font-medium text-slate-400 dark:text-slate-500">
-                Concept Placeholder Only
-              </span>
+            <div className="mt-8 w-full py-2.5 rounded-xl bg-violet-500/10 dark:bg-violet-500/15 border border-violet-500/20 text-violet-600 dark:text-violet-400 font-semibold text-xs flex items-center justify-center gap-1.5 select-none">
+              <Sparkles className="w-3.5 h-3.5 text-violet-500 animate-pulse" />
+              <span>Coming Soon</span>
             </div>
           </div>
         </div>

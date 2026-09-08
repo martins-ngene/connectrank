@@ -399,7 +399,7 @@ export function App() {
       {/* Personas / Use Cases Section */}
       <PersonasSection />
 
-      {/* Transparent Comparison / Pricing Section with Explicit Placeholders */}
+      {/* Transparent Comparison / Pricing Section with $0 Free & $10 Coming Soon Tier */}
       <ComparisonSection onScrollToRecommender={scrollToRecommender} />
 
       {/* FAQ Section */}

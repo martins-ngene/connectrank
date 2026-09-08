@@ -35,7 +35,7 @@ describe('HeroSection Component', () => {
 });
 
 describe('ComparisonSection Component', () => {
-  it('honestly displays the $0 free tier alongside clearly marked placeholder tiers', () => {
+  it('displays the $0 free tier alongside the $10 ConnectRank Pro coming soon tier', () => {
     const handleScroll = vi.fn();
     render(<ComparisonSection onScrollToRecommender={handleScroll} />);
 
@@ -44,12 +44,16 @@ describe('ComparisonSection Component', () => {
     expect(screen.getByText('$0')).toBeInTheDocument();
     expect(screen.getByText('Community Open Source')).toBeInTheDocument();
 
-    // Explicit placeholder tiers
-    const placeholderBadges = screen.getAllByText('[Placeholder Tier]');
-    expect(placeholderBadges.length).toBe(2);
+    // Pro Coming Soon tier ($10/mo)
+    expect(screen.getByText('$10')).toBeInTheDocument();
+    expect(screen.getByText('ConnectRank Pro')).toBeInTheDocument();
+    const comingSoonBadges = screen.getAllByText('Coming Soon');
+    expect(comingSoonBadges.length).toBeGreaterThanOrEqual(1);
 
-    expect(screen.getByText('Managed Cloud Vault')).toBeInTheDocument();
-    expect(screen.getByText('Enterprise Team Hub')).toBeInTheDocument();
+    // Click CTA
+    const freeCta = screen.getByRole('button', { name: /Use Free ConnectRank Now/i });
+    fireEvent.click(freeCta);
+    expect(handleScroll).toHaveBeenCalledTimes(1);
   });
 });
 

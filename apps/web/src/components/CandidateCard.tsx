@@ -30,7 +30,7 @@ export const CandidateCard: React.FC<CandidateCardProps> = ({
   };
 
   return (
-    <div className={`glass-card rounded-2xl p-4 sm:p-5 relative overflow-hidden flex flex-col justify-between border border-slate-200 dark:border-slate-800/80 ${
+    <div className={`glass-card rounded-2xl p-4 sm:p-5 relative overflow-hidden flex flex-col justify-between border border-slate-200 dark:border-slate-800/80 animate-fade-in-up hover:-translate-y-1 transition-all duration-300 ${
       isTopMatch ? 'ring-2 ring-indigo-500/50 shadow-xl shadow-indigo-500/10' : ''
     }`}>
       {/* Top Banner for Rank #1 */}

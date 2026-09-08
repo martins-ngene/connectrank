@@ -57,14 +57,14 @@ export const HowItWorks: React.FC<HowItWorksProps> = ({ onOpenUpload }) => {
             return (
               <div
                 key={step.num}
-                className="glass-panel p-6 sm:p-7 rounded-2xl border border-slate-200 dark:border-slate-800 flex flex-col justify-between relative group hover:border-indigo-500/50 transition-all"
+                className="glass-panel p-6 sm:p-7 rounded-2xl border border-slate-200 dark:border-slate-800 flex flex-col justify-between relative group hover:border-indigo-500/50 hover:-translate-y-1.5 hover:shadow-xl hover:shadow-indigo-500/10 transition-all duration-300"
               >
                 <div>
                   <div className="flex items-center justify-between mb-5">
-                    <span className="text-2xl sm:text-3xl font-display font-black text-indigo-600/30 dark:text-indigo-400/30">
+                    <span className="text-2xl sm:text-3xl font-display font-black text-indigo-600/30 dark:text-indigo-400/30 group-hover:text-indigo-500/50 transition-colors">
                       {step.num}
                     </span>
-                    <div className="w-10 h-10 rounded-xl bg-indigo-500/10 dark:bg-indigo-500/20 text-indigo-600 dark:text-indigo-400 flex items-center justify-center border border-indigo-500/30">
+                    <div className="w-10 h-10 rounded-xl bg-indigo-500/10 dark:bg-indigo-500/20 text-indigo-600 dark:text-indigo-400 flex items-center justify-center border border-indigo-500/30 group-hover:scale-110 transition-transform duration-300">
                       <Icon className="w-5 h-5" />
                     </div>
                   </div>

@@ -1,0 +1,20 @@
+{
+  "name": "linkedin-cold-dm-recommender",
+  "private": true,
+  "packageManager": "pnpm@10.33.0",
+  "scripts": {
+    "dev": "turbo dev",
+    "build": "turbo build",
+    "test": "turbo test",
+    "test:api": "pnpm --filter @linkedin-recommender/api test",
+    "test:web": "pnpm --filter @linkedin-recommender/web test",
+    "lint": "turbo lint",
+    "typecheck": "turbo typecheck",
+    "clean": "turbo clean && rm -rf node_modules apps/*/node_modules apps/*/dist"
+  },
+  "devDependencies": {
+    "@types/node": "^26.5.0",
+    "turbo": "^2.4.4",
+    "typescript": "^5.9.3"
+  }
+}

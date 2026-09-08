@@ -1,1 +1,43 @@
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+venv/
+.venv/
+env/
+ENV/
+.pytest_cache/
+.coverage
+htmlcov/
+
+# Data & PII (Never commit uploaded raw CSVs or local parquets with real names)
 Connections.csv
+*.parquet
+data/
+apps/api/data/*.csv
+
+# Node & Frontend
+node_modules/
+.pnpm-store/
+dist/
+dist-ssr/
+*.local
+.turbo/
+coverage/
+
+# IDE & OS
+.DS_Store
+.idea/
+.vscode/
+*.swp
+*.swo
+
+# Environment
+.env
+.env.local
+.env.production
+
+# Personal / Career Documents
+RESUME.md

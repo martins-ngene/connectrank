@@ -1,0 +1,12 @@
+{
+  "name": "@linkedin-recommender/api",
+  "version": "1.0.0",
+  "private": true,
+  "scripts": {
+    "dev": "../../venv/bin/python -m uvicorn src.main:app --host 0.0.0.0 --port 8080 --reload",
+    "start": "../../venv/bin/python -m uvicorn src.main:app --host 0.0.0.0 --port 8080",
+    "test": "../../venv/bin/python -m pytest tests -v",
+    "lint": "echo 'No Python linter configured'",
+    "build": "echo 'API is ready'"
+  }
+}

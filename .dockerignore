@@ -1,0 +1,42 @@
+# Git
+.git
+.gitignore
+
+# Python virtual environments
+venv/
+.venv/
+env/
+ENV/
+env.bak/
+venv.bak/
+
+# Byte-code and cache
+__pycache__/
+*.py[cod]
+*$py.class
+.pytest_cache/
+.coverage
+htmlcov/
+.mypy_cache/
+.ruff_cache/
+
+# Raw and sensitive data
+Connections.csv
+data/Connections.csv
+*.csv
+.env
+.env.*
+*.log
+
+# Docker artifacts & docs
+Dockerfile*
+docker-compose*.yml
+.dockerignore
+README.md
+*.md
+
+# OS & IDE metadata
+.DS_Store
+Thumbs.db
+.vscode/
+.idea/

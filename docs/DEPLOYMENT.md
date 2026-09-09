@@ -222,6 +222,9 @@ pnpm --filter @connectrank/web build
 pnpm dlx wrangler pages deploy apps/web/dist --project-name connectrank
 ```
 
+> [!NOTE]
+> Wrangler outputs both a deployment preview hash URL (e.g. `https://<hash>.connectrank.pages.dev`) and your canonical project domain (`https://connectrank.pages.dev`). The canonical domain is immediately active with Cloudflare's `*.pages.dev` wildcard SSL certificate. The preview hash URL requires 1–2 minutes for Cloudflare's automated CA to issue its multi-level edge certificate.
+
 ---
 
 ## 7. Post-Deployment Smoke Test Protocol

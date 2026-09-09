@@ -196,9 +196,9 @@ Cloudflare Pages provides automated Git deployments, unlimited bandwidth, and na
 3. Select your repository: `martins-ngene/connectrank` and branch: `main`.
 4. Configure Build Settings:
    - **Framework preset**: `Vite`
-   - **Build command**: `pnpm --filter @connectrank/web build`
-   - **Build output directory**: `apps/web/dist`
-   - **Root directory**: `/`
+   - **Root directory**: `apps/web` *(Important: targets the web app directly instead of monorepo root)*
+   - **Build command**: `pnpm build`
+   - **Build output directory**: `dist`
 5. Configure Environment Variables:
    - `VITE_API_URL` = `https://<your-app-runner-id>.us-east-1.awsapprunner.com`
    - `VITE_SENTRY_DSN` = `your_sentry_dsn`

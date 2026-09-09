@@ -3,13 +3,15 @@ services:
     build:
       context: ./apps/api
       dockerfile: Dockerfile
-    container_name: linkedin-recommender-api
+    container_name: connectrank-api
     ports:
       - "8080:8080"
     environment:
       - PORT=8080
       - CORS_ORIGINS=http://localhost:3000,http://localhost:5173
       - SESSION_TTL_MINUTES=30
+      - SENTRY_DSN=${SENTRY_DSN:-}
+      - ENVIRONMENT=${ENVIRONMENT:-development}
     healthcheck:
       test: ["CMD-SHELL", "python -c \"import urllib.request; urllib.request.urlopen('http://localhost:8080/health')\""]
       interval: 15s
@@ -21,11 +23,12 @@ services:
     build:
       context: ./apps/web
       dockerfile: Dockerfile
-    container_name: linkedin-recommender-web
+      args:
+        - VITE_API_URL=http://localhost:8080
+        - VITE_SENTRY_DSN=${VITE_SENTRY_DSN:-}
+    container_name: connectrank-web
     ports:
       - "3000:80"
-    environment:
-      - VITE_API_URL=http://localhost:8080
     depends_on:
       api:
         condition: service_healthy

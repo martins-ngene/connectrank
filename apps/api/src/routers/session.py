@@ -44,6 +44,9 @@ async def upload_connections_csv(file: UploadFile = File(...)):
     except CSVProcessingError as e:
         raise HTTPException(status_code=status.HTTP_422_UNPROCESSABLE_ENTITY, detail=str(e))
     except Exception as e:
+        if settings.sentry_dsn:
+            import sentry_sdk
+            sentry_sdk.capture_exception(e)
         raise HTTPException(status_code=status.HTTP_400_BAD_REQUEST, detail=f"Failed to process CSV: {str(e)}")
 
     # Compute dense embeddings in memory

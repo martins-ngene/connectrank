@@ -1,10 +1,26 @@
 # API Reference & OpenAPI Specification
 
-The ConnectRank backend provides an OpenAPI 3.1 compliant REST interface built with FastAPI.
+[![OpenAPI](https://img.shields.io/badge/OpenAPI-3.1-6BA539.svg?style=flat-square&logo=openapi-initiative&logoColor=white)](http://localhost:8080/openapi.json)
+[![FastAPI](https://img.shields.io/badge/FastAPI-0.110+-009688.svg?style=flat-square&logo=fastapi&logoColor=white)](https://fastapi.tiangolo.com)
+[![Pydantic](https://img.shields.io/badge/Pydantic-v2.6+-E92063.svg?style=flat-square&logo=pydantic&logoColor=white)](https://docs.pydantic.dev)
+[![Python](https://img.shields.io/badge/Python-3.13-3776AB.svg?style=flat-square&logo=python&logoColor=white)](https://python.org)
+[![Sentry](https://img.shields.io/badge/Sentry-APM_Tracing-362D59.svg?style=flat-square&logo=sentry&logoColor=white)](https://sentry.io)
+[![Swagger](https://img.shields.io/badge/Swagger-UI-85EA2D.svg?style=flat-square&logo=swagger&logoColor=black)](http://localhost:8080/docs)
+
+The ConnectRank backend provides an OpenAPI 3.1 compliant REST interface built with FastAPI, Pydantic v2, and PyTorch.
 
 * **Interactive Swagger UI:** `http://localhost:8080/docs`
 * **Interactive ReDoc:** `http://localhost:8080/redoc`
 * **Raw OpenAPI JSON Schema:** `http://localhost:8080/openapi.json`
+
+### Backend Technology Specifications
+
+| Component | Technology | Specification / Notes |
+| :--- | :--- | :--- |
+| **Framework** | [FastAPI](https://fastapi.tiangolo.com) | Async ASGI router, dependency injection, lifespan context manager |
+| **Data Validation** | [Pydantic v2](https://docs.pydantic.dev) | High-speed Rust-based serialization and strict request/response validation |
+| **File Ingestion** | `python-multipart` | Streaming multipart CSV uploads handled directly in volatile RAM |
+| **Telemetry** | `sentry-sdk` | Starlette and FastAPI middleware integration with automated PII scrubbing |
 
 ---
 

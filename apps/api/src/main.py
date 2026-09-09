@@ -55,6 +55,35 @@ async def lifespan(app: FastAPI):
     session_manager.cleanup_expired_sessions()
     print("[+] All ephemeral memory released.")
 
+# Initialize Sentry error monitoring and performance tracing if DSN is configured
+if settings.sentry_dsn:
+    import sentry_sdk
+    from sentry_sdk.integrations.fastapi import FastApiIntegration
+    from sentry_sdk.integrations.starlette import StarletteIntegration
+
+    def scrub_sensitive_pii(event, hint):
+        # Strict GDPR Zero-Persistence Invariant:
+        # Strip request body and multipart upload data from Sentry error events
+        if "request" in event:
+            req = event["request"]
+            if "data" in req:
+                req["data"] = "[REDACTED_GDPR_ZERO_PERSISTENCE]"
+        return event
+
+    sentry_sdk.init(
+        dsn=settings.sentry_dsn,
+        environment=settings.environment,
+        traces_sample_rate=settings.sentry_traces_sample_rate,
+        profiles_sample_rate=settings.sentry_profiles_sample_rate,
+        send_default_pii=False,
+        before_send=scrub_sensitive_pii,
+        integrations=[
+            StarletteIntegration(transaction_style="endpoint"),
+            FastApiIntegration(transaction_style="endpoint"),
+        ],
+    )
+    print(f"[+] Sentry monitoring initialized in environment '{settings.environment}'")
+
 app = FastAPI(
     title=settings.app_name,
     version=settings.app_version,

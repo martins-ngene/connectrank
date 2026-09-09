@@ -64,3 +64,4 @@ def test_upload_invalid_file_type():
 def test_recommend_missing_pitch():
     res = client.post("/recommend")
     assert res.status_code == 400
+

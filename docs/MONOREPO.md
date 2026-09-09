@@ -1,5 +1,12 @@
 # Monorepo Strategy & Turborepo Reference
 
+[![Turborepo](https://img.shields.io/badge/Turborepo-2.x-EF4444.svg?style=flat-square&logo=turborepo&logoColor=white)](https://turbo.build)
+[![pnpm Workspaces](https://img.shields.io/badge/pnpm-10.x_Workspaces-F69220.svg?style=flat-square&logo=pnpm&logoColor=white)](https://pnpm.io)
+[![TypeScript](https://img.shields.io/badge/TypeScript-5.x-3178C6.svg?style=flat-square&logo=typescript&logoColor=white)](https://typescriptlang.org)
+[![Python](https://img.shields.io/badge/Python-3.13-3776AB.svg?style=flat-square&logo=python&logoColor=white)](https://python.org)
+[![Vite](https://img.shields.io/badge/Vite-6.x-646CFF.svg?style=flat-square&logo=vite&logoColor=white)](https://vite.dev)
+[![Docker](https://img.shields.io/badge/Docker-Compose-2496ED.svg?style=flat-square&logo=docker&logoColor=white)](https://docker.com)
+
 This repository is organized as a **polyglot monorepo** managed by **Turborepo** and **pnpm workspaces**.
 
 ---
@@ -7,9 +14,9 @@ This repository is organized as a **polyglot monorepo** managed by **Turborepo**
 ## 1. Workspace Structure
 
 ```plaintext
-linkedin-cold-dm-recommender/
+connectrank/
 ├── apps/
-│   ├── api/                           # FastAPI + PyTorch Backend (@linkedin-recommender/api)
+│   ├── api/                           # FastAPI + PyTorch Backend (@connectrank/api)
 │   │   ├── src/
 │   │   │   ├── core/                  # Configuration & In-Memory Session Manager
 │   │   │   ├── models/                # Pydantic Schemas
@@ -20,7 +27,7 @@ linkedin-cold-dm-recommender/
 │   │   ├── Dockerfile                 # AWS App Runner production container
 │   │   └── package.json               # Turborepo integration wrapper
 │   │
-│   └── web/                           # React 19 + Vite Frontend (@linkedin-recommender/web)
+│   └── web/                           # React 19 + Vite Frontend (@connectrank/web)
 │       ├── src/
 │       │   ├── components/            # UI components (Header, PitchBar, Sliders, Cards, Modals)
 │       │   ├── services/              # Typed API client
@@ -45,6 +52,15 @@ linkedin-cold-dm-recommender/
 2. **Unified Single-Command Dev:** `pnpm dev` launches the FastAPI backend and Vite frontend concurrently with prefixed, color-coded terminal streams.
 3. **Zero-Overhead Caching:** Outputs of builds, tests, and linting tasks are cached locally using content hashes, skipping unchanged workspaces.
 4. **Fast Package Linking:** pnpm uses content-addressable storage and hard links to minimize disk consumption and install times.
+
+### Monorepo Tooling Matrix
+
+| Tool | Version / Spec | Badge | Primary Purpose in ConnectRank |
+| :--- | :--- | :--- | :--- |
+| **Turborepo** | `^2.4.4` | [![Turborepo](https://img.shields.io/badge/Turborepo-2.x-EF4444.svg?style=flat-square&logo=turborepo&logoColor=white)](https://turbo.build) | Multi-package task execution graph, terminal multiplexing, build caching. |
+| **pnpm** | `10.33.0` | [![pnpm](https://img.shields.io/badge/pnpm-10.x-F69220.svg?style=flat-square&logo=pnpm&logoColor=white)](https://pnpm.io) | Workspace dependency linking, shared lockfile (`pnpm-lock.yaml`), discrete node_modules. |
+| **GNU Make** | Polyglot Wrapper | [![Make](https://img.shields.io/badge/Make-CLI-6D00CC.svg?style=flat-square)](https://www.gnu.org/software/make/) | Uniform convenience commands (`make dev`, `make test`, `make build`) bridging Node & Python. |
+| **Docker Compose** | Compose v2 | [![Docker](https://img.shields.io/badge/Docker-Compose-2496ED.svg?style=flat-square&logo=docker&logoColor=white)](https://docker.com) | Multi-container local orchestration simulating production App Runner and Nginx setups. |
 
 ---
 
@@ -84,10 +100,10 @@ pnpm test:web
 Turborepo supports granular workspace selection using `--filter`:
 ```bash
 # Run tests only in apps/web
-pnpm turbo test --filter @linkedin-recommender/web
+pnpm turbo test --filter @connectrank/web
 
 # Build only apps/api
-pnpm turbo build --filter @linkedin-recommender/api
+pnpm turbo build --filter @connectrank/api
 ```
 
 ---
@@ -102,7 +118,7 @@ pnpm turbo build --filter @linkedin-recommender/api
       "dependsOn": ["^build"],
       "outputs": ["dist/**"]
     },
-    "@linkedin-recommender/api#build": {
+    "@connectrank/api#build": {
       "outputs": []
     },
     "dev": {
@@ -124,5 +140,5 @@ pnpm turbo build --filter @linkedin-recommender/api
 
 To add a new application or shared library:
 1. Create a directory under `apps/` or `packages/` (e.g. `packages/shared-types`).
-2. Add a `package.json` with a unique name (e.g. `@linkedin-recommender/shared-types`).
+2. Add a `package.json` with a unique name (e.g. `@connectrank/shared-types`).
 3. Run `pnpm install` from the root to register the workspace in the pnpm lockfile.

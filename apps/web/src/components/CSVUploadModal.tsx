@@ -3,6 +3,7 @@ import * as Dialog from '@radix-ui/react-dialog';
 import { X, UploadCloud, ShieldCheck, FileSpreadsheet, AlertCircle, HelpCircle } from 'lucide-react';
 import { uploadConnectionsCSV } from '../services/api';
 import { UploadResponse } from '../types';
+import * as Sentry from '@sentry/react';
 
 interface CSVUploadModalProps {
   isOpen: boolean;
@@ -33,6 +34,9 @@ export const CSVUploadModal: React.FC<CSVUploadModalProps> = ({
       onUploadSuccess(res);
       onClose();
     } catch (err: any) {
+      if (import.meta.env.VITE_SENTRY_DSN) {
+        Sentry.captureException(err);
+      }
       setError(err.message || 'Failed to parse CSV. Please ensure it is a valid LinkedIn export.');
     } finally {
       setIsUploading(false);

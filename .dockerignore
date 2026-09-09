@@ -35,6 +35,14 @@ docker-compose*.yml
 README.md
 *.md
 
+# Node and web build artifacts
+node_modules/
+*/node_modules/
+dist/
+*/dist/
+.turbo/
+*.tsbuildinfo
+
 # OS & IDE metadata
 .DS_Store
 Thumbs.db

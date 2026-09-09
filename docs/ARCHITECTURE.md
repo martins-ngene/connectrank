@@ -1,5 +1,14 @@
 # System Architecture & Technical Specification
 
+[![Architecture](https://img.shields.io/badge/Architecture-C4_Model-blueviolet.svg?style=flat-square)](docs/ARCHITECTURE.md)
+[![Backend](https://img.shields.io/badge/Backend-FastAPI_+_Python_3.13-009688.svg?style=flat-square&logo=fastapi&logoColor=white)](https://fastapi.tiangolo.com)
+[![ML](https://img.shields.io/badge/ML_Engine-PyTorch_+_Sentence--Transformers-FFD21E.svg?style=flat-square&logo=pytorch&logoColor=white)](https://huggingface.co/sentence-transformers/all-MiniLM-L6-v2)
+[![Frontend](https://img.shields.io/badge/Frontend-React_19_+_TypeScript-61DAFB.svg?style=flat-square&logo=react&logoColor=black)](https://react.dev)
+[![Styling](https://img.shields.io/badge/Styling-Tailwind_CSS_v4-06B6D4.svg?style=flat-square&logo=tailwindcss&logoColor=white)](https://tailwindcss.com)
+[![Privacy](https://img.shields.io/badge/Privacy-GDPR_Art._17_Zero--Persistence-10B981.svg?style=flat-square)](docs/ARCHITECTURE.md)
+[![Observability](https://img.shields.io/badge/Observability-Sentry_APM-362D59.svg?style=flat-square&logo=sentry&logoColor=white)](https://sentry.io)
+[![Cloud](https://img.shields.io/badge/Cloud-AWS_App_Runner_+_S3-FF9900.svg?style=flat-square&logo=amazon-aws&logoColor=white)](https://aws.amazon.com)
+
 This document provides a comprehensive technical overview of **ConnectRank**, covering system design, ephemeral memory management, the composite scoring model, and cloud deployment topology.
 
 ---
@@ -193,3 +202,18 @@ flowchart LR
 ### Component Roles:
 * **Frontend:** Static SPA build (`dist/`) hosted on Amazon S3 and distributed globally via Amazon CloudFront (or Vercel / Cloudflare Pages) for sub-50ms latency.
 * **Backend:** Single containerized service deployed to **AWS App Runner** using the optimized CPU PyTorch `Dockerfile`.
+
+---
+
+## 5. Technology Stack Mapping by Architectural Layer
+
+| Architectural Tier | Primary Technologies | Badges | Architecture Responsibilities |
+| :--- | :--- | :--- | :--- |
+| **Presentation Tier** (`apps/web`) | React 19, TypeScript, Vite, Tailwind CSS v4, Radix UI | [![React](https://img.shields.io/badge/React-19-61DAFB.svg?style=flat-square&logo=react&logoColor=black)](https://react.dev) [![Tailwind](https://img.shields.io/badge/Tailwind-v4-06B6D4.svg?style=flat-square&logo=tailwindcss&logoColor=white)](https://tailwindcss.com) [![TypeScript](https://img.shields.io/badge/TS-5.x-3178C6.svg?style=flat-square&logo=typescript&logoColor=white)](https://typescriptlang.org) | Renders responsive SPA interface, manages dynamic client weighting state, enforces accessible WAI-ARIA dialogs, handles persistent dual-theme switching. |
+| **Application & API Gateway** (`apps/api`) | FastAPI, Python 3.13, Pydantic v2, Uvicorn | [![FastAPI](https://img.shields.io/badge/FastAPI-0.110+-009688.svg?style=flat-square&logo=fastapi&logoColor=white)](https://fastapi.tiangolo.com) [![Pydantic](https://img.shields.io/badge/Pydantic-v2-E92063.svg?style=flat-square&logo=pydantic&logoColor=white)](https://pydantic.dev) | Enforces strict OpenAPI schema contracts, executes async request lifecycle, parses multipart CSV uploads, validates pitch search requests. |
+| **Machine Learning & Inference** | PyTorch (CPU), SentenceTransformers, NumPy | [![PyTorch](https://img.shields.io/badge/PyTorch-CPU-EE4C2C.svg?style=flat-square&logo=pytorch&logoColor=white)](https://pytorch.org) [![HF](https://img.shields.io/badge/HuggingFace-MiniLM-FFD21E.svg?style=flat-square&logo=huggingface&logoColor=black)](https://huggingface.co) | Computes 384-dimensional dense semantic vectors using `all-MiniLM-L6-v2`, runs vectorized cosine similarity matrix dot products. |
+| **Zero-Persistence Data Layer** | In-Memory Session Cache (`SessionManager`) | [![GDPR](https://img.shields.io/badge/GDPR-Art._17-10B981.svg?style=flat-square)](docs/ARCHITECTURE.md) | Ephemeral RAM storage, automatic 30-minute rolling TTL inactivity eviction, single-click instant purge endpoint; zero disk I/O. |
+| **Observability & APM** | Sentry SDK (FastAPI + React), Error Boundaries | [![Sentry](https://img.shields.io/badge/Sentry-APM-362D59.svg?style=flat-square&logo=sentry&logoColor=white)](https://sentry.io) | Real-time fullstack exception tracing, React glassmorphic crash boundary fallback, and automated GDPR PII scrubbing before payload transmission. |
+| **Monorepo & Build System** | Turborepo, pnpm Workspaces | [![Turborepo](https://img.shields.io/badge/Turborepo-2.x-EF4444.svg?style=flat-square&logo=turborepo&logoColor=white)](https://turbo.build) [![pnpm](https://img.shields.io/badge/pnpm-10.x-F69220.svg?style=flat-square&logo=pnpm&logoColor=white)](https://pnpm.io) | Polyglot pipeline orchestrator running parallel TypeScript and Python test/build tasks with content-hash artifact caching. |
+| **Cloud & Deployment** | AWS App Runner, Amazon S3, CloudFront, Docker | [![AWS](https://img.shields.io/badge/AWS-App_Runner-FF9900.svg?style=flat-square&logo=amazon-aws&logoColor=white)](https://aws.amazon.com) [![Docker](https://img.shields.io/badge/Docker-Multi--stage-2496ED.svg?style=flat-square&logo=docker&logoColor=white)](https://docker.com) | Multi-stage containerization with zero-host symlink leakage, serverless autoscaling backend compute, and global edge static content delivery. |
+

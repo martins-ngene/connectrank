@@ -1,5 +1,5 @@
 {
-  "name": "@linkedin-recommender/api",
+  "name": "@connectrank/api",
   "version": "1.0.0",
   "private": true,
   "scripts": {

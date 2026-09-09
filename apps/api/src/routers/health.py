@@ -21,3 +21,4 @@ def health(request: Request):
         active_ephemeral_sessions=session_manager.active_session_count(),
         privacy_guarantee="Zero-persistence. User PII is processed strictly in RAM and automatically purged."
     )
+

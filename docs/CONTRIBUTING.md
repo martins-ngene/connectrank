@@ -1,5 +1,12 @@
 # Contributing Guidelines
 
+[![Node.js](https://img.shields.io/badge/Node.js-20.x+-339933.svg?style=flat-square&logo=node.js&logoColor=white)](https://nodejs.org)
+[![pnpm](https://img.shields.io/badge/pnpm-10.x-F69220.svg?style=flat-square&logo=pnpm&logoColor=white)](https://pnpm.io)
+[![Python](https://img.shields.io/badge/Python-3.11+-3776AB.svg?style=flat-square&logo=python&logoColor=white)](https://python.org)
+[![Vitest](https://img.shields.io/badge/Vitest-3.x-6E9F18.svg?style=flat-square&logo=vitest&logoColor=white)](https://vitest.dev)
+[![Pytest](https://img.shields.io/badge/Pytest-9.x-0A9EDC.svg?style=flat-square&logo=pytest&logoColor=white)](https://pytest.org)
+[![Conventional Commits](https://img.shields.io/badge/Conventional%20Commits-1.0.0-yellow.svg?style=flat-square&logo=git&logoColor=white)](https://conventionalcommits.org)
+
 Thank you for contributing to the **ConnectRank** project. Follow these guidelines to maintain high architectural quality, safety, and privacy compliance.
 
 ---
@@ -19,7 +26,7 @@ Ensure the following runtimes are installed on your workstation:
 ```bash
 # Clone the repository
 git clone <repository-url>
-cd linkedin-cold-dm-recommender
+cd connectrank
 
 # Initialize virtual environment and install all dependencies
 make setup
@@ -64,7 +71,7 @@ make test-api
 ### Running Frontend Tests (`vitest`)
 ```bash
 make test-web
-# OR: pnpm --filter @linkedin-recommender/web test
+# OR: pnpm --filter @connectrank/web test
 ```
 
 ### Running the Full Monorepo Pipeline

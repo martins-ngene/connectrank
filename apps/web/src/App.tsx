@@ -20,6 +20,7 @@ import { useTheme } from './hooks/useTheme';
 import { Candidate, UploadResponse } from './types';
 import { fetchHealth, fetchRecommendations, purgeSessionData } from './services/api';
 import { Sparkles, AlertCircle, RefreshCw, ShieldCheck, Upload } from 'lucide-react';
+import * as Sentry from '@sentry/react';
 
 const PAGE_SIZE = 15;
 
@@ -105,6 +106,9 @@ export function App() {
       setCandidates(results);
       setCurrentPage(1);
     } catch (err: any) {
+      if (import.meta.env.VITE_SENTRY_DSN) {
+        Sentry.captureException(err);
+      }
       setError(err.message || 'Failed to fetch recommendations. Please verify the API server is running.');
     } finally {
       setIsLoading(false);

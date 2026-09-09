@@ -1,5 +1,5 @@
-import React from 'react';
-import { ShieldCheck, Upload, Trash2, FileText, Sun, Moon } from 'lucide-react';
+import React, { useState } from 'react';
+import { ShieldCheck, Upload, Trash2, FileText, Sun, Moon, Menu, X } from 'lucide-react';
 import { GithubIcon } from './GithubIcon';
 import { ConnectRankLogo } from './ConnectRankLogo';
 
@@ -24,8 +24,12 @@ export const Header: React.FC<HeaderProps> = ({
   onOpenTerms,
   isPurging,
 }) => {
+  const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
+
+  const closeMenu = () => setIsMobileMenuOpen(false);
+
   return (
-    <header className="sticky top-0 z-40 w-full glass-panel border-b border-slate-200/80 dark:border-slate-800/80 bg-white/80 dark:bg-slate-950/80 backdrop-blur-md">
+    <header className="sticky top-0 z-40 w-full glass-panel border-b border-slate-200/80 dark:border-slate-800/80 bg-white/80 dark:bg-slate-950/80 backdrop-blur-md transition-colors">
       <div className="max-w-7xl mx-auto px-3 sm:px-6 lg:px-8 h-16 flex items-center justify-between gap-2">
         {/* Brand */}
         <a href="#" className="flex items-center gap-2 sm:gap-3 shrink-0 group">
@@ -45,7 +49,7 @@ export const Header: React.FC<HeaderProps> = ({
           </div>
         </a>
 
-        {/* Center: Navigation Links */}
+        {/* Center: Desktop Navigation Links */}
         <nav className="hidden lg:flex items-center gap-6 text-xs font-medium text-slate-600 dark:text-slate-300">
           <a href="#features" className="hover:text-indigo-600 dark:hover:text-indigo-400 transition-colors">
             Features
@@ -94,7 +98,7 @@ export const Header: React.FC<HeaderProps> = ({
             )}
           </button>
 
-          {/* Privacy & Terms */}
+          {/* Privacy & Terms (Desktop) */}
           <button
             onClick={onOpenTerms}
             className="hidden sm:flex items-center gap-1.5 text-xs text-slate-600 dark:text-slate-300 hover:text-slate-900 dark:hover:text-white p-2 sm:px-2.5 sm:py-1.5 rounded-lg hover:bg-slate-100 dark:hover:bg-slate-800/60 transition-colors cursor-pointer"
@@ -134,8 +138,100 @@ export const Header: React.FC<HeaderProps> = ({
             <Upload className="w-3.5 h-3.5 sm:w-4 sm:h-4 shrink-0" />
             <span>Upload CSV</span>
           </button>
+
+          {/* Mobile Hamburger Toggle Button */}
+          <button
+            onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
+            className="lg:hidden p-2 text-slate-600 dark:text-slate-300 hover:text-indigo-600 dark:hover:text-white rounded-lg border border-slate-200 dark:border-slate-800 hover:bg-slate-100 dark:hover:bg-slate-800/60 transition-all cursor-pointer"
+            aria-label="Toggle mobile navigation menu"
+            aria-expanded={isMobileMenuOpen}
+          >
+            {isMobileMenuOpen ? (
+              <X className="w-4 h-4" />
+            ) : (
+              <Menu className="w-4 h-4" />
+            )}
+          </button>
         </div>
       </div>
+
+      {/* Mobile Dropdown Drawer */}
+      {isMobileMenuOpen && (
+        <div
+          className="lg:hidden border-t border-slate-200/80 dark:border-slate-800/80 bg-white/95 dark:bg-slate-950/95 backdrop-blur-xl px-4 py-3 space-y-2.5 shadow-xl animate-fadeIn"
+          data-testid="mobile-nav-drawer"
+        >
+          <div className="flex flex-col space-y-1 text-sm font-medium text-slate-700 dark:text-slate-200">
+            <a
+              href="#features"
+              onClick={closeMenu}
+              className="px-3 py-2 rounded-lg hover:bg-slate-100 dark:hover:bg-slate-900 transition-colors flex items-center justify-between"
+            >
+              <span>Features</span>
+              <span className="text-xs text-slate-400">&rarr;</span>
+            </a>
+            <a
+              href="#how-it-works"
+              onClick={closeMenu}
+              className="px-3 py-2 rounded-lg hover:bg-slate-100 dark:hover:bg-slate-900 transition-colors flex items-center justify-between"
+            >
+              <span>How It Works</span>
+              <span className="text-xs text-slate-400">&rarr;</span>
+            </a>
+            <a
+              href="#recommender"
+              onClick={closeMenu}
+              className="px-3 py-2 rounded-lg bg-indigo-500/10 text-indigo-600 dark:text-indigo-400 font-semibold hover:bg-indigo-500/15 transition-colors flex items-center justify-between"
+            >
+              <div className="flex items-center gap-2">
+                <span>ConnectRank Recommender</span>
+                <span className="w-1.5 h-1.5 rounded-full bg-emerald-500 animate-pulse" />
+              </div>
+              <span className="text-xs text-indigo-400">Live</span>
+            </a>
+            <a
+              href="#personas"
+              onClick={closeMenu}
+              className="px-3 py-2 rounded-lg hover:bg-slate-100 dark:hover:bg-slate-900 transition-colors flex items-center justify-between"
+            >
+              <span>Use Cases &amp; Personas</span>
+              <span className="text-xs text-slate-400">&rarr;</span>
+            </a>
+            <a
+              href="#faq"
+              onClick={closeMenu}
+              className="px-3 py-2 rounded-lg hover:bg-slate-100 dark:hover:bg-slate-900 transition-colors flex items-center justify-between"
+            >
+              <span>Frequently Asked Questions</span>
+              <span className="text-xs text-slate-400">&rarr;</span>
+            </a>
+          </div>
+
+          <div className="pt-2 border-t border-slate-200 dark:border-slate-800 flex items-center justify-between gap-2">
+            <button
+              onClick={() => {
+                closeMenu();
+                onOpenTerms();
+              }}
+              className="flex items-center gap-1.5 text-xs text-slate-600 dark:text-slate-400 hover:text-indigo-600 dark:hover:text-white px-2 py-1.5 rounded-md hover:bg-slate-100 dark:hover:bg-slate-900 transition-colors"
+            >
+              <FileText className="w-3.5 h-3.5 shrink-0" />
+              <span>GDPR Privacy &amp; Terms</span>
+            </button>
+
+            <a
+              href="https://github.com/martins-ngene/connectrank"
+              target="_blank"
+              rel="noopener noreferrer"
+              onClick={closeMenu}
+              className="flex items-center gap-1.5 text-xs text-slate-600 dark:text-slate-400 hover:text-indigo-600 dark:hover:text-white px-2 py-1.5 rounded-md hover:bg-slate-100 dark:hover:bg-slate-900 transition-colors"
+            >
+              <GithubIcon className="w-3.5 h-3.5 shrink-0" />
+              <span>GitHub (v1.0)</span>
+            </a>
+          </div>
+        </div>
+      )}
 
       {/* Mobile Sub-bar: Privacy & Status */}
       <div className="md:hidden flex items-center justify-between px-3 py-1 bg-slate-100 dark:bg-slate-900/90 border-t border-slate-200 dark:border-slate-800/60 text-[11px]">
@@ -156,3 +252,4 @@ export const Header: React.FC<HeaderProps> = ({
     </header>
   );
 };
+

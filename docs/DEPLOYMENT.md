@@ -135,7 +135,10 @@ To prevent runaway auto-scaling from bots or excessive queries:
 
 ---
 
-## 5. Backend Deployment (AWS App Runner)
+## 5. Backend Deployment (Amazon ECS Express Mode / AWS App Runner)
+
+> [!NOTE]
+> Starting April 30, 2026, AWS App Runner is no longer accepting new customer accounts. AWS officially recommends **Amazon ECS Express Mode** as the modern, high-performance successor. Both options use the exact same Docker container image and ECR repository.
 
 ### Step 5.1: Build & Push Image to Amazon ECR
 
@@ -147,41 +150,32 @@ aws ecr get-login-password --region us-east-1 | \
 # 2. Create ECR repository (if not already existing)
 aws ecr create-repository --repository-name connectrank-api --region us-east-1
 
-# 3. Build the production image with baked model weights
-docker build -t connectrank-api:latest -f apps/api/Dockerfile apps/api
+# 3. Build the production image for linux/amd64 (Essential for Apple Silicon Macs)
+docker build --platform linux/amd64 -t connectrank-api:latest -f apps/api/Dockerfile apps/api
 
 # 4. Tag and push image
 docker tag connectrank-api:latest <aws_account_id>.dkr.ecr.us-east-1.amazonaws.com/connectrank-api:latest
-docker push <aws_account_id>.dkr.ecr.us-east-1.amazonaws.com/connectrank-api:latest
+DOCKER_BUILDKIT=1 docker push <aws_account_id>.dkr.ecr.us-east-1.amazonaws.com/connectrank-api:latest
 ```
 
-### Step 5.2: Create App Runner Service
+### Step 5.2: Deploy via Amazon ECS Express Mode (Recommended)
 
-Configure the service in the AWS App Runner Console:
-
-- [ ] **Source**: Container registry $\rightarrow$ Amazon ECR $\rightarrow$ `connectrank-api:latest`.
-- [ ] **Deployment trigger**: Manual or Automatic.
-- [ ] **Service Name**: `connectrank-api`.
-- [ ] **Virtual CPU & Memory (Cost-Optimized)**:
-  - **vCPU**: **`1 vCPU`**
-  - **Memory**: **`2 GB`** (adequate for CPU SentenceTransformers and active session cache)
-- [ ] **Port**: `8080`.
-- [ ] **Health Check**:
-  - Protocol: `HTTP`
-  - Path: `/health`
-  - Interval: `20 seconds`
-  - Timeout: `5 seconds`
-  - Healthy threshold: `1`
-  - Unhealthy threshold: `3`
-- [ ] **Auto Scaling (Cost Guardrail)**:
-  - Create custom auto scaling configuration:
-    - **Min size**: `1`
-    - **Max size**: `1` (prevents scaling charges during free/budget periods)
-    - **Max concurrency**: `100`
-- [ ] **Environment Variables**:
-  - `ENVIRONMENT` = `production`
-  - `CORS_ORIGINS` = `https://connectrank.pages.dev` (update with your Cloudflare Pages domain)
-  - `SENTRY_DSN` = `your_sentry_dsn`
+1. Open the [Amazon ECS Express Mode Console (`us-east-1`)](https://us-east-1.console.aws.amazon.com/ecs/v2/express-mode?region=us-east-1).
+2. Configure your service:
+   - **Image URI**: `<aws_account_id>.dkr.ecr.us-east-1.amazonaws.com/connectrank-api:latest`
+   - **Task execution role**: `Create new role` (`ecsTaskExecutionRole`)
+   - **Infrastructure role**: `Create new role` (`ecsInfrastructureRoleForExpressServices`)
+3. Expand **Additional configurations - optional**:
+   - **Cluster**: Leave blank (auto-creates `default`)
+   - **Compute**: `1 vCPU`, `2 GB Memory`
+   - **Auto scaling**: Min tasks: `1`, **Max tasks: `1`** *(Strict cost containment guardrail)*
+   - **Environment Variables**:
+     - `ENVIRONMENT` = `production`
+     - `PORT` = `8080`
+     - `CORS_ORIGINS` = `https://connectrank.pages.dev`
+     - `SENTRY_DSN` = `your_sentry_dsn`
+     - `SENTRY_TRACES_SAMPLE_RATE` = `0.1`
+4. Click **Deploy**. ECS automatically provisions Fargate compute, attaches a shared Application Load Balancer, and generates your public endpoint (e.g. `https://<service-id>.ecs.us-east-1.on.aws/`).
 
 ---
 

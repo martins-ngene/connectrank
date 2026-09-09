@@ -195,8 +195,8 @@ Cloudflare Pages provides automated Git deployments, unlimited bandwidth, and na
 2. Click **Create Application** $\rightarrow$ **Pages** $\rightarrow$ **Connect to Git**.
 3. Select your repository: `martins-ngene/connectrank` and branch: `main`.
 4. Configure Build Settings:
-   - **Framework preset**: `Vite`
-   - **Root directory**: `apps/web` *(Important: targets the web app directly instead of monorepo root)*
+   - **Framework preset**: `None` *(CRITICAL: Do NOT select `Vite`. ConnectRank is a static client SPA, not a Cloudflare Worker. Selecting `Vite` triggers an interactive Wrangler migration wizard that fails on `jsdom`)*
+   - **Root directory**: `apps/web` *(Targets the web application inside the monorepo)*
    - **Build command**: `pnpm build`
    - **Build output directory**: `dist`
 5. Configure Environment Variables:

@@ -162,7 +162,7 @@ graph LR
 
 ---
 
-## 4. Cloud Deployment Architecture (AWS)
+## 4. Cloud Deployment Architecture (Cloudflare Pages + AWS App Runner)
 
 ```mermaid
 %%{init: {
@@ -177,31 +177,36 @@ graph LR
   }
 }}%%
 flowchart LR
-    subgraph Client ["Client Browser"]
+    subgraph Client ["Client Layer"]
         BROWSER["Web Browser"]
     end
 
-    subgraph AWSCloud ["Amazon Web Services (AWS)"]
-        subgraph StaticFrontend ["Frontend Hosting"]
-            CF["Amazon CloudFront CDN"]
-            S3["Amazon S3 Bucket / Amplify<br>(Compiled React SPA dist/)"]
+    subgraph CloudflareCloud ["Cloudflare Edge ($0.00/mo)"]
+        CF_PAGES["Cloudflare Pages CDN<br>(Compiled React SPA dist/)<br>• Zero Egress Bandwidth Fees<br>• SPA Fallback (_redirects -> 200)"]
+    end
+
+    subgraph AWSCloud ["Amazon Web Services (AWS ~$11.22/mo)"]
+        subgraph ContainerCompute ["Backend Compute"]
+            ECR["Amazon ECR<br>(connectrank-api:latest)"]
+            APPRUNNER["AWS App Runner<br>(1 vCPU / 2GB RAM Container)<br>• Port 8080 | Health: /health"]
         end
 
-        subgraph ContainerCompute ["Backend Compute"]
-            ECR["Amazon ECR<br>(Container Registry)"]
-            APPRUNNER["AWS App Runner<br>(FastAPI Container Instance)"]
+        subgraph Guardrails ["Cost Guardrails"]
+            BUDGETS["AWS Budgets ($15/mo Cap)"]
+            ALARMS["CloudWatch Billing Alarms"]
         end
     end
 
-    BROWSER -->|HTTPS GET Static UI| CF
-    CF --> S3
-    BROWSER -->|HTTPS API Requests /recommend| APPRUNNER
+    BROWSER -->|HTTPS GET Static UI (Edge CDN)| CF_PAGES
+    BROWSER -->|HTTPS API POST /recommend| APPRUNNER
     ECR -->|Deploy Image| APPRUNNER
+    APPRUNNER -.-> Guardrails
 ```
 
 ### Component Roles:
-* **Frontend:** Static SPA build (`dist/`) hosted on Amazon S3 and distributed globally via Amazon CloudFront (or Vercel / Cloudflare Pages) for sub-50ms latency.
-* **Backend:** Single containerized service deployed to **AWS App Runner** using the optimized CPU PyTorch `Dockerfile`.
+* **Frontend:** Static SPA build (`dist/`) hosted on **Cloudflare Pages** for zero-cost, sub-50ms edge delivery with unlimited requests and zero egress bandwidth fees.
+* **Backend:** Serverless container service deployed to **AWS App Runner** (1 vCPU / 2 GB RAM) using the optimized CPU PyTorch `Dockerfile`, capped to a $100 / 6-month budget.
+* **Deployment Guide:** Complete step-by-step checklist, cost breakdown, and billing alarms are documented in [**docs/DEPLOYMENT.md**](DEPLOYMENT.md).
 
 ---
 
@@ -215,5 +220,5 @@ flowchart LR
 | **Zero-Persistence Data Layer** | In-Memory Session Cache (`SessionManager`) | [![GDPR](https://img.shields.io/badge/GDPR-Art._17-10B981.svg?style=flat-square)](docs/ARCHITECTURE.md) | Ephemeral RAM storage, automatic 30-minute rolling TTL inactivity eviction, single-click instant purge endpoint; zero disk I/O. |
 | **Observability & APM** | Sentry SDK (FastAPI + React), Error Boundaries | [![Sentry](https://img.shields.io/badge/Sentry-APM-362D59.svg?style=flat-square&logo=sentry&logoColor=white)](https://sentry.io) | Real-time fullstack exception tracing, React glassmorphic crash boundary fallback, and automated GDPR PII scrubbing before payload transmission. |
 | **Monorepo & Build System** | Turborepo, pnpm Workspaces | [![Turborepo](https://img.shields.io/badge/Turborepo-2.x-EF4444.svg?style=flat-square&logo=turborepo&logoColor=white)](https://turbo.build) [![pnpm](https://img.shields.io/badge/pnpm-10.x-F69220.svg?style=flat-square&logo=pnpm&logoColor=white)](https://pnpm.io) | Polyglot pipeline orchestrator running parallel TypeScript and Python test/build tasks with content-hash artifact caching. |
-| **Cloud & Deployment** | AWS App Runner, Amazon S3, CloudFront, Docker | [![AWS](https://img.shields.io/badge/AWS-App_Runner-FF9900.svg?style=flat-square&logo=amazon-aws&logoColor=white)](https://aws.amazon.com) [![Docker](https://img.shields.io/badge/Docker-Multi--stage-2496ED.svg?style=flat-square&logo=docker&logoColor=white)](https://docker.com) | Multi-stage containerization with zero-host symlink leakage, serverless autoscaling backend compute, and global edge static content delivery. |
+| **Cloud & Deployment** | Cloudflare Pages, AWS App Runner, Docker | [![Cloudflare](https://img.shields.io/badge/Cloudflare-Pages-F38020.svg?style=flat-square&logo=cloudflare&logoColor=white)](https://pages.cloudflare.com) [![AWS](https://img.shields.io/badge/AWS-App_Runner-FF9900.svg?style=flat-square&logo=amazon-aws&logoColor=white)](https://aws.amazon.com) | Multi-stage containerization, serverless autoscaling backend compute, zero-cost edge static frontend hosting ($0 egress). |
 

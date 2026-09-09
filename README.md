@@ -14,9 +14,9 @@
 
 [![Turborepo](https://img.shields.io/badge/Turborepo-2.x-EF4444.svg?style=flat-square&logo=turborepo&logoColor=white)](https://turbo.build)
 [![pnpm](https://img.shields.io/badge/pnpm-10.x_Workspaces-F69220.svg?style=flat-square&logo=pnpm&logoColor=white)](https://pnpm.io)
-[![Docker](https://img.shields.io/badge/Docker-Multi--stage-2496ED.svg?style=flat-square&logo=docker&logoColor=white)](https://www.docker.com)
-[![Sentry](https://img.shields.io/badge/Sentry-APM%20%26%20Errors-362D59.svg?style=flat-square&logo=sentry&logoColor=white)](https://sentry.io)
-[![AWS](https://img.shields.io/badge/AWS-App_Runner%20%2B%20S3-FF9900.svg?style=flat-square&logo=amazon-aws&logoColor=white)](https://aws.amazon.com)
+[![Cloudflare](https://img.shields.io/badge/Frontend-Cloudflare_Pages-F38020.svg?style=flat-square&logo=cloudflare&logoColor=white)](https://pages.cloudflare.com)
+[![AWS](https://img.shields.io/badge/Backend-AWS_App_Runner-FF9900.svg?style=flat-square&logo=amazon-aws&logoColor=white)](https://aws.amazon.com/apprunner/)
+[![Budget](https://img.shields.io/badge/Budget-$100_in_6_Months-10B981.svg?style=flat-square)](docs/DEPLOYMENT.md)
 
 [![Privacy](https://img.shields.io/badge/GDPR-Zero--Persistence_RAM-10B981.svg?style=flat-square)](docs/ARCHITECTURE.md)
 [![Pytest](https://img.shields.io/badge/Pytest-18%2F18_Passing-0A9EDC.svg?style=flat-square&logo=pytest&logoColor=white)](docs/CONTRIBUTING.md)
@@ -155,16 +155,16 @@ ConnectRank is architected as a modern polyglot monorepo, pairing state-of-the-a
 [![Docker](https://img.shields.io/badge/Docker-Multi--stage-2496ED.svg?style=flat-square&logo=docker&logoColor=white)](https://www.docker.com)
 [![Docker Compose](https://img.shields.io/badge/Docker_Compose-Multi--Container-2496ED.svg?style=flat-square&logo=docker&logoColor=white)](https://docs.docker.com/compose/)
 [![Nginx](https://img.shields.io/badge/Nginx-Alpine_Proxy-009639.svg?style=flat-square&logo=nginx&logoColor=white)](https://nginx.org)
+[![Cloudflare Pages](https://img.shields.io/badge/Cloudflare-Pages-F38020.svg?style=flat-square&logo=cloudflare&logoColor=white)](https://pages.cloudflare.com)
 [![AWS App Runner](https://img.shields.io/badge/AWS-App_Runner-FF9900.svg?style=flat-square&logo=amazon-aws&logoColor=white)](https://aws.amazon.com/apprunner/)
-[![AWS S3 + CloudFront](https://img.shields.io/badge/AWS-S3_%2B_CloudFront-232F3E.svg?style=flat-square&logo=amazon-aws&logoColor=white)](https://aws.amazon.com/cloudfront/)
 
 | Technology | Deployment Tier | Purpose |
 | :--- | :--- | :--- |
 | **[Docker](https://www.docker.com)** | Container Runtime | Multi-stage Dockerfiles for optimized production images |
 | **[Docker Compose](https://docs.docker.com/compose/)** | Local Orchestration | Single-command cluster provisioning (`connectrank-api` + `connectrank-web`) |
-| **[Nginx](https://nginx.org)** | Web Server | Lightweight Alpine container hosting Vite SPA assets with SPA routing |
-| **[AWS App Runner](https://aws.amazon.com/apprunner/)** | Serverless Backend Hosting | Fully managed container runtime running the FastAPI engine |
-| **[Amazon S3 + CloudFront](https://aws.amazon.com/cloudfront/)** | Global Edge CDN | Static hosting for the React SPA with global edge caching |
+| **[Nginx](https://nginx.org)** | Container Web Server | Lightweight Alpine container hosting Vite SPA assets for containerized runs |
+| **[Cloudflare Pages](https://pages.cloudflare.com)** | Production Frontend CDN | Zero-cost edge hosting ($0 egress, unlimited bandwidth, global SSL) |
+| **[AWS App Runner](https://aws.amazon.com/apprunner/)** | Production Backend Hosting | Fully managed serverless container runtime (1 vCPU / 2GB RAM, ~$11/mo) |
 
 ---
 
@@ -176,6 +176,7 @@ ConnectRank is architected as a modern polyglot monorepo, pairing state-of-the-a
 | 📙 [**docs/MONOREPO.md**](docs/MONOREPO.md) | Turborepo workspace reference, pipeline configurations, and caching guide. |
 | 📗 [**docs/CONTRIBUTING.md**](docs/CONTRIBUTING.md) | Local developer setup, branching model, code styles, and testing instructions. |
 | 📕 [**docs/API.md**](docs/API.md) | OpenAPI reference for all endpoints (`/health`, `/upload`, `/recommend`, `/session/purge`) with cURL & code samples. |
+| 🚀 [**docs/DEPLOYMENT.md**](docs/DEPLOYMENT.md) | Production checklist, AWS App Runner & S3/CloudFront provisioning, env vars, and smoke testing. |
 
 ---
 
@@ -235,10 +236,12 @@ docker compose up --build
 
 ---
 
-## Cloud Deployment (AWS)
-
-* **Backend (`apps/api`):** Deployed to **AWS App Runner** using `apps/api/Dockerfile`. The image is pre-baked with Hugging Face model weights and a lightweight CPU PyTorch wheel (~150MB).
-* **Frontend (`apps/web`):** Static SPA build (`apps/web/dist`) deployed to **Amazon S3 + CloudFront** (or AWS Amplify / Vercel) for sub-50ms global edge delivery.
+## Cloud Deployment (Cloudflare Pages + AWS App Runner)
+ 
+- **Frontend (`apps/web`):** Deployed to **Cloudflare Pages** ($0.00 egress, unlimited bandwidth, global Anycast edge network) with automated Git CI/CD and custom domain SSL.
+- **Backend (`apps/api`):** Deployed to **AWS App Runner** (1 vCPU / 2 GB RAM) using `apps/api/Dockerfile`, pre-baked with Hugging Face model weights and CPU PyTorch.
+- 💰 **Budget & Cost Model:** Engineered strictly to operate under **$100 for 6 months** (~$11.22/mo projected spend; 32% unallocated safety margin) backed by **AWS Budgets** ($15/mo ceiling) and CloudWatch Billing Alarms.
+- 📋 **Step-by-Step Guide:** Follow the [**Production Deployment & Cost Optimization Guide (`docs/DEPLOYMENT.md`)**](docs/DEPLOYMENT.md) for billing alerts, ECR image publishing, Cloudflare Pages integration, and post-deployment smoke tests.
 
 ---
 

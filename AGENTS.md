@@ -7,6 +7,7 @@
   - Update the **Engineering Log**: Document the exact user prompt, root cause, thought process, code solution, and provide a simple Mermaid sequence or architecture diagram where appropriate.
 - **Synchronize Project Documentation**:
   - Keep [`docs/API.md`](file:///Users/martinium-dev/projects/aws-projects/connectrank/docs/API.md) up-to-date whenever FastAPI endpoints, parameters, or schemas change.
+  - Keep [`docs/DEPLOYMENT.md`](file:///Users/martinium-dev/projects/aws-projects/connectrank/docs/DEPLOYMENT.md) aligned with infrastructure requirements, environment variables, and cloud architecture.
   - Keep [`README.md`](file:///Users/martinium-dev/projects/aws-projects/connectrank/README.md) aligned with the active architecture, setup commands, and feature set.
 
 ## 2. Privacy & Zero-Persistence Invariant

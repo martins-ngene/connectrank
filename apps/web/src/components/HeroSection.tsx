@@ -65,47 +65,48 @@ export const HeroSection: React.FC<HeroSectionProps> = ({
         </div>
 
         {/* Proof & Invariant Metrics Bar */}
-        <div className="mt-12 p-4 sm:p-5 rounded-2xl glass-panel border border-slate-200 dark:border-slate-800/80 grid grid-cols-2 md:grid-cols-4 gap-4 text-left animate-fade-in-up animate-delay-400">
-          <div className="flex items-start gap-3 hover:-translate-y-0.5 transition-transform duration-200">
-            <div className="p-2 rounded-xl bg-emerald-500/10 text-emerald-600 dark:text-emerald-400 shrink-0">
-              <ShieldCheck className="w-5 h-5" />
+        <div className="mt-12 p-3 sm:p-5 rounded-2xl glass-panel border border-slate-200 dark:border-slate-800/80 grid grid-cols-2 md:grid-cols-4 gap-2.5 sm:gap-4 text-left animate-fade-in-up animate-delay-400">
+          <div className="flex items-start gap-2 sm:gap-3 hover:-translate-y-0.5 transition-transform duration-200 min-w-0">
+            <div className="p-1.5 sm:p-2 rounded-xl bg-emerald-500/10 text-emerald-600 dark:text-emerald-400 shrink-0">
+              <ShieldCheck className="w-4 h-4 sm:w-5 sm:h-5" />
             </div>
-            <div>
-              <div className="text-xl sm:text-2xl font-display font-bold text-slate-900 dark:text-white">100%</div>
-              <div className="text-xs text-slate-500 dark:text-slate-400 font-medium">Zero-Persistence RAM</div>
-            </div>
-          </div>
-
-          <div className="flex items-start gap-3 hover:-translate-y-0.5 transition-transform duration-200">
-            <div className="p-2 rounded-xl bg-indigo-500/10 text-indigo-600 dark:text-indigo-400 shrink-0">
-              <Zap className="w-5 h-5" />
-            </div>
-            <div>
-              <div className="text-xl sm:text-2xl font-display font-bold text-slate-900 dark:text-white">&lt;120ms</div>
-              <div className="text-xs text-slate-500 dark:text-slate-400 font-medium">Vector Cosine Latency</div>
+            <div className="min-w-0">
+              <div className="text-lg sm:text-2xl font-display font-bold text-slate-900 dark:text-white truncate">100%</div>
+              <div className="text-[11px] sm:text-xs text-slate-500 dark:text-slate-400 font-medium leading-tight">Zero-Persistence RAM</div>
             </div>
           </div>
 
-          <div className="flex items-start gap-3 hover:-translate-y-0.5 transition-transform duration-200">
-            <div className="p-2 rounded-xl bg-cyan-500/10 text-cyan-600 dark:text-cyan-400 shrink-0">
-              <Globe className="w-5 h-5" />
+          <div className="flex items-start gap-2 sm:gap-3 hover:-translate-y-0.5 transition-transform duration-200 min-w-0">
+            <div className="p-1.5 sm:p-2 rounded-xl bg-indigo-500/10 text-indigo-600 dark:text-indigo-400 shrink-0">
+              <Zap className="w-4 h-4 sm:w-5 sm:h-5" />
             </div>
-            <div>
-              <div className="text-xl sm:text-2xl font-display font-bold text-slate-900 dark:text-white">70+</div>
-              <div className="text-xs text-slate-500 dark:text-slate-400 font-medium">Remote-First Registry</div>
+            <div className="min-w-0">
+              <div className="text-lg sm:text-2xl font-display font-bold text-slate-900 dark:text-white truncate">&lt;120ms</div>
+              <div className="text-[11px] sm:text-xs text-slate-500 dark:text-slate-400 font-medium leading-tight">Vector Cosine Latency</div>
             </div>
           </div>
 
-          <div className="flex items-start gap-3 hover:-translate-y-0.5 transition-transform duration-200">
-            <div className="p-2 rounded-xl bg-fuchsia-500/10 text-fuchsia-600 dark:text-fuchsia-400 shrink-0">
-              <MessageSquare className="w-5 h-5" />
+          <div className="flex items-start gap-2 sm:gap-3 hover:-translate-y-0.5 transition-transform duration-200 min-w-0">
+            <div className="p-1.5 sm:p-2 rounded-xl bg-cyan-500/10 text-cyan-600 dark:text-cyan-400 shrink-0">
+              <Globe className="w-4 h-4 sm:w-5 sm:h-5" />
             </div>
-            <div>
-              <div className="text-xl sm:text-2xl font-display font-bold text-slate-900 dark:text-white">3 Modes</div>
-              <div className="text-xs text-slate-500 dark:text-slate-400 font-medium">Bespoke DM Strategies</div>
+            <div className="min-w-0">
+              <div className="text-lg sm:text-2xl font-display font-bold text-slate-900 dark:text-white truncate">70+</div>
+              <div className="text-[11px] sm:text-xs text-slate-500 dark:text-slate-400 font-medium leading-tight">Remote-First Registry</div>
+            </div>
+          </div>
+
+          <div className="flex items-start gap-2 sm:gap-3 hover:-translate-y-0.5 transition-transform duration-200 min-w-0">
+            <div className="p-1.5 sm:p-2 rounded-xl bg-fuchsia-500/10 text-fuchsia-600 dark:text-fuchsia-400 shrink-0">
+              <MessageSquare className="w-4 h-4 sm:w-5 sm:h-5" />
+            </div>
+            <div className="min-w-0">
+              <div className="text-lg sm:text-2xl font-display font-bold text-slate-900 dark:text-white truncate">3 Modes</div>
+              <div className="text-[11px] sm:text-xs text-slate-500 dark:text-slate-400 font-medium leading-tight">Bespoke DM Strategies</div>
             </div>
           </div>
         </div>
+
       </div>
     </section>
   );

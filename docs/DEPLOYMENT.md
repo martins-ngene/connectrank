@@ -259,4 +259,50 @@ Verify system behavior across Cloudflare and AWS:
 1. **Frontend Instant Rollback**:
    - In the Cloudflare Pages dashboard $\rightarrow$ Click **Deployments** $\rightarrow$ Select any previous successful build $\rightarrow$ Click **Rollback to this deployment** (instant, 0-downtime rollback).
 2. **Backend Rollback**:
-   - In AWS App Runner Console $\rightarrow$ Click **Deployments** $\rightarrow$ Re-deploy previous known-good ECR image tag.
+   - In Amazon ECS Console $\rightarrow$ Click **Services** $\rightarrow$ **connectrank-api** $\rightarrow$ Re-deploy previous known-good ECR image tag SHA (`803647806810.dkr.ecr.us-east-1.amazonaws.com/connectrank-api:<commit-sha>`).
+
+---
+
+## 9. Automated CI/CD Pipeline (GitHub Actions & Amazon ECS Express Mode)
+
+ConnectRank includes a fully automated, production-grade GitHub Actions CI/CD pipeline defined in [`.github/workflows/deploy-api.yml`](file:///Users/martinium-dev/projects/aws-projects/connectrank/.github/workflows/deploy-api.yml).
+
+### Pipeline Flow
+
+```mermaid
+sequenceDiagram
+    autonumber
+    participant Dev as Developer (git push)
+    participant GH as GitHub Actions CI/CD
+    participant ECR as Amazon ECR Registry
+    participant ECS as Amazon ECS Express Mode
+    participant CW as AWS CloudWatch
+
+    Dev->>GH: git push origin main (apps/api/**)
+    GH->>GH: Job 1: Run Pytest Suite (18/18 Tests)
+    GH->>ECR: Job 2: Build AMD64 Docker Container & Push (:latest + :sha)
+    GH->>ECS: Trigger Rolling Service Update (force-new-deployment)
+    ECS->>ECR: Pull New Image Tag
+    ECS->>ECS: Replace Task with Zero Downtime
+    ECS->>CW: Auto-Stream Application Logs (14-Day Free Retention)
+    ECS-->>GH: Service Reaches Stable State
+```
+
+### Required GitHub Repository Secrets
+
+To activate automated deployment on `git push`, add these two secrets to your GitHub repository under **Settings** $\rightarrow$ **Secrets and variables** $\rightarrow$ **Actions**:
+
+| Secret Name | Purpose | Value Description |
+| :--- | :--- | :--- |
+| `AWS_ACCESS_KEY_ID` | AWS CLI Authentication | Your IAM user access key with ECR and ECS update permissions. |
+| `AWS_SECRET_ACCESS_KEY` | AWS CLI Secret | Your IAM user secret access key. |
+
+### Pipeline Triggers
+- **Automatic**: Triggered on every `git push` to `main` when files within `apps/api/**` or the workflow itself are modified.
+- **Manual**: Triggerable on-demand via the GitHub Actions UI (**Run workflow** button via `workflow_dispatch`).
+
+### CloudWatch Observability & Zero-Cost Guardrails
+- Amazon ECS Express Mode automatically streams stdout/stderr to CloudWatch under `/ecs/connectrank-api`.
+- **AWS Free Tier**: CloudWatch includes **5 GB/month log ingestion** and **5 GB/month storage** at **$0.00/mo**.
+- **Recommended Maintenance**: In the AWS Console, set log group retention to **14 days** to ensure archive volume never accumulates storage costs over time.
+

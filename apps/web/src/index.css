@@ -8,11 +8,16 @@
     --font-display: 'Outfit', system-ui, -apple-system, sans-serif;
   }
 
+  html, body {
+    max-width: 100%;
+    overflow-x: hidden;
+  }
+
   body {
     font-family: var(--font-sans);
     transition: background-color 0.3s ease, color 0.3s ease;
-    overflow-x: hidden;
   }
+
 
   /* Default light theme */
   html:not(.dark) body {

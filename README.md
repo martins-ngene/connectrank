@@ -236,12 +236,13 @@ docker compose up --build
 
 ---
 
-## Cloud Deployment (Cloudflare Pages + AWS App Runner)
+## Cloud Deployment (Cloudflare Pages + Amazon ECS Express Mode)
  
 - **Frontend (`apps/web`):** Deployed to **Cloudflare Pages** ($0.00 egress, unlimited bandwidth, global Anycast edge network) with automated Git CI/CD and custom domain SSL.
-- **Backend (`apps/api`):** Deployed to **AWS App Runner** (1 vCPU / 2 GB RAM) using `apps/api/Dockerfile`, pre-baked with Hugging Face model weights and CPU PyTorch.
+- **Backend (`apps/api`):** Deployed to **Amazon ECS Express Mode (AWS Fargate)** (1 vCPU / 2 GB RAM, 1-task cost ceiling) via pre-cached Amazon ECR Docker images (`apps/api/Dockerfile`) with automated continuous deployment via **GitHub Actions** (`.github/workflows/deploy-api.yml`).
 - 💰 **Budget & Cost Model:** Engineered strictly to operate under **$100 for 6 months** (~$11.22/mo projected spend; 32% unallocated safety margin) backed by **AWS Budgets** ($15/mo ceiling) and CloudWatch Billing Alarms.
-- 📋 **Step-by-Step Guide:** Follow the [**Production Deployment & Cost Optimization Guide (`docs/DEPLOYMENT.md`)**](docs/DEPLOYMENT.md) for billing alerts, ECR image publishing, Cloudflare Pages integration, and post-deployment smoke tests.
+- 📋 **Step-by-Step Guide:** Follow the [**Production Deployment & Cost Optimization Guide (`docs/DEPLOYMENT.md`)**](docs/DEPLOYMENT.md) for billing alerts, ECR image publishing, Cloudflare Pages integration, CI/CD automation, and post-deployment smoke tests.
+
 
 ---
 

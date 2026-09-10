@@ -82,10 +82,58 @@ jobs:
             --service ${{ env.ECS_SERVICE }} \
             --force-new-deployment
 
-      - name: Await Service Stability
+      - name: Await ECS Express Mode Canary Rollout & Verify Health
         run: |
-          echo "Waiting for Amazon ECS Express Mode task replacement to stabilize..."
-          aws ecs wait services-stable \
-            --cluster ${{ env.ECS_CLUSTER }} \
-            --services ${{ env.ECS_SERVICE }}
-          echo "Deployment succeeded! New task is healthy and running."
+          echo "=========================================================================="
+          echo "Monitoring Amazon ECS Express Mode Deployment..."
+          echo "Note: ECS Express Mode uses a Canary strategy with 3-minute bake times"
+          echo "(typical end-to-end steady state duration: 10-12 minutes)."
+          echo "=========================================================================="
+
+          CLUSTER="${{ env.ECS_CLUSTER }}"
+          SERVICE="${{ env.ECS_SERVICE }}"
+          TIMEOUT_SECONDS=1200  # 20-minute safety ceiling
+          INTERVAL=20
+          ELAPSED=0
+
+          while [ $ELAPSED -lt $TIMEOUT_SECONDS ]; do
+            # Extract deployment status using AWS CLI JMESPath query into tab-separated values
+            STATUS_LINE=$(aws ecs describe-services \
+              --cluster "$CLUSTER" \
+              --services "$SERVICE" \
+              --region "${{ env.AWS_REGION }}" \
+              --query "[services[0].deployments[0].rolloutState, length(services[0].deployments), services[0].deployments[0].desiredCount, services[0].deployments[0].runningCount, services[0].deployments[0].failedTasks]" \
+              --output text)
+
+            read -r ROLLOUT NUM_DEPS DESIRED RUNNING FAILED <<< "$STATUS_LINE"
+
+            MINS=$((ELAPSED / 60))
+            SECS=$((ELAPSED % 60))
+            printf "[%02dm %02ds] RolloutState: %-11s | Active Deployments: %s | Tasks: %s/%s running | Failed: %s\n" \
+              "$MINS" "$SECS" "$ROLLOUT" "$NUM_DEPS" "$RUNNING" "$DESIRED" "$FAILED"
+
+            if [ "$ROLLOUT" = "FAILED" ] || [ "$FAILED" -gt 0 ]; then
+              echo "❌ Error: ECS deployment failed or encountered failing tasks."
+              exit 1
+            fi
+
+            if [ "$ROLLOUT" = "COMPLETED" ] && [ "$NUM_DEPS" -eq 1 ] && [ "$RUNNING" -ge "$DESIRED" ]; then
+              echo "✅ Amazon ECS Express Mode rollout completed successfully in ${MINS}m ${SECS}s!"
+              break
+            fi
+
+            sleep $INTERVAL
+            ELAPSED=$((ELAPSED + INTERVAL))
+          done
+
+          if [ $ELAPSED -ge $TIMEOUT_SECONDS ]; then
+            echo "❌ Error: Deployment monitoring exceeded 20-minute timeout ceiling."
+            exit 1
+          fi
+
+          echo "--------------------------------------------------------------------------"
+          echo "Verifying live public endpoint health..."
+          HEALTH_URL="https://co-1d40322c1542487a832269d7bbadb532.ecs.us-east-1.on.aws/health"
+          curl --fail --retry 5 --retry-delay 5 -s "$HEALTH_URL"
+          echo ""
+          echo "🎉 Live API verified healthy and operational!"

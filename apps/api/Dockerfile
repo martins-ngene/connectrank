@@ -17,8 +17,8 @@ RUN pip install --no-cache-dir -r requirements.txt
 # 3. Pre-cache Hugging Face model weights in container image layer for fast cold starts
 RUN python -c "from sentence_transformers import SentenceTransformer; SentenceTransformer('sentence-transformers/all-MiniLM-L6-v2')"
 
-# 4. Copy application source and preloaded demo data
-COPY data/ ./data/
+# 4. Create ephemeral data directory and copy application source
+RUN mkdir -p data
 COPY src/ ./src/
 
 ENV PORT=8080

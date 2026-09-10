@@ -13,3 +13,9 @@
 ## 2. Privacy & Zero-Persistence Invariant
 - Never commit or persist raw user CSV exports, parquets, or PII to the repository or disk.
 - Ensure all test suites (`pytest` and `vitest`) continue passing at 100% across the monorepo (`pnpm turbo test`).
+
+## 3. Strict Git Policy (No Auto-Staging, Commits, or Pushes)
+- **Never autonomously run `git add`, `git commit`, or `git push`.**
+- Always leave modified and newly created files unstaged in the working directory so the user can inspect diffs via `git diff` or source control.
+- Only run Git staging, commit, or push commands if the user **explicitly and directly** instructs you to do so in their prompt (e.g., *"commit this with message '...' and push to main"*).
+

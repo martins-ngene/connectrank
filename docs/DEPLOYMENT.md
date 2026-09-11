@@ -140,10 +140,9 @@ To prevent unexpected billing charges:
 | `SESSION_TTL_MINUTES` | `30` | No (Default: 30) | Inactivity window before RAM session garbage collection |
 | `MAX_UPLOAD_SIZE_MB` | `15` | No (Default: 15) | Prevents large multipart memory injection |
 | `SENTRY_DSN` | `https://<key>@<org>.ingest.sentry.io/<id>` | Recommended | Server-side APM error tracking (PII redacted) |
-| `SENTRY_TRACES_SAMPLE_RATE` | `0.1` (10%) | No (Default: 0.1) | Keeps Sentry transaction quota within free tier |
+| `SENTRY_TRACES_SAMPLE_RATE` | `0.1` | No (Default: 0.1) | APM distributed trace sample rate |
 
-### Frontend Build-Time Variables (`apps/web` on Cloudflare Pages)
-
+### Frontend Client Configuration (`apps/web/.env.production`)
 | Variable | Recommended Production Value | Required? | Purpose |
 | :--- | :--- | :--- | :--- |
 | `VITE_API_URL` | `https://api.connectrank.flowkeit.com` | **Yes** | Root URL for REST API communication via Cloudflare Tunnel |

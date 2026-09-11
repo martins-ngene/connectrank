@@ -309,11 +309,13 @@ aws ecs update-service \
   --desired-count 0 \
   --region us-east-1
 
-aws ecs delete-service \
-  --cluster default \
-  --service connectrank-api \
-  --force \
+# For ECS Express Mode services:
+aws ecs delete-express-gateway-service \
+  --service-arn "arn:aws:ecs:us-east-1:803647806810:service/default/connectrank-api" \
   --region us-east-1
+
+# Alternatively for standard ECS services:
+# aws ecs delete-service --cluster default --service connectrank-api --force --region us-east-1
 
 # 2. Delete Application Load Balancer (Stops ~$18/mo ALB charge)
 aws elbv2 delete-load-balancer \

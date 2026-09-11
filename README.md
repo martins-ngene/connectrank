@@ -157,8 +157,9 @@ ConnectRank is architected as a modern polyglot monorepo, pairing state-of-the-a
 [![Docker Compose](https://img.shields.io/badge/Docker_Compose-Multi--Container-2496ED.svg?style=flat-square&logo=docker&logoColor=white)](https://docs.docker.com/compose/)
 [![Nginx](https://img.shields.io/badge/Nginx-Alpine_Proxy-009639.svg?style=flat-square&logo=nginx&logoColor=white)](https://nginx.org)
 [![Cloudflare Pages](https://img.shields.io/badge/Cloudflare-Pages-F38020.svg?style=flat-square&logo=cloudflare&logoColor=white)](https://pages.cloudflare.com)
-[![AWS EC2](https://img.shields.io/badge/AWS-EC2_t4g.small-FF9900.svg?style=flat-square&logo=amazon-aws&logoColor=white)](https://aws.amazon.com/ec2/)
-[![Cloudflare Tunnel](https://img.shields.io/badge/Cloudflare-Tunnel-F38020.svg?style=flat-square&logo=cloudflare&logoColor=white)](https://developers.cloudflare.com/cloudflare-one/connections/connect-networks/)
+[![AWS SSM](https://img.shields.io/badge/AWS-Systems_Manager_SSM-FF9900.svg?style=flat-square&logo=amazon-aws&logoColor=white)](https://aws.amazon.com/systems-manager/)
+[![Amazon ECR](https://img.shields.io/badge/AWS-ECR_Registry-FF9900.svg?style=flat-square&logo=amazon-aws&logoColor=white)](https://aws.amazon.com/ecr/)
+[![Linux](https://img.shields.io/badge/OS-Amazon_Linux_2023-FCC624.svg?style=flat-square&logo=linux&logoColor=black)](https://aws.amazon.com/linux/amazon-linux-2023/)
 
 | Technology | Deployment Tier | Purpose |
 | :--- | :--- | :--- |
@@ -168,6 +169,9 @@ ConnectRank is architected as a modern polyglot monorepo, pairing state-of-the-a
 | **[Cloudflare Pages](https://pages.cloudflare.com)** | Production Frontend CDN | Zero-cost edge hosting ($0 egress, unlimited bandwidth, global SSL) |
 | **[AWS EC2 (t4g.small)](https://aws.amazon.com/ec2/)** | Production Backend Host | Cost-engineered Graviton2 ARM64 compute (2 vCPU / 2GB RAM, ~$12/mo) |
 | **[Cloudflare Tunnel](https://developers.cloudflare.com/cloudflare-one/connections/connect-networks/)** | Zero-Trust Edge Ingress | Free edge SSL & DDoS protection with zero open inbound ports |
+| **[AWS Systems Manager (SSM)](https://aws.amazon.com/systems-manager/)** | Zero-SSH Continuous Delivery | Automated remote container deployment via `aws ssm send-command` (<45s) |
+| **[Amazon ECR](https://aws.amazon.com/ecr/)** | Container Registry | Secure storage and versioning of `linux/arm64` container images |
+| **[Linux systemd & Swapfile](https://aws.amazon.com/linux/amazon-linux-2023/)** | OS Daemon & Memory | 2 GB gp3 swapfile buffer preventing PyTorch CPU OOM panics on 2GB host |
 
 ---
 

@@ -115,7 +115,7 @@ export const DMModal: React.FC<DMModalProps> = ({
           {/* Header */}
           <div className="flex items-center justify-between pb-3 sm:pb-4 border-b border-slate-800">
             <div className="flex items-center gap-2.5 min-w-0 pr-2">
-              <div className="w-8 h-8 rounded-lg bg-indigo-600/20 text-indigo-400 flex items-center justify-center border border-indigo-500/30 shrink-0">
+              <div className="w-8 h-8 rounded-lg bg-blue-600/20 text-blue-400 flex items-center justify-center border border-blue-500/30 shrink-0">
                 <MessageSquare className="w-4 h-4" />
               </div>
               <div className="min-w-0">
@@ -148,7 +148,7 @@ export const DMModal: React.FC<DMModalProps> = ({
                   onClick={() => setSelectedTemplateId(tmpl.id)}
                   className={`px-3 py-2 sm:py-2.5 rounded-xl text-left border transition-all text-xs cursor-pointer ${
                     selectedTemplateId === tmpl.id
-                      ? 'bg-indigo-600/20 border-indigo-500 text-indigo-200 font-medium shadow-sm'
+                      ? 'bg-blue-600/20 border-blue-500 text-blue-200 font-medium shadow-sm'
                       : 'bg-slate-800/60 border-slate-700/70 text-slate-400 hover:text-slate-200'
                   }`}
                 >
@@ -163,7 +163,7 @@ export const DMModal: React.FC<DMModalProps> = ({
           <div className="mt-4">
             <div className="flex items-center justify-between text-xs text-slate-400 mb-1.5">
               <span>Draft Message:</span>
-              <span className="text-[11px] text-indigo-400 flex items-center gap-1">
+              <span className="text-[11px] text-blue-400 flex items-center gap-1">
                 <Sparkles className="w-3 h-3" />
                 Customizable
               </span>
@@ -172,7 +172,7 @@ export const DMModal: React.FC<DMModalProps> = ({
               value={message}
               onChange={(e) => setMessage(e.target.value)}
               rows={7}
-              className="w-full bg-slate-950 border border-slate-800 focus:border-indigo-500 rounded-xl p-3 sm:p-3.5 text-xs sm:text-sm text-slate-200 font-mono focus:ring-1 focus:ring-indigo-500 outline-none resize-none"
+              className="w-full bg-slate-950 border border-slate-800 focus:border-blue-500 rounded-xl p-3 sm:p-3.5 text-xs sm:text-sm text-slate-200 font-mono focus:ring-1 focus:ring-blue-500 outline-none resize-none"
             />
           </div>
 
@@ -183,7 +183,7 @@ export const DMModal: React.FC<DMModalProps> = ({
                 href={candidate.url.startsWith('http') ? candidate.url : `https://${candidate.url}`}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="flex items-center justify-center sm:justify-start gap-1.5 text-xs text-slate-400 hover:text-indigo-300 transition-colors py-1"
+                className="flex items-center justify-center sm:justify-start gap-1.5 text-xs text-slate-400 hover:text-blue-300 transition-colors py-1"
               >
                 <span className="truncate">View {candidate.name}'s Profile</span>
                 <ExternalLink className="w-3.5 h-3.5 shrink-0" />
@@ -194,7 +194,7 @@ export const DMModal: React.FC<DMModalProps> = ({
               <button
                 type="button"
                 onClick={handleCopy}
-                className="w-full sm:w-auto flex items-center justify-center gap-2 px-4 py-2.5 sm:py-2 rounded-xl bg-gradient-to-r from-indigo-600 to-violet-600 hover:from-indigo-500 hover:to-violet-500 text-white font-medium text-sm transition-all shadow-md shadow-indigo-600/30 active:scale-95 cursor-pointer"
+                className="w-full sm:w-auto flex items-center justify-center gap-2 px-4 py-2.5 sm:py-2 rounded-xl bg-gradient-to-r from-blue-600 to-sky-600 hover:from-blue-500 hover:to-sky-500 text-white font-medium text-sm transition-all shadow-md shadow-blue-600/25 active:scale-95 cursor-pointer"
               >
                 {isCopied ? (
                   <>

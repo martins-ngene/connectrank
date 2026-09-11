@@ -29,7 +29,7 @@ export const StatBanner: React.FC<StatBannerProps> = ({
       {/* Stat 1: Profiles Analyzed */}
       <div className="glass-panel p-3.5 rounded-xl border border-slate-200 dark:border-slate-800/80">
         <div className="flex items-center gap-2 text-slate-500 dark:text-slate-400 text-xs mb-1">
-          <Users className="w-3.5 h-3.5 text-indigo-500 dark:text-indigo-400" />
+          <Users className="w-3.5 h-3.5 text-blue-500 dark:text-blue-400" />
           <span>Network Indexed</span>
         </div>
         <div className="text-xl font-display font-bold text-slate-900 dark:text-white">

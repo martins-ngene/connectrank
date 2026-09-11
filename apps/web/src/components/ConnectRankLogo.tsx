@@ -25,9 +25,9 @@ export const ConnectRankLogo: React.FC<ConnectRankLogoProps> = ({
     >
       <defs>
         <linearGradient id="cr-logo-grad" x1="2" y1="2" x2="30" y2="30" gradientUnits="userSpaceOnUse">
-          <stop offset="0%" stopColor="#6366F1" />
-          <stop offset="50%" stopColor="#8B5CF6" />
-          <stop offset="100%" stopColor="#EC4899" />
+          <stop offset="0%" stopColor="#2563EB" />
+          <stop offset="50%" stopColor="#3B82F6" />
+          <stop offset="100%" stopColor="#38BDF8" />
         </linearGradient>
       </defs>
 
@@ -57,7 +57,7 @@ export const ConnectRankLogo: React.FC<ConnectRankLogoProps> = ({
       {/* Vertical projection guides */}
       <path
         d="M13 15V24M19 18V24"
-        stroke="#818CF8"
+        stroke="#60A5FA"
         strokeWidth="1.2"
         strokeLinecap="round"
         strokeDasharray="1.5 2"
@@ -65,14 +65,14 @@ export const ConnectRankLogo: React.FC<ConnectRankLogoProps> = ({
       />
 
       {/* Network Connection Nodes */}
-      <circle cx="7" cy="21" r="2.5" fill="currentColor" fillOpacity="0.15" stroke="#818CF8" strokeWidth="1.5" />
-      <circle cx="7" cy="21" r="1" fill="#818CF8" />
+      <circle cx="7" cy="21" r="2.5" fill="currentColor" fillOpacity="0.15" stroke="#93C5FD" strokeWidth="1.5" />
+      <circle cx="7" cy="21" r="1" fill="#93C5FD" />
 
-      <circle cx="13" cy="15" r="2.5" fill="currentColor" fillOpacity="0.15" stroke="#A855F7" strokeWidth="1.5" />
-      <circle cx="13" cy="15" r="1" fill="#A855F7" />
+      <circle cx="13" cy="15" r="2.5" fill="currentColor" fillOpacity="0.15" stroke="#60A5FA" strokeWidth="1.5" />
+      <circle cx="13" cy="15" r="1" fill="#60A5FA" />
 
-      <circle cx="19" cy="18" r="2.2" fill="currentColor" fillOpacity="0.15" stroke="#C084FC" strokeWidth="1.5" />
-      <circle cx="19" cy="18" r="0.9" fill="#C084FC" />
+      <circle cx="19" cy="18" r="2.2" fill="currentColor" fillOpacity="0.15" stroke="#38BDF8" strokeWidth="1.5" />
+      <circle cx="19" cy="18" r="0.9" fill="#38BDF8" />
 
       {/* Apex Authority Node (Top Rank Decision Maker) */}
       <circle cx="25" cy="9" r="3.75" fill="url(#cr-logo-grad)" />

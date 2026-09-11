@@ -184,13 +184,13 @@ export function App() {
   };
 
   return (
-    <div className="min-h-screen w-full max-w-full overflow-x-hidden bg-slate-50 dark:bg-slate-950 text-slate-900 dark:text-slate-100 flex flex-col selection:bg-indigo-500 selection:text-white transition-colors duration-200">
+    <div className="min-h-screen w-full max-w-full overflow-x-hidden bg-slate-50 dark:bg-slate-950 text-slate-900 dark:text-slate-100 flex flex-col selection:bg-blue-500 selection:text-white transition-colors duration-200">
       {/* Background Ambient Glows */}
       <div className="fixed inset-0 pointer-events-none hero-glow-light dark:hero-glow-dark -z-10" />
 
       {/* Toast Notification */}
       {toastMessage && (
-        <div className="fixed bottom-4 left-4 right-4 sm:left-auto sm:right-6 sm:bottom-6 z-50 bg-white dark:bg-slate-900 border border-slate-200 dark:border-indigo-500/40 text-slate-900 dark:text-indigo-200 px-4 py-3 rounded-xl shadow-2xl flex items-center gap-2.5 text-xs animate-in slide-in-from-bottom-5">
+        <div className="fixed bottom-4 left-4 right-4 sm:left-auto sm:right-6 sm:bottom-6 z-50 bg-white dark:bg-slate-900 border border-slate-200 dark:border-blue-500/40 text-slate-900 dark:text-blue-200 px-4 py-3 rounded-xl shadow-2xl flex items-center gap-2.5 text-xs animate-in slide-in-from-bottom-5">
           <ShieldCheck className="w-4 h-4 text-emerald-500 shrink-0" />
           <span>{toastMessage}</span>
         </div>
@@ -224,7 +224,7 @@ export function App() {
       >
         <div className="flex flex-col sm:flex-row sm:items-end justify-between gap-4 mb-6 pb-4 border-b border-slate-200/80 dark:border-slate-800/80">
           <div>
-            <div className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full bg-indigo-500/10 text-indigo-600 dark:text-indigo-400 text-[11px] font-semibold mb-2 border border-indigo-500/20">
+            <div className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full bg-blue-500/10 text-blue-600 dark:text-blue-400 text-[11px] font-semibold mb-2 border border-blue-500/20">
               <Sparkles className="w-3.5 h-3.5" />
               <span>Interactive ConnectRank Hub</span>
             </div>
@@ -238,7 +238,7 @@ export function App() {
           <div className="flex items-center gap-2">
             <button
               onClick={() => setIsUploadOpen(true)}
-              className="px-3.5 py-2 rounded-xl bg-indigo-600 hover:bg-indigo-500 text-white text-xs font-semibold flex items-center gap-1.5 shadow-sm transition-all cursor-pointer"
+              className="px-3.5 py-2 rounded-xl bg-gradient-to-r from-blue-600 to-sky-600 hover:from-blue-500 hover:to-sky-500 text-white text-xs font-semibold flex items-center gap-1.5 shadow-md shadow-blue-600/20 transition-all cursor-pointer"
             >
               <Upload className="w-3.5 h-3.5" />
               <span>Upload CSV</span>
@@ -293,7 +293,7 @@ export function App() {
               {candidates.length} {candidates.length === 1 ? 'match' : 'matches'}
             </span>
             {Math.ceil(candidates.length / PAGE_SIZE) > 1 && (
-              <span className="text-xs px-2.5 py-0.5 rounded-full bg-indigo-500/10 text-indigo-700 dark:text-indigo-300 border border-indigo-500/20 font-medium">
+              <span className="text-xs px-2.5 py-0.5 rounded-full bg-blue-500/10 text-blue-700 dark:text-blue-300 border border-blue-500/20 font-medium">
                 Page {currentPage} of {Math.ceil(candidates.length / PAGE_SIZE)}
               </span>
             )}
@@ -302,7 +302,7 @@ export function App() {
           <button
             onClick={() => executeSearch(pitch)}
             disabled={isLoading}
-            className="self-start sm:self-auto flex items-center gap-1.5 text-xs text-slate-500 dark:text-slate-400 hover:text-indigo-600 dark:hover:text-indigo-300 transition-colors cursor-pointer"
+            className="self-start sm:self-auto flex items-center gap-1.5 text-xs text-slate-500 dark:text-slate-400 hover:text-blue-600 dark:hover:text-blue-300 transition-colors cursor-pointer"
           >
             <RefreshCw className={`w-3.5 h-3.5 ${isLoading ? 'animate-spin' : ''}`} />
             <span>Refresh Ranking</span>
@@ -364,17 +364,17 @@ export function App() {
 
         {/* Awaiting Upload State */}
         {!isLoading && candidates.length === 0 && !sessionId && totalIndexed === 0 && (
-          <div className="glass-panel rounded-2xl p-6 sm:p-10 text-center max-w-lg mx-auto border border-indigo-500/30 shadow-2xl shadow-indigo-500/10">
-            <div className="w-12 h-12 sm:w-14 sm:h-14 rounded-2xl bg-indigo-600/10 dark:bg-indigo-600/20 border border-indigo-500/30 flex items-center justify-center text-indigo-600 dark:text-indigo-400 mx-auto mb-4">
+          <div className="glass-panel rounded-2xl p-6 sm:p-10 text-center max-w-lg mx-auto border border-blue-500/30 shadow-2xl shadow-blue-500/10">
+            <div className="w-12 h-12 sm:w-14 sm:h-14 rounded-2xl bg-blue-600/10 dark:bg-blue-600/20 border border-blue-500/30 flex items-center justify-center text-blue-600 dark:text-blue-400 mx-auto mb-4">
               <Upload className="w-6 h-6 sm:w-7 sm:h-7" />
             </div>
             <h3 className="font-display font-bold text-slate-900 dark:text-white text-lg sm:text-xl">Upload Your LinkedIn Network</h3>
             <p className="text-xs sm:text-sm text-slate-600 dark:text-slate-400 mt-2 leading-relaxed">
-              Upload your exported <code className="text-indigo-600 dark:text-indigo-300 font-mono">Connections.csv</code> to begin ranking contacts by skill relevance and hiring authority. Your data is analyzed strictly in volatile RAM with zero disk persistence.
+              Upload your exported <code className="text-blue-600 dark:text-blue-300 font-mono">Connections.csv</code> to begin ranking contacts by skill relevance and hiring authority. Your data is analyzed strictly in volatile RAM with zero disk persistence.
             </p>
             <button
               onClick={() => setIsUploadOpen(true)}
-              className="mt-5 inline-flex items-center gap-2 px-5 sm:px-6 py-2.5 sm:py-3 bg-gradient-to-r from-indigo-600 to-violet-600 hover:from-indigo-500 hover:to-violet-500 text-white font-semibold text-xs sm:text-sm rounded-xl shadow-lg shadow-indigo-600/30 transition-all active:scale-95 cursor-pointer"
+              className="mt-5 inline-flex items-center gap-2 px-5 sm:px-6 py-2.5 sm:py-3 bg-gradient-to-r from-blue-600 to-sky-600 hover:from-blue-500 hover:to-sky-500 text-white font-semibold text-xs sm:text-sm rounded-xl shadow-md shadow-blue-600/25 transition-all active:scale-95 cursor-pointer"
             >
               <Upload className="w-4 h-4" />
               <span>Upload Connections.csv</span>
@@ -385,7 +385,7 @@ export function App() {
         {/* Empty Search Results State */}
         {!isLoading && candidates.length === 0 && (sessionId || totalIndexed > 0) && !error && (
           <div className="glass-panel rounded-2xl p-6 sm:p-12 text-center max-w-md mx-auto">
-            <Sparkles className="w-7 h-7 sm:w-8 sm:h-8 text-indigo-500 dark:text-indigo-400 mx-auto mb-3" />
+            <Sparkles className="w-7 h-7 sm:w-8 sm:h-8 text-blue-500 dark:text-blue-400 mx-auto mb-3" />
             <h3 className="font-display font-semibold text-slate-900 dark:text-white text-base">No matching connections found</h3>
             <p className="text-xs text-slate-600 dark:text-slate-400 mt-1">
               Try adjusting your pitch query or relaxing the minimum authority filter.

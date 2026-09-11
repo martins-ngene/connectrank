@@ -25,7 +25,7 @@ export const TermsModal: React.FC<TermsModalProps> = ({
           {/* Header */}
           <div className="flex items-center justify-between pb-3 sm:pb-4 border-b border-slate-800 sticky top-0 bg-slate-900 z-10">
             <div className="flex items-center gap-2.5 min-w-0 pr-2">
-              <div className="w-8 h-8 rounded-lg bg-indigo-600/20 text-indigo-400 flex items-center justify-center border border-indigo-500/30 shrink-0">
+              <div className="w-8 h-8 rounded-lg bg-blue-600/20 text-blue-400 flex items-center justify-center border border-blue-500/30 shrink-0">
                 <Scale className="w-4 h-4" />
               </div>
               <div className="min-w-0">
@@ -60,7 +60,7 @@ export const TermsModal: React.FC<TermsModalProps> = ({
               </p>
               <ul className="list-disc pl-5 space-y-1 text-slate-400">
                 <li><strong>No User Accounts:</strong> You do not need to register, log in, or provide personal credentials.</li>
-                <li><strong>Volatile RAM Processing Only:</strong> When you upload a LinkedIn <code className="text-indigo-300">Connections.csv</code>, all profile parsing and vector embedding calculations occur purely in server RAM. No Personally Identifiable Information (PII) is ever written to disk, databases, or persistent object storage.</li>
+                <li><strong>Volatile RAM Processing Only:</strong> When you upload a LinkedIn <code className="text-blue-300">Connections.csv</code>, all profile parsing and vector embedding calculations occur purely in server RAM. No Personally Identifiable Information (PII) is ever written to disk, databases, or persistent object storage.</li>
                 <li><strong>Automatic Expiration (TTL):</strong> Inactive sessions are automatically destroyed and garbage-collected from server memory after 30 minutes.</li>
                 <li><strong>Right to Erasure (GDPR Article 17):</strong> You retain complete control over your data. Clicking the <strong>'Purge My Data'</strong> button located in the top navigation bar (or directly below) immediately and irreversibly purges your session and all vector indices from server memory.</li>
                 <li><strong>No Third-Party AI Data Sharing:</strong> Embeddings are computed locally using open-source SentenceTransformers. Your LinkedIn network data is never sent to OpenAI, Anthropic, or external model providers.</li>
@@ -69,7 +69,7 @@ export const TermsModal: React.FC<TermsModalProps> = ({
               {/* Direct Action Box inside the Modal */}
               <div className="mt-3 p-3 sm:p-3.5 rounded-xl bg-slate-900 border border-slate-700/80 flex flex-col sm:flex-row items-stretch sm:items-center justify-between gap-3">
                 <div className="flex items-center gap-2 text-xs min-w-0">
-                  <Info className="w-4 h-4 text-indigo-400 shrink-0" />
+                  <Info className="w-4 h-4 text-blue-400 shrink-0" />
                   {sessionId ? (
                     <span className="text-slate-200">
                       <strong>Active Custom Session:</strong> Your uploaded profile data is currently resident in RAM.
@@ -108,7 +108,7 @@ export const TermsModal: React.FC<TermsModalProps> = ({
 
             {/* Section 2: Terms of Service */}
             <div className="p-4 rounded-xl bg-slate-950/80 border border-slate-800 space-y-2.5">
-              <div className="flex items-center gap-2 text-indigo-400 font-semibold text-sm">
+              <div className="flex items-center gap-2 text-blue-400 font-semibold text-sm">
                 <Lock className="w-4 h-4" />
                 <span>2. Acceptable Use & Outreach Etiquette</span>
               </div>

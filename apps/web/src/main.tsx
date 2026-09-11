@@ -22,7 +22,7 @@ if (import.meta.env.VITE_SENTRY_DSN) {
 function RootErrorFallback({ error, resetError }: { error?: unknown; resetError?: () => void }) {
   const errorMessage = error instanceof Error ? error.message : String(error || 'An unexpected error occurred');
   return (
-    <div className="min-h-screen bg-slate-950 text-slate-100 flex items-center justify-center p-4 selection:bg-indigo-500/30">
+    <div className="min-h-screen bg-slate-950 text-slate-100 flex items-center justify-center p-4 selection:bg-blue-500/30">
       <div className="max-w-md w-full bg-slate-900/95 backdrop-blur-xl border border-rose-500/30 rounded-2xl p-6 shadow-2xl text-center space-y-4">
         <div className="w-12 h-12 rounded-full bg-rose-500/10 text-rose-400 flex items-center justify-center mx-auto border border-rose-500/20">
           <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -39,7 +39,7 @@ function RootErrorFallback({ error, resetError }: { error?: unknown; resetError?
         <div className="flex gap-3 justify-center pt-2">
           <button
             onClick={() => window.location.reload()}
-            className="px-4 py-2 bg-indigo-600 hover:bg-indigo-500 text-white rounded-xl text-sm font-medium transition-colors shadow-lg shadow-indigo-600/20"
+            className="px-4 py-2 bg-gradient-to-r from-blue-600 to-sky-600 hover:from-blue-500 hover:to-sky-500 text-white rounded-xl text-sm font-medium transition-all shadow-md shadow-blue-600/20"
           >
             Reload Page
           </button>

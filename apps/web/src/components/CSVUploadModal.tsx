@@ -59,7 +59,7 @@ export const CSVUploadModal: React.FC<CSVUploadModalProps> = ({
           {/* Header */}
           <div className="flex items-center justify-between pb-3 sm:pb-4 border-b border-slate-800">
             <div className="flex items-center gap-2.5 min-w-0 pr-2">
-              <div className="w-8 h-8 rounded-lg bg-indigo-600/20 text-indigo-400 flex items-center justify-center border border-indigo-500/30 shrink-0">
+              <div className="w-8 h-8 rounded-lg bg-blue-600/20 text-blue-400 flex items-center justify-center border border-blue-500/30 shrink-0">
                 <FileSpreadsheet className="w-4 h-4" />
               </div>
               <div className="min-w-0">
@@ -110,8 +110,8 @@ export const CSVUploadModal: React.FC<CSVUploadModalProps> = ({
             onClick={() => fileInputRef.current?.click()}
             className={`mt-4 border-2 border-dashed rounded-2xl p-5 sm:p-8 text-center cursor-pointer transition-all flex flex-col items-center justify-center gap-3 ${
               isDragging
-                ? 'border-indigo-500 bg-indigo-500/10 scale-[0.99]'
-                : 'border-slate-700 hover:border-indigo-500/50 bg-slate-950/40 hover:bg-slate-950/80'
+                ? 'border-blue-500 bg-blue-500/10 scale-[0.99]'
+                : 'border-slate-700 hover:border-blue-500/50 bg-slate-950/40 hover:bg-slate-950/80'
             }`}
           >
             <input
@@ -126,7 +126,7 @@ export const CSVUploadModal: React.FC<CSVUploadModalProps> = ({
               }}
             />
 
-            <div className="w-12 h-12 rounded-full bg-indigo-600/20 border border-indigo-500/30 flex items-center justify-center text-indigo-400 shadow-md">
+            <div className="w-12 h-12 rounded-full bg-blue-600/20 border border-blue-500/30 flex items-center justify-center text-blue-400 shadow-md">
               <UploadCloud className="w-6 h-6" />
             </div>
 
@@ -141,7 +141,7 @@ export const CSVUploadModal: React.FC<CSVUploadModalProps> = ({
 
             {isUploading && (
               <div className="w-48 bg-slate-800 rounded-full h-1.5 overflow-hidden mt-2">
-                <div className="bg-indigo-500 h-full animate-pulse w-full" />
+                <div className="bg-blue-500 h-full animate-pulse w-full" />
               </div>
             )}
           </div>
@@ -150,7 +150,7 @@ export const CSVUploadModal: React.FC<CSVUploadModalProps> = ({
           <div className="mt-4 pt-3 border-t border-slate-800">
             <button
               onClick={() => setShowGuide(!showGuide)}
-              className="flex items-center gap-1.5 text-xs text-indigo-400 hover:text-indigo-300 font-medium"
+              className="flex items-center gap-1.5 text-xs text-blue-400 hover:text-blue-300 font-medium"
             >
               <HelpCircle className="w-3.5 h-3.5" />
               <span>How do I export my Connections.csv from LinkedIn?</span>
@@ -162,7 +162,7 @@ export const CSVUploadModal: React.FC<CSVUploadModalProps> = ({
                 <p>2. Select <strong>Data Privacy</strong> in the left sidebar.</p>
                 <p>3. Click <strong>Get a copy of your data</strong>.</p>
                 <p>4. Check <strong>Connections</strong> and click <strong>Request archive</strong>.</p>
-                <p>5. Download the zip archive from LinkedIn's email and extract <code className="text-indigo-300">Connections.csv</code>.</p>
+                <p>5. Download the zip archive from LinkedIn's email and extract <code className="text-blue-300">Connections.csv</code>.</p>
               </div>
             )}
           </div>

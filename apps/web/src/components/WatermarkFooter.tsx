@@ -23,9 +23,9 @@ export const WatermarkFooter: React.FC<WatermarkFooterProps> = ({
             <div className="flex items-center gap-2.5">
               <ConnectRankLogo size={32} withBackground />
               <span className="font-display font-bold text-lg text-slate-900 dark:text-white">
-                Connect<span className="bg-gradient-to-r from-indigo-500 to-fuchsia-500 bg-clip-text text-transparent">Rank</span>
+                Connect<span className="bg-gradient-to-r from-blue-600 to-sky-500 bg-clip-text text-transparent">Rank</span>
               </span>
-              <span className="text-[10px] font-semibold px-2 py-0.5 rounded-full bg-indigo-500/10 text-indigo-600 dark:text-indigo-400 border border-indigo-500/20">
+              <span className="text-[10px] font-semibold px-2 py-0.5 rounded-full bg-blue-500/10 text-blue-600 dark:text-blue-400 border border-blue-500/20">
                 Open Source
               </span>
             </div>
@@ -57,7 +57,7 @@ export const WatermarkFooter: React.FC<WatermarkFooterProps> = ({
               <li>
                 <button
                   onClick={onScrollToRecommender}
-                  className="hover:text-indigo-600 dark:hover:text-indigo-400 transition-colors cursor-pointer"
+                  className="hover:text-blue-600 dark:hover:text-blue-400 transition-colors cursor-pointer"
                 >
                   Interactive ConnectRank Hub
                 </button>
@@ -65,18 +65,18 @@ export const WatermarkFooter: React.FC<WatermarkFooterProps> = ({
               <li>
                 <button
                   onClick={onOpenUpload}
-                  className="hover:text-indigo-600 dark:hover:text-indigo-400 transition-colors cursor-pointer"
+                  className="hover:text-blue-600 dark:hover:text-blue-400 transition-colors cursor-pointer"
                 >
                   Upload Connections.csv
                 </button>
               </li>
               <li>
-                <a href="#features" className="hover:text-indigo-600 dark:hover:text-indigo-400 transition-colors">
+                <a href="#features" className="hover:text-blue-600 dark:hover:text-blue-400 transition-colors">
                   AI Capabilities Matrix
                 </a>
               </li>
               <li>
-                <a href="#how-it-works" className="hover:text-indigo-600 dark:hover:text-indigo-400 transition-colors">
+                <a href="#how-it-works" className="hover:text-blue-600 dark:hover:text-blue-400 transition-colors">
                   How It Works
                 </a>
               </li>
@@ -92,7 +92,7 @@ export const WatermarkFooter: React.FC<WatermarkFooterProps> = ({
               <li>
                 <button
                   onClick={onOpenTerms}
-                  className="hover:text-indigo-600 dark:hover:text-indigo-400 transition-colors cursor-pointer flex items-center gap-1"
+                  className="hover:text-blue-600 dark:hover:text-blue-400 transition-colors cursor-pointer flex items-center gap-1"
                 >
                   <ShieldCheck className="w-3.5 h-3.5 text-emerald-500" />
                   <span>GDPR Article 17 Policy &amp; Terms</span>

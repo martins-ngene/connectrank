@@ -46,13 +46,13 @@ export const FAQSection: React.FC = () => {
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12 items-start">
           {/* Left Column: Heading & Callout */}
           <div className="lg:col-span-4">
-            <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-indigo-500/10 text-indigo-600 dark:text-indigo-400 text-xs font-semibold mb-3 border border-indigo-500/20">
+            <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-blue-500/10 text-blue-600 dark:text-blue-400 text-xs font-semibold mb-3 border border-blue-500/20">
               <HelpCircle className="w-3.5 h-3.5" />
               <span>Questions &amp; Answers</span>
             </div>
             <h2 className="font-display font-extrabold text-2xl sm:text-4xl text-slate-900 dark:text-white tracking-tight">
               Frequently Asked{' '}
-              <span className="bg-gradient-to-r from-indigo-600 via-violet-600 to-fuchsia-600 dark:from-indigo-400 dark:via-purple-300 dark:to-pink-400 bg-clip-text text-transparent">
+              <span className="bg-gradient-to-r from-blue-600 via-blue-500 to-sky-500 dark:from-blue-400 dark:via-sky-300 dark:to-blue-200 bg-clip-text text-transparent">
                 Questions
               </span>
             </h2>
@@ -67,7 +67,7 @@ export const FAQSection: React.FC = () => {
               </div>
               <p>
                 Have questions about your data security? Read our detailed{' '}
-                <a href="#terms" className="text-indigo-600 dark:text-indigo-400 font-semibold underline">
+                <a href="#terms" className="text-blue-600 dark:text-blue-400 font-semibold underline">
                   Zero-Persistence Policy
                 </a>.
               </p>
@@ -83,7 +83,7 @@ export const FAQSection: React.FC = () => {
                   key={faq.q}
                   className={`rounded-2xl border transition-all glass-panel overflow-hidden ${
                     isOpen
-                      ? 'border-indigo-500/50 bg-white dark:bg-slate-900/90 shadow-sm'
+                      ? 'border-blue-500/50 bg-white dark:bg-slate-900/90 shadow-sm'
                       : 'border-slate-200 dark:border-slate-800/80 hover:border-slate-300 dark:hover:border-slate-700'
                   }`}
                 >
@@ -97,7 +97,7 @@ export const FAQSection: React.FC = () => {
                     </span>
                     <ChevronDown
                       className={`w-4 h-4 text-slate-400 transition-transform duration-200 shrink-0 ${
-                        isOpen ? 'rotate-180 text-indigo-500' : ''
+                        isOpen ? 'rotate-180 text-blue-500' : ''
                       }`}
                     />
                   </button>

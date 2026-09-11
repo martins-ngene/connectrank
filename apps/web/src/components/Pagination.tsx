@@ -57,7 +57,7 @@ export const Pagination: React.FC<PaginationProps> = ({
       <div className="text-xs text-slate-500 dark:text-slate-400 text-center sm:text-left">
         Showing <span className="font-semibold text-slate-800 dark:text-slate-200">{startItem}</span>–
         <span className="font-semibold text-slate-800 dark:text-slate-200">{endItem}</span> of{' '}
-        <span className="font-semibold text-indigo-600 dark:text-indigo-300">{totalItems}</span> connections
+        <span className="font-semibold text-blue-600 dark:text-blue-300">{totalItems}</span> connections
       </div>
 
       {/* Page navigation controls */}
@@ -105,7 +105,7 @@ export const Pagination: React.FC<PaginationProps> = ({
                 aria-label={`Page ${pageNumber}`}
                 className={`w-7 h-7 sm:w-8 sm:h-8 rounded-lg text-xs font-semibold transition-all cursor-pointer flex items-center justify-center ${
                   isActive
-                    ? 'bg-gradient-to-r from-indigo-600 to-violet-600 text-white shadow-md shadow-indigo-600/30 border border-indigo-500'
+                    ? 'bg-gradient-to-r from-blue-600 to-sky-600 text-white shadow-md shadow-blue-600/25 border border-blue-500'
                     : 'bg-white dark:bg-slate-900/80 border border-slate-200 dark:border-slate-800 text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-slate-200 hover:bg-slate-100 dark:hover:bg-slate-800/80'
                 }`}
               >

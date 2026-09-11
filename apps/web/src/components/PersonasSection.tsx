@@ -7,7 +7,7 @@ export const PersonasSection: React.FC = () => {
       title: 'Software Engineers & Architects',
       tag: 'Skip ATS Black Holes',
       icon: Code,
-      accent: 'border-indigo-500/30 text-indigo-500',
+      accent: 'border-blue-500/30 text-blue-500',
       description: 'Stop submitting resumes into opaque job portals. Connect directly with technical hiring managers and senior peers in your 1st-degree network to secure internal referrals.',
       points: [
         'Prioritize Founders, CTOs, and Engineering Leads',
@@ -19,7 +19,7 @@ export const PersonasSection: React.FC = () => {
       title: 'Freelancers & Tech Consultants',
       tag: 'Win High-Ticket Advisory Deals',
       icon: Briefcase,
-      accent: 'border-violet-500/30 text-violet-500',
+      accent: 'border-sky-500/30 text-sky-500',
       description: 'Re-activate dormant professional connections who hold budget-approving authority. Pitch targeted fractional bandwidth without full-time onboarding lag.',
       points: [
         'Consulting / Gig Offer cold message strategy',
@@ -43,7 +43,7 @@ export const PersonasSection: React.FC = () => {
       title: 'Startup Founders & Talent Leads',
       tag: 'Mine Warm 1st-Degree Talent',
       icon: Users,
-      accent: 'border-fuchsia-500/30 text-fuchsia-500',
+      accent: 'border-blue-500/30 text-blue-500',
       description: 'Avoid paying high monthly seat fees for commercial recruiter tools when your personal network already holds senior advisors, co-founders, and specialists.',
       points: [
         'Fine-grained seniority filters (0.4+ to 1.0 CTOs)',
@@ -57,12 +57,12 @@ export const PersonasSection: React.FC = () => {
     <section id="personas" className="py-16 sm:py-24 relative">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="text-center max-w-3xl mx-auto mb-12 sm:mb-16">
-          <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-indigo-500/10 text-indigo-600 dark:text-indigo-400 text-xs font-semibold mb-3 border border-indigo-500/20">
+          <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-blue-500/10 text-blue-600 dark:text-blue-400 text-xs font-semibold mb-3 border border-blue-500/20">
             <span>Tailored Use Cases</span>
           </div>
           <h2 className="font-display font-extrabold text-2xl sm:text-4xl text-slate-900 dark:text-white tracking-tight">
             Purpose-Driven Outreach for{' '}
-            <span className="bg-gradient-to-r from-indigo-600 via-violet-600 to-fuchsia-600 dark:from-indigo-400 dark:via-purple-300 dark:to-pink-400 bg-clip-text text-transparent">
+            <span className="bg-gradient-to-r from-blue-600 via-blue-500 to-sky-500 dark:from-blue-400 dark:via-sky-300 dark:to-blue-200 bg-clip-text text-transparent">
               Every Professional Path
             </span>
           </h2>
@@ -89,7 +89,7 @@ export const PersonasSection: React.FC = () => {
                         <h3 className="font-display font-bold text-base sm:text-lg text-slate-900 dark:text-white">
                           {p.title}
                         </h3>
-                        <span className="text-[11px] font-semibold text-indigo-600 dark:text-indigo-400">
+                        <span className="text-[11px] font-semibold text-blue-600 dark:text-blue-400">
                           {p.tag}
                         </span>
                       </div>

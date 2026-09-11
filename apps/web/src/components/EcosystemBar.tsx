@@ -24,9 +24,9 @@ export const EcosystemBar: React.FC = () => {
             return (
               <div
                 key={t.label}
-                className="flex flex-col items-center p-3 rounded-xl bg-white/60 dark:bg-slate-900/40 border border-slate-200/80 dark:border-slate-800/60 shadow-xs hover:border-indigo-500/40 transition-colors"
+                className="flex flex-col items-center p-3 rounded-xl bg-white/60 dark:bg-slate-900/40 border border-slate-200/80 dark:border-slate-800/60 shadow-xs hover:border-blue-500/40 transition-colors"
               >
-                <Icon className="w-5 h-5 text-indigo-600 dark:text-indigo-400 mb-1.5" />
+                <Icon className="w-5 h-5 text-blue-600 dark:text-blue-400 mb-1.5" />
                 <span className="text-xs font-semibold text-slate-800 dark:text-slate-200">{t.label}</span>
                 <span className="text-[10px] text-slate-500 dark:text-slate-400">{t.desc}</span>
               </div>

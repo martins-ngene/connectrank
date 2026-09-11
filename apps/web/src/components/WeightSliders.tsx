@@ -40,7 +40,7 @@ export const WeightSliders: React.FC<WeightSlidersProps> = ({
     <div className="w-full max-w-4xl mx-auto glass-panel p-4 sm:p-5 rounded-2xl border border-slate-200 dark:border-slate-800/80 mb-6 sm:mb-8">
       <div className="flex items-center justify-between pb-3 border-b border-slate-200 dark:border-slate-800 mb-4">
         <div className="flex items-center gap-2 text-xs sm:text-sm font-semibold text-slate-900 dark:text-white">
-          <Sliders className="w-4 h-4 text-indigo-600 dark:text-indigo-400 shrink-0" />
+          <Sliders className="w-4 h-4 text-blue-600 dark:text-blue-400 shrink-0" />
           <span>Ranking Formula &amp; Authority Tuner</span>
         </div>
         <button
@@ -57,7 +57,7 @@ export const WeightSliders: React.FC<WeightSlidersProps> = ({
         {/* Composite Ratio Slider */}
         <div>
           <div className="flex justify-between text-[11px] sm:text-xs mb-2">
-            <span className="flex items-center gap-1.5 text-indigo-700 dark:text-indigo-300 font-medium">
+            <span className="flex items-center gap-1.5 text-blue-700 dark:text-blue-300 font-medium">
               <Brain className="w-3.5 h-3.5" />
               Semantic Match: {semPercent}%
             </span>
@@ -76,10 +76,10 @@ export const WeightSliders: React.FC<WeightSlidersProps> = ({
             onValueChange={handleSliderChange}
           >
             <Slider.Track className="bg-slate-200 dark:bg-slate-800 relative grow rounded-full h-2 overflow-hidden">
-              <Slider.Range className="absolute bg-gradient-to-r from-indigo-500 via-purple-500 to-amber-500 h-full" />
+              <Slider.Range className="absolute bg-gradient-to-r from-blue-600 via-sky-500 to-amber-500 h-full" />
             </Slider.Track>
             <Slider.Thumb
-              className="block w-5 h-5 bg-white shadow-lg ring-2 ring-indigo-500 rounded-full hover:scale-110 focus:outline-none transition-transform"
+              className="block w-5 h-5 bg-white shadow-lg ring-2 ring-blue-500 rounded-full hover:scale-110 focus:outline-none transition-transform"
               aria-label="Composite ratio"
             />
           </Slider.Root>
@@ -105,7 +105,7 @@ export const WeightSliders: React.FC<WeightSlidersProps> = ({
                   onClick={() => onChangeMinAuthority(tier.val)}
                   className={`px-2 py-1.5 sm:px-2.5 sm:py-1 rounded-lg border text-center transition-all cursor-pointer text-xs ${
                     minAuthority === tier.val
-                      ? 'bg-indigo-600/15 dark:bg-indigo-600/30 text-indigo-700 dark:text-indigo-300 border-indigo-500/50 font-medium'
+                      ? 'bg-blue-600/15 dark:bg-blue-600/30 text-blue-700 dark:text-blue-300 border-blue-500/50 font-medium'
                       : 'bg-slate-100 dark:bg-slate-900/60 text-slate-600 dark:text-slate-400 border-slate-200 dark:border-slate-800 hover:text-slate-900 dark:hover:text-slate-300'
                   }`}
                 >
@@ -121,7 +121,7 @@ export const WeightSliders: React.FC<WeightSlidersProps> = ({
             <select
               value={topK}
               onChange={(e) => onChangeTopK(Number(e.target.value))}
-              className="w-full sm:w-auto bg-slate-100 dark:bg-slate-900 border border-slate-300 dark:border-slate-800 text-slate-800 dark:text-slate-200 text-xs rounded-lg px-2.5 py-1.5 outline-none focus:border-indigo-500 cursor-pointer"
+              className="w-full sm:w-auto bg-slate-100 dark:bg-slate-900 border border-slate-300 dark:border-slate-800 text-slate-800 dark:text-slate-200 text-xs rounded-lg px-2.5 py-1.5 outline-none focus:border-blue-500 cursor-pointer"
             >
               <option value={10}>Top 10</option>
               <option value={15}>Top 15</option>

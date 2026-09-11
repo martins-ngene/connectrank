@@ -69,8 +69,8 @@ html.dark .glass-card {
 
 html.dark .glass-card:hover {
   background: rgba(24, 33, 53, 0.88);
-  border-color: rgba(168, 85, 247, 0.4);
-  box-shadow: 0 10px 30px -10px rgba(168, 85, 247, 0.2);
+  border-color: rgba(59, 130, 246, 0.35);
+  box-shadow: 0 10px 30px -10px rgba(59, 130, 246, 0.15);
   transform: translateY(-2px);
 }
 
@@ -84,26 +84,22 @@ html:not(.dark) .glass-card {
 
 html:not(.dark) .glass-card:hover {
   background: #ffffff;
-  border-color: rgba(99, 102, 241, 0.4);
-  box-shadow: 0 10px 25px -5px rgba(99, 102, 241, 0.12);
+  border-color: rgba(59, 130, 246, 0.35);
+  box-shadow: 0 10px 25px -5px rgba(59, 130, 246, 0.1);
   transform: translateY(-2px);
 }
 
-.glow-purple {
-  box-shadow: 0 0 35px -5px rgba(168, 85, 247, 0.35);
-}
-
-.glow-indigo {
-  box-shadow: 0 0 25px -5px rgba(99, 102, 241, 0.3);
+.glow-blue {
+  box-shadow: 0 0 35px -5px rgba(59, 130, 246, 0.25);
 }
 
 /* Background Radial Glows */
 .hero-glow-dark {
-  background: radial-gradient(circle at 50% 10%, rgba(139, 92, 246, 0.18) 0%, rgba(168, 85, 247, 0.08) 35%, transparent 70%);
+  background: radial-gradient(circle at 50% 10%, rgba(37, 99, 235, 0.14) 0%, rgba(56, 189, 248, 0.06) 35%, transparent 70%);
 }
 
 .hero-glow-light {
-  background: radial-gradient(circle at 50% 10%, rgba(199, 210, 254, 0.45) 0%, rgba(224, 231, 255, 0.2) 35%, transparent 70%);
+  background: radial-gradient(circle at 50% 10%, rgba(219, 234, 254, 0.5) 0%, rgba(224, 242, 254, 0.25) 35%, transparent 70%);
 }
 
 /* Custom scrollbars */

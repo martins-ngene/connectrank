@@ -1,4 +1,4 @@
-name: Deploy API to Amazon ECS Express Mode
+name: Deploy API to AWS EC2 (t4g.small) via AWS Systems Manager
 
 on:
   push:
@@ -12,8 +12,6 @@ on:
 env:
   AWS_REGION: us-east-1
   ECR_REPOSITORY: connectrank-api
-  ECS_CLUSTER: default
-  ECS_SERVICE: connectrank-api
 
 jobs:
   test:
@@ -40,12 +38,17 @@ jobs:
           pytest tests -v
 
   deploy:
-    name: Build AMD64 Container & Deploy ECS
+    name: Build ARM64 Container & Deploy via SSM
     needs: test
     runs-on: ubuntu-latest
     steps:
       - name: Checkout Source Code
         uses: actions/checkout@v4
+
+      - name: Set up QEMU for ARM64 Emulation
+        uses: docker/setup-qemu-action@v3
+        with:
+          platforms: arm64
 
       - name: Set up Docker Buildx
         uses: docker/setup-buildx-action@v3
@@ -61,12 +64,12 @@ jobs:
         id: login-ecr
         uses: aws-actions/amazon-ecr-login@v2
 
-      - name: Build and Push Docker Image to ECR
+      - name: Build and Push ARM64 Docker Image to ECR
         uses: docker/build-push-action@v5
         with:
           context: apps/api
           file: apps/api/Dockerfile
-          platforms: linux/amd64
+          platforms: linux/arm64
           push: true
           tags: |
             ${{ steps.login-ecr.outputs.registry }}/${{ env.ECR_REPOSITORY }}:latest
@@ -74,66 +77,97 @@ jobs:
           cache-from: type=gha
           cache-to: type=gha,mode=max
 
-      - name: Trigger Rolling ECS Service Update
-        run: |
-          echo "Triggering zero-downtime deployment for ECS service: ${{ env.ECS_SERVICE }}..."
-          aws ecs update-service \
-            --cluster ${{ env.ECS_CLUSTER }} \
-            --service ${{ env.ECS_SERVICE }} \
-            --force-new-deployment
-
-      - name: Await ECS Express Mode Canary Rollout & Verify Health
+      - name: Deploy to EC2 via AWS Systems Manager (SSM)
+        if: env.AWS_REGION != ''
         run: |
           echo "=========================================================================="
-          echo "Monitoring Amazon ECS Express Mode Deployment..."
-          echo "Note: ECS Express Mode uses a Canary strategy with 3-minute bake times"
-          echo "(typical end-to-end steady state duration: 10-12 minutes)."
+          echo "Deploying ARM64 Container to EC2 t4g.small via AWS Systems Manager..."
           echo "=========================================================================="
 
-          CLUSTER="${{ env.ECS_CLUSTER }}"
-          SERVICE="${{ env.ECS_SERVICE }}"
-          TIMEOUT_SECONDS=1200  # 20-minute safety ceiling
-          INTERVAL=20
+          INSTANCE_ID="${{ secrets.EC2_INSTANCE_ID }}"
+          if [ -z "$INSTANCE_ID" ]; then
+            echo "⚠️ Warning: EC2_INSTANCE_ID secret not yet configured. Skipping remote host deploy."
+            echo "Image successfully built and pushed to ECR: ${{ steps.login-ecr.outputs.registry }}/${{ env.ECR_REPOSITORY }}:${{ github.sha }}"
+            exit 0
+          fi
+
+          REGISTRY="${{ steps.login-ecr.outputs.registry }}"
+          REPO="${{ env.ECR_REPOSITORY }}"
+          REGION="${{ env.AWS_REGION }}"
+
+          DEPLOY_SCRIPT=$(cat <<EOF
+          aws ecr get-login-password --region $REGION | docker login --username AWS --password-stdin $REGISTRY
+          docker pull $REGISTRY/$REPO:latest
+          docker stop connectrank-api || true
+          docker rm connectrank-api || true
+          docker run -d --name connectrank-api --restart always -p 8080:8080 \
+            -e ENVIRONMENT=production \
+            -e PORT=8080 \
+            -e CORS_ORIGINS=https://connectrank.flowkeit.com,https://connectrank.pages.dev,https://api.connectrank.flowkeit.com \
+            -e SENTRY_DSN="${{ secrets.SENTRY_DSN }}" \
+            -e SENTRY_TRACES_SAMPLE_RATE=0.1 \
+            $REGISTRY/$REPO:latest
+          sleep 5
+          curl -f http://localhost:8080/health || exit 1
+          EOF
+          )
+
+          echo "Dispatching AWS-RunShellScript via SSM to $INSTANCE_ID..."
+          COMMAND_ID=$(aws ssm send-command \
+            --instance-ids "$INSTANCE_ID" \
+            --document-name "AWS-RunShellScript" \
+            --comment "Deploy connectrank-api ${{ github.sha }}" \
+            --parameters "commands=[\"$(echo "$DEPLOY_SCRIPT" | sed ':a;N;$!ba;s/\n/\\n/g' | sed 's/"/\\"/g')\"]" \
+            --region "$REGION" \
+            --query "Command.CommandId" \
+            --output text)
+
+          echo "Dispatched SSM Command ID: $COMMAND_ID. Polling execution status..."
+
+          TIMEOUT=180
           ELAPSED=0
+          INTERVAL=5
 
-          while [ $ELAPSED -lt $TIMEOUT_SECONDS ]; do
-            # Extract deployment status using AWS CLI JMESPath query into tab-separated values
-            STATUS_LINE=$(aws ecs describe-services \
-              --cluster "$CLUSTER" \
-              --services "$SERVICE" \
-              --region "${{ env.AWS_REGION }}" \
-              --query "[services[0].deployments[0].rolloutState, length(services[0].deployments), services[0].deployments[0].desiredCount, services[0].deployments[0].runningCount, services[0].deployments[0].failedTasks]" \
+          while [ $ELAPSED -lt $TIMEOUT ]; do
+            STATUS=$(aws ssm list-command-invocations \
+              --command-id "$COMMAND_ID" \
+              --details \
+              --region "$REGION" \
+              --query "CommandInvocations[0].Status" \
               --output text)
 
-            read -r ROLLOUT NUM_DEPS DESIRED RUNNING FAILED <<< "$STATUS_LINE"
+            echo "[$ELAPSED s] SSM Invocation Status: $STATUS"
 
-            MINS=$((ELAPSED / 60))
-            SECS=$((ELAPSED % 60))
-            printf "[%02dm %02ds] RolloutState: %-11s | Active Deployments: %s | Tasks: %s/%s running | Failed: %s\n" \
-              "$MINS" "$SECS" "$ROLLOUT" "$NUM_DEPS" "$RUNNING" "$DESIRED" "$FAILED"
-
-            if [ "$ROLLOUT" = "FAILED" ] || [ "$FAILED" -gt 0 ]; then
-              echo "❌ Error: ECS deployment failed or encountered failing tasks."
-              exit 1
-            fi
-
-            if [ "$ROLLOUT" = "COMPLETED" ] && [ "$NUM_DEPS" -eq 1 ] && [ "$RUNNING" -ge "$DESIRED" ]; then
-              echo "✅ Amazon ECS Express Mode rollout completed successfully in ${MINS}m ${SECS}s!"
+            if [ "$STATUS" = "Success" ]; then
+              echo "✅ Remote Docker deployment succeeded on EC2 host!"
               break
+            elif [ "$STATUS" = "Failed" ] || [ "$STATUS" = "Cancelled" ] || [ "$STATUS" = "TimedOut" ]; then
+              echo "❌ Error: SSM command execution $STATUS."
+              aws ssm list-command-invocations \
+                --command-id "$COMMAND_ID" \
+                --details \
+                --region "$REGION" \
+                --query "CommandInvocations[0].CommandPlugins[0].Output" \
+                --output text
+              exit 1
             fi
 
             sleep $INTERVAL
             ELAPSED=$((ELAPSED + INTERVAL))
           done
 
-          if [ $ELAPSED -ge $TIMEOUT_SECONDS ]; then
-            echo "❌ Error: Deployment monitoring exceeded 20-minute timeout ceiling."
+          if [ $ELAPSED -ge $TIMEOUT ]; then
+            echo "❌ Error: Deployment timed out waiting for SSM execution."
             exit 1
           fi
 
           echo "--------------------------------------------------------------------------"
-          echo "Verifying live public endpoint health..."
-          HEALTH_URL="https://co-1d40322c1542487a832269d7bbadb532.ecs.us-east-1.on.aws/health"
-          curl --fail --retry 5 --retry-delay 5 -s "$HEALTH_URL"
-          echo ""
-          echo "🎉 Live API verified healthy and operational!"
+          echo "Verifying live Cloudflare Tunnel endpoint health..."
+          HEALTH_URL="https://api.connectrank.flowkeit.com/health"
+          if curl --fail --retry 3 --retry-delay 5 -s "$HEALTH_URL"; then
+            echo ""
+            echo "🎉 Live API verified healthy via Cloudflare Tunnel: $HEALTH_URL"
+          else
+            echo "⚠️ Public health check returned non-200. Ensure Cloudflare Tunnel routing is active."
+          fi
+

@@ -87,3 +87,6 @@ docker-compose.override.yml
 
 # Personal / Career Documents
 RESUME.md
+
+# Architecture & Incident Plans
+INCIDENT_REPORT_COST_PIVOT_PLAN.md

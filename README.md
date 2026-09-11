@@ -15,7 +15,8 @@
 [![Turborepo](https://img.shields.io/badge/Turborepo-2.x-EF4444.svg?style=flat-square&logo=turborepo&logoColor=white)](https://turbo.build)
 [![pnpm](https://img.shields.io/badge/pnpm-10.x_Workspaces-F69220.svg?style=flat-square&logo=pnpm&logoColor=white)](https://pnpm.io)
 [![Cloudflare](https://img.shields.io/badge/Frontend-Cloudflare_Pages-F38020.svg?style=flat-square&logo=cloudflare&logoColor=white)](https://pages.cloudflare.com)
-[![AWS](https://img.shields.io/badge/Backend-AWS_App_Runner-FF9900.svg?style=flat-square&logo=amazon-aws&logoColor=white)](https://aws.amazon.com/apprunner/)
+[![AWS](https://img.shields.io/badge/Backend-AWS_EC2_t4g.small-FF9900.svg?style=flat-square&logo=amazon-aws&logoColor=white)](https://aws.amazon.com/ec2/)
+[![Ingress](https://img.shields.io/badge/Ingress-Cloudflare_Tunnel-F38020.svg?style=flat-square&logo=cloudflare&logoColor=white)](https://developers.cloudflare.com/cloudflare-one/connections/connect-networks/)
 [![Budget](https://img.shields.io/badge/Budget-$100_in_6_Months-10B981.svg?style=flat-square)](docs/DEPLOYMENT.md)
 
 [![Privacy](https://img.shields.io/badge/GDPR-Zero--Persistence_RAM-10B981.svg?style=flat-square)](docs/ARCHITECTURE.md)
@@ -156,15 +157,17 @@ ConnectRank is architected as a modern polyglot monorepo, pairing state-of-the-a
 [![Docker Compose](https://img.shields.io/badge/Docker_Compose-Multi--Container-2496ED.svg?style=flat-square&logo=docker&logoColor=white)](https://docs.docker.com/compose/)
 [![Nginx](https://img.shields.io/badge/Nginx-Alpine_Proxy-009639.svg?style=flat-square&logo=nginx&logoColor=white)](https://nginx.org)
 [![Cloudflare Pages](https://img.shields.io/badge/Cloudflare-Pages-F38020.svg?style=flat-square&logo=cloudflare&logoColor=white)](https://pages.cloudflare.com)
-[![AWS App Runner](https://img.shields.io/badge/AWS-App_Runner-FF9900.svg?style=flat-square&logo=amazon-aws&logoColor=white)](https://aws.amazon.com/apprunner/)
+[![AWS EC2](https://img.shields.io/badge/AWS-EC2_t4g.small-FF9900.svg?style=flat-square&logo=amazon-aws&logoColor=white)](https://aws.amazon.com/ec2/)
+[![Cloudflare Tunnel](https://img.shields.io/badge/Cloudflare-Tunnel-F38020.svg?style=flat-square&logo=cloudflare&logoColor=white)](https://developers.cloudflare.com/cloudflare-one/connections/connect-networks/)
 
 | Technology | Deployment Tier | Purpose |
 | :--- | :--- | :--- |
-| **[Docker](https://www.docker.com)** | Container Runtime | Multi-stage Dockerfiles for optimized production images |
+| **[Docker](https://www.docker.com)** | Container Runtime | Multi-stage Dockerfiles for optimized ARM64 production images |
 | **[Docker Compose](https://docs.docker.com/compose/)** | Local Orchestration | Single-command cluster provisioning (`connectrank-api` + `connectrank-web`) |
 | **[Nginx](https://nginx.org)** | Container Web Server | Lightweight Alpine container hosting Vite SPA assets for containerized runs |
 | **[Cloudflare Pages](https://pages.cloudflare.com)** | Production Frontend CDN | Zero-cost edge hosting ($0 egress, unlimited bandwidth, global SSL) |
-| **[AWS App Runner](https://aws.amazon.com/apprunner/)** | Production Backend Hosting | Fully managed serverless container runtime (1 vCPU / 2GB RAM, ~$11/mo) |
+| **[AWS EC2 (t4g.small)](https://aws.amazon.com/ec2/)** | Production Backend Host | Cost-engineered Graviton2 ARM64 compute (2 vCPU / 2GB RAM, ~$12/mo) |
+| **[Cloudflare Tunnel](https://developers.cloudflare.com/cloudflare-one/connections/connect-networks/)** | Zero-Trust Edge Ingress | Free edge SSL & DDoS protection with zero open inbound ports |
 
 ---
 

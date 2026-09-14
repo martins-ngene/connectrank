@@ -1,67 +1,64 @@
 import React from 'react';
-import { Brain, Crown, Globe, MessageSquare, ShieldCheck, Cpu } from 'lucide-react';
+import { Search, Crown, Globe, MessageSquare, ShieldCheck, Code } from 'lucide-react';
 
 export const FeatureGrid: React.FC = () => {
   const features = [
     {
-      icon: Brain,
-      title: 'Dense Vector Semantic Search',
+      icon: Search,
+      title: 'Semantic Skill Matching',
       badge: 'MiniLM-L6-v2',
       description:
-        'Encodes roles and pitches into 384-dimensional dense embeddings to surface relevant domain experts regardless of keyword variances.',
+        'Understands technical roles and domains, surfacing relevant connections even when their exact title phrasing varies.',
     },
     {
       icon: Crown,
-      title: 'Hiring Authority Heuristic Scoring',
-      badge: '0.0 – 1.0 Multiplier',
+      title: 'Decision-Maker Priority',
+      badge: '0.1 – 1.0 Multiplier',
       description:
-        'Dynamically boosts technical decision-makers (CTOs, Founders, VPs, Leads) over generic connections to maximize response rates.',
+        'Surfaces founders, CTOs, and engineering leads who have direct hiring authority, boosting response rates.',
     },
     {
       icon: Globe,
-      title: '3-Tier Remote & Global Classifier',
+      title: 'Remote-First Filter',
       badge: '70+ Verified Companies',
       description:
-        'Heuristic engine cross-references employers with verified remote-first registries and distributed role tokens across unstructured titles.',
+        'Instantly filter your network for connections at verified distributed and remote-first organizations.',
     },
     {
       icon: MessageSquare,
-      title: 'Personalized Cold DM Strategies',
-      badge: '3 Tailored Frameworks',
+      title: 'Personalized Outreach Drafts',
+      badge: '3 Frameworks',
       description:
-        'Instant customizable drafts: High-impact decision-maker pitches, casual peer referral inquiries, and fractional consulting bandwidth offers.',
+        'Pre-built, customizable outreach templates tailored for decision-makers, peer referrals, and consulting proposals.',
     },
     {
       icon: ShieldCheck,
-      title: 'GDPR Zero-Persistence RAM Invariant',
-      badge: '0 Disk Writes',
+      title: 'Zero-Persistence Privacy',
+      badge: 'RAM Only',
       description:
-        'Your network data exists purely in volatile server RAM. No user accounts, zero database persistence, and immediate Right-to-Erasure purging.',
+        'Your connection data lives strictly in temporary session memory. Nothing is ever written to a database or disk.',
     },
     {
-      icon: Cpu,
-      title: '100% Open Source & Self-Hostable',
-      badge: 'MIT Licensed',
+      icon: Code,
+      title: 'Open Source & Transparent',
+      badge: 'MIT License',
       description:
-        'Full transparency with no closed proprietary models or external cloud API keys. Run locally on your laptop or deploy via Docker.',
+        'Fully open source with no third-party tracking, ads, or hidden data sales. Inspect the code or run it locally.',
     },
   ];
 
   return (
-    <section id="features" className="py-16 sm:py-24 relative">
+    <section id="features" className="py-16 sm:py-20 relative">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="text-center max-w-3xl mx-auto mb-12 sm:mb-16">
-          <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-blue-500/10 text-blue-600 dark:text-blue-400 text-xs font-semibold mb-3 border border-blue-500/20">
-            <span>Engineered Capabilities</span>
-          </div>
+        <div className="text-center max-w-2xl mx-auto mb-12 sm:mb-14">
           <h2 className="font-display font-extrabold text-2xl sm:text-4xl text-slate-900 dark:text-white tracking-tight">
-            AI-Powered Solutions for{' '}
-            <span className="bg-gradient-to-r from-blue-600 via-blue-500 to-sky-500 dark:from-blue-400 dark:via-sky-300 dark:to-blue-200 bg-clip-text text-transparent">
-              High-Yield Network Outreach
+            Key{' '}
+            <span className="bg-gradient-to-r from-blue-600 to-sky-500 dark:from-blue-400 dark:to-sky-300 bg-clip-text text-transparent">
+              Capabilities
             </span>
           </h2>
           <p className="mt-3 text-slate-600 dark:text-slate-400 text-sm sm:text-base leading-relaxed">
-            Eliminate hours of manual spreadsheet auditing. Discover the highest-leverage opportunities hiding in your 1st-degree connections.
+            Everything you need to turn raw connections into warm conversations.
           </p>
         </div>
 
@@ -71,11 +68,11 @@ export const FeatureGrid: React.FC = () => {
             return (
               <div
                 key={feat.title}
-                className="glass-card p-6 rounded-2xl relative overflow-hidden flex flex-col justify-between border border-slate-200 dark:border-slate-800/80 group"
+                className="glass-card p-6 rounded-2xl relative overflow-hidden flex flex-col justify-between border border-slate-200 dark:border-slate-800/80 group hover:border-blue-500/40 hover:-translate-y-0.5 transition-all duration-200"
               >
                 <div>
                   <div className="flex items-center justify-between mb-4">
-                    <div className="w-10 h-10 rounded-xl bg-gradient-to-br from-blue-500/15 to-sky-500/15 text-blue-600 dark:text-blue-400 flex items-center justify-center border border-blue-500/20 group-hover:scale-110 transition-transform">
+                    <div className="w-10 h-10 rounded-xl bg-blue-500/10 text-blue-600 dark:text-blue-400 flex items-center justify-center border border-blue-500/20">
                       <Icon className="w-5 h-5" />
                     </div>
                     <span className="text-[11px] font-semibold px-2 py-0.5 rounded-full bg-slate-100 dark:bg-slate-800/80 text-slate-600 dark:text-slate-400 border border-slate-200 dark:border-slate-700/60">
@@ -83,7 +80,7 @@ export const FeatureGrid: React.FC = () => {
                     </span>
                   </div>
 
-                  <h3 className="font-display font-bold text-base sm:text-lg text-slate-900 dark:text-white mb-2 group-hover:text-blue-600 dark:group-hover:text-blue-300 transition-colors">
+                  <h3 className="font-display font-bold text-base text-slate-900 dark:text-white mb-2">
                     {feat.title}
                   </h3>
                   <p className="text-xs sm:text-sm text-slate-600 dark:text-slate-400 leading-relaxed font-normal">

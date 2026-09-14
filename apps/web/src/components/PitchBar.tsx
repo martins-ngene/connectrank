@@ -8,11 +8,9 @@ interface PitchBarProps {
 }
 
 const PRESET_PITCHES = [
-  'Senior Backend Engineer Python AWS',
-  'Founding Engineer Distributed Systems',
+  'Senior Backend Engineer (Python / AWS)',
   'Technical Recruiter / Talent Lead',
-  'Staff Platform Architect Kubernetes',
-  'VP of Engineering & Head of Tech',
+  'CEO / Founder',
 ];
 
 export const PitchBar: React.FC<PitchBarProps> = ({
@@ -35,42 +33,42 @@ export const PitchBar: React.FC<PitchBarProps> = ({
   };
 
   return (
-    <div className="w-full max-w-4xl mx-auto">
+    <div className="w-full">
       <form onSubmit={handleSubmit} className="relative">
         <div className="relative flex items-center">
-          <div className="absolute left-3.5 sm:left-4 text-slate-400 pointer-events-none">
-            <Search className="w-4 h-4 sm:w-5 sm:h-5 text-blue-500 dark:text-blue-400" />
+          <div className="absolute left-2.5 text-slate-400 pointer-events-none">
+            <Search className="w-3.5 h-3.5 text-blue-500 dark:text-blue-400" />
           </div>
 
           <input
             type="text"
             value={pitch}
             onChange={(e) => setPitch(e.target.value)}
-            placeholder="Describe your ideal role or pitch (e.g. 'Senior Backend Engineer')..."
-            className="w-full pl-10 sm:pl-12 pr-22 sm:pr-28 py-3.5 sm:py-4 bg-white/90 dark:bg-slate-900/90 border border-slate-300 dark:border-slate-700/70 focus:border-blue-500 focus:ring-2 focus:ring-blue-500/20 rounded-2xl text-slate-900 dark:text-white placeholder-slate-400 dark:placeholder-slate-500 text-sm sm:text-base shadow-xl backdrop-blur-md outline-none transition-all"
+            placeholder="Search role or skills (e.g. 'Backend Engineer')..."
+            className="w-full pl-8 pr-16 py-1.5 sm:py-2 bg-white/90 dark:bg-slate-900/90 border border-slate-300 dark:border-slate-700/70 focus:border-blue-500 focus:ring-1 focus:ring-blue-500/20 rounded-lg text-slate-900 dark:text-white placeholder-slate-400 dark:placeholder-slate-500 text-xs shadow-sm backdrop-blur-md outline-none transition-all"
           />
 
           {pitch && (
             <button
               type="button"
               onClick={() => setPitch('')}
-              className="absolute right-20 sm:right-24 text-slate-400 hover:text-slate-600 dark:hover:text-slate-200 p-1.5 rounded-full"
+              className="absolute right-14 text-slate-400 hover:text-slate-600 dark:hover:text-slate-200 p-0.5 rounded-full cursor-pointer"
               aria-label="Clear pitch"
             >
-              <X className="w-3.5 h-3.5 sm:w-4 sm:h-4" />
+              <X className="w-3 h-3" />
             </button>
           )}
 
           <button
             type="submit"
             disabled={isLoading || !pitch.trim()}
-            className="absolute right-1.5 sm:right-2.5 px-3 sm:px-5 py-2 sm:py-2.5 bg-gradient-to-r from-blue-600 to-sky-600 hover:from-blue-500 hover:to-sky-500 disabled:opacity-50 text-white font-medium rounded-xl text-xs sm:text-sm transition-all shadow-md shadow-blue-600/25 active:scale-95 flex items-center gap-1 sm:gap-1.5 cursor-pointer"
+            className="absolute right-1 px-2.5 py-1 bg-gradient-to-r from-blue-600 to-sky-600 hover:from-blue-500 hover:to-sky-500 disabled:opacity-50 text-white font-medium rounded-md text-[11px] transition-all shadow-sm active:scale-95 flex items-center gap-1 cursor-pointer"
           >
             {isLoading ? (
-              <div className="w-3.5 h-3.5 sm:w-4 sm:h-4 border-2 border-white/30 border-t-white rounded-full animate-spin" />
+              <div className="w-3 h-3 border-2 border-white/30 border-t-white rounded-full animate-spin" />
             ) : (
               <>
-                <Sparkles className="w-3.5 h-3.5 sm:w-4 sm:h-4" />
+                <Sparkles className="w-3 h-3" />
                 <span>Search</span>
               </>
             )}
@@ -79,13 +77,13 @@ export const PitchBar: React.FC<PitchBarProps> = ({
       </form>
 
       {/* Preset Chips */}
-      <div className="mt-3 flex items-center gap-1.5 sm:gap-2 overflow-x-auto pb-1 sm:flex-wrap text-xs">
-        <span className="text-slate-500 dark:text-slate-400 font-medium shrink-0">Quick Pitches:</span>
+      <div className="mt-1.5 flex flex-wrap items-center gap-1 text-[10px]">
+        <span className="text-[10px] text-slate-500 dark:text-slate-400 font-medium shrink-0">Quick:</span>
         {PRESET_PITCHES.map((preset) => (
           <button
             key={preset}
             onClick={() => handleSelectPreset(preset)}
-            className="shrink-0 whitespace-nowrap px-2.5 py-1 rounded-full bg-slate-100 hover:bg-blue-50 dark:bg-slate-800/80 dark:hover:bg-blue-950/60 text-slate-700 dark:text-slate-300 hover:text-blue-600 dark:hover:text-blue-300 border border-slate-200 dark:border-slate-700/60 hover:border-blue-500/30 transition-all cursor-pointer"
+            className="whitespace-nowrap px-1.5 py-0.5 rounded bg-slate-100 hover:bg-blue-50 dark:bg-slate-800/80 dark:hover:bg-blue-950/60 text-slate-700 dark:text-slate-300 hover:text-blue-600 dark:hover:text-blue-300 border border-slate-200 dark:border-slate-700/60 hover:border-blue-500/30 transition-all text-[10px] cursor-pointer"
           >
             {preset}
           </button>

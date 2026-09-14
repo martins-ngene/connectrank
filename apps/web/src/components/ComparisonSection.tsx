@@ -7,12 +7,9 @@ interface ComparisonSectionProps {
 
 export const ComparisonSection: React.FC<ComparisonSectionProps> = ({ onScrollToRecommender }) => {
   return (
-    <section className="py-16 sm:py-24 border-t border-slate-200/80 dark:border-slate-800/80 bg-slate-50/40 dark:bg-slate-900/30 relative">
+    <section id="pricing" className="py-16 sm:py-24 border-t border-slate-200/80 dark:border-slate-800/80 bg-slate-50/40 dark:bg-slate-900/30 relative">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="text-center max-w-3xl mx-auto mb-12 sm:mb-16">
-          <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-blue-500/10 text-blue-600 dark:text-blue-400 text-xs font-semibold mb-3 border border-blue-500/20">
-            <span>Simple, Honest Model</span>
-          </div>
+        <div className="text-center max-w-2xl mx-auto mb-12 sm:mb-14">
           <h2 className="font-display font-extrabold text-2xl sm:text-4xl text-slate-900 dark:text-white tracking-tight">
             Transparent Pricing{' '}
             <span className="bg-gradient-to-r from-blue-600 via-blue-500 to-sky-500 dark:from-blue-400 dark:via-sky-300 dark:to-blue-200 bg-clip-text text-transparent">
@@ -20,7 +17,7 @@ export const ComparisonSection: React.FC<ComparisonSectionProps> = ({ onScrollTo
             </span>
           </h2>
           <p className="mt-3 text-slate-600 dark:text-slate-400 text-sm sm:text-base leading-relaxed">
-            Unlike commercial sales CRMs that charge hundreds of dollars per seat while harvesting your connections, ConnectRank provides a 100% free local engine with an optional pro cloud tier coming soon.
+            ConnectRank is 100% free and open source. A cloud-hosted Pro tier is planned for teams and advanced workflows.
           </p>
         </div>
 

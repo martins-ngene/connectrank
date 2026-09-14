@@ -29,7 +29,7 @@ export const Header: React.FC<HeaderProps> = ({
   const closeMenu = () => setIsMobileMenuOpen(false);
 
   return (
-    <header className="sticky top-0 z-40 w-full max-w-full overflow-x-clip glass-panel border-b border-slate-200/80 dark:border-slate-800/80 bg-white/80 dark:bg-slate-950/80 backdrop-blur-md transition-colors">
+    <header className="sticky top-0 z-50 w-full max-w-full overflow-x-clip glass-panel border-b border-slate-200/80 dark:border-slate-800/80 bg-white/80 dark:bg-slate-950/80 backdrop-blur-md transition-colors">
       <div className="max-w-7xl mx-auto px-2.5 sm:px-6 lg:px-8 h-16 flex items-center justify-between gap-1.5 sm:gap-2">
         {/* Brand */}
         <a href="#" className="flex items-center gap-2 sm:gap-3 shrink-0 group">
@@ -45,24 +45,23 @@ export const Header: React.FC<HeaderProps> = ({
                 v1.0
               </span>
             </div>
-            <p className="text-[11px] text-slate-500 dark:text-slate-400 hidden xl:block">AI Semantic Search &amp; Authority Ranker</p>
           </div>
         </a>
 
         {/* Center: Desktop Navigation Links */}
         <nav className="hidden lg:flex items-center gap-6 text-xs font-medium text-slate-600 dark:text-slate-300">
-          <a href="#features" className="hover:text-blue-600 dark:hover:text-blue-400 transition-colors">
-            Features
+          <a href="#recommender" className="hover:text-blue-600 dark:hover:text-blue-400 transition-colors flex items-center gap-1 font-semibold text-blue-600 dark:text-blue-400">
+            <span>Workspace</span>
+            <span className="w-1.5 h-1.5 rounded-full bg-emerald-500 animate-pulse" />
           </a>
           <a href="#how-it-works" className="hover:text-blue-600 dark:hover:text-blue-400 transition-colors">
             How It Works
           </a>
-          <a href="#recommender" className="hover:text-blue-600 dark:hover:text-blue-400 transition-colors flex items-center gap-1">
-            <span>ConnectRank</span>
-            <span className="w-1.5 h-1.5 rounded-full bg-emerald-500 animate-pulse" />
+          <a href="#features" className="hover:text-blue-600 dark:hover:text-blue-400 transition-colors">
+            Features
           </a>
-          <a href="#personas" className="hover:text-blue-600 dark:hover:text-blue-400 transition-colors">
-            Use Cases
+          <a href="#pricing" className="hover:text-blue-600 dark:hover:text-blue-400 transition-colors">
+            Pricing
           </a>
           <a href="#faq" className="hover:text-blue-600 dark:hover:text-blue-400 transition-colors">
             FAQ
@@ -177,12 +176,15 @@ export const Header: React.FC<HeaderProps> = ({
 
           <div className="flex flex-col space-y-1 text-sm font-medium text-slate-700 dark:text-slate-200">
             <a
-              href="#features"
+              href="#recommender"
               onClick={closeMenu}
-              className="px-3 py-2 rounded-lg hover:bg-slate-100 dark:hover:bg-slate-900 transition-colors flex items-center justify-between"
+              className="px-3 py-2 rounded-lg bg-blue-500/10 text-blue-600 dark:text-blue-400 font-semibold hover:bg-blue-500/15 transition-colors flex items-center justify-between"
             >
-              <span>Features</span>
-              <span className="text-xs text-slate-400">&rarr;</span>
+              <div className="flex items-center gap-2">
+                <span>Workspace</span>
+                <span className="w-1.5 h-1.5 rounded-full bg-emerald-500 animate-pulse" />
+              </div>
+              <span className="text-xs text-blue-400">Live</span>
             </a>
             <a
               href="#how-it-works"
@@ -193,22 +195,19 @@ export const Header: React.FC<HeaderProps> = ({
               <span className="text-xs text-slate-400">&rarr;</span>
             </a>
             <a
-              href="#recommender"
-              onClick={closeMenu}
-              className="px-3 py-2 rounded-lg bg-blue-500/10 text-blue-600 dark:text-blue-400 font-semibold hover:bg-blue-500/15 transition-colors flex items-center justify-between"
-            >
-              <div className="flex items-center gap-2">
-                <span>ConnectRank Recommender</span>
-                <span className="w-1.5 h-1.5 rounded-full bg-emerald-500 animate-pulse" />
-              </div>
-              <span className="text-xs text-blue-400">Live</span>
-            </a>
-            <a
-              href="#personas"
+              href="#features"
               onClick={closeMenu}
               className="px-3 py-2 rounded-lg hover:bg-slate-100 dark:hover:bg-slate-900 transition-colors flex items-center justify-between"
             >
-              <span>Use Cases &amp; Personas</span>
+              <span>Features</span>
+              <span className="text-xs text-slate-400">&rarr;</span>
+            </a>
+            <a
+              href="#pricing"
+              onClick={closeMenu}
+              className="px-3 py-2 rounded-lg hover:bg-slate-100 dark:hover:bg-slate-900 transition-colors flex items-center justify-between"
+            >
+              <span>Pricing</span>
               <span className="text-xs text-slate-400">&rarr;</span>
             </a>
             <a

@@ -9,10 +9,8 @@ import { CSVUploadModal } from './components/CSVUploadModal';
 import { TermsModal } from './components/TermsModal';
 import { StatBanner } from './components/StatBanner';
 import { HeroSection } from './components/HeroSection';
-import { EcosystemBar } from './components/EcosystemBar';
 import { FeatureGrid } from './components/FeatureGrid';
 import { HowItWorks } from './components/HowItWorks';
-import { PersonasSection } from './components/PersonasSection';
 import { ComparisonSection } from './components/ComparisonSection';
 import { FAQSection } from './components/FAQSection';
 import { WatermarkFooter } from './components/WatermarkFooter';
@@ -22,7 +20,7 @@ import { fetchHealth, fetchRecommendations, purgeSessionData } from './services/
 import { Sparkles, AlertCircle, RefreshCw, ShieldCheck, Upload } from 'lucide-react';
 import * as Sentry from '@sentry/react';
 
-const PAGE_SIZE = 15;
+const PAGE_SIZE = 6;
 
 export function App() {
   const { theme, toggleTheme, isDark } = useTheme();
@@ -184,7 +182,7 @@ export function App() {
   };
 
   return (
-    <div className="min-h-screen w-full max-w-full overflow-x-hidden bg-slate-50 dark:bg-slate-950 text-slate-900 dark:text-slate-100 flex flex-col selection:bg-blue-500 selection:text-white transition-colors duration-200">
+    <div className="min-h-screen w-full max-w-full overflow-x-clip bg-slate-50 dark:bg-slate-950 text-slate-900 dark:text-slate-100 flex flex-col selection:bg-blue-500 selection:text-white transition-colors duration-200">
       {/* Background Ambient Glows */}
       <div className="fixed inset-0 pointer-events-none hero-glow-light dark:hero-glow-dark -z-10" />
 
@@ -214,25 +212,19 @@ export function App() {
         onScrollToRecommender={scrollToRecommender}
       />
 
-      {/* Real Open-Source Tech Ecosystem Bar */}
-      <EcosystemBar />
-
-      {/* Interactive Recommender Hub */}
+      {/* Interactive Recommender Hub: 100vh Split 2-Column Workspace */}
       <section
         id="recommender"
-        className="scroll-mt-20 max-w-7xl mx-auto px-3 sm:px-6 lg:px-8 py-8 sm:py-12 w-full"
+        className="scroll-mt-16 max-w-7xl mx-auto px-3 sm:px-6 lg:px-8 py-4 sm:py-6 w-full lg:h-[calc(100dvh-4rem)] lg:min-h-[720px] flex flex-col justify-between"
       >
-        <div className="flex flex-col sm:flex-row sm:items-end justify-between gap-4 mb-6 pb-4 border-b border-slate-200/80 dark:border-slate-800/80">
+        {/* Top Header */}
+        <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 mb-3 pb-3 border-b border-slate-200/80 dark:border-slate-800/80 shrink-0">
           <div>
-            <div className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full bg-blue-500/10 text-blue-600 dark:text-blue-400 text-[11px] font-semibold mb-2 border border-blue-500/20">
-              <Sparkles className="w-3.5 h-3.5" />
-              <span>Interactive ConnectRank Hub</span>
-            </div>
             <h2 className="font-display font-bold text-xl sm:text-2xl text-slate-900 dark:text-white tracking-tight">
-              Personalized Candidate Ranking Engine
+              Candidate Search &amp; Ranking
             </h2>
-            <p className="text-xs sm:text-sm text-slate-600 dark:text-slate-400 mt-1">
-              Search your network by target skills or job description. Our RAM engine calculates dense semantic cosine similarity alongside position seniority.
+            <p className="text-xs text-slate-600 dark:text-slate-400 mt-0.5">
+              Search target roles or skills. Profiles are scored by semantic match and hiring authority in session RAM.
             </p>
           </div>
           <div className="flex items-center gap-2">
@@ -246,164 +238,173 @@ export function App() {
           </div>
         </div>
 
-        {/* Pitch Search Bar */}
-        <div className="mb-6">
-          <PitchBar
-            onSearch={(p) => {
-              setPitch(p);
-              executeSearch(p);
-            }}
-            isLoading={isLoading}
-            initialValue={pitch}
-          />
-        </div>
-
-        {/* Analytics Banner */}
-        <StatBanner
-          candidates={candidates}
-          totalIndexed={totalIndexed}
-          sessionId={sessionId}
-          secondsRemaining={secondsRemaining}
-        />
-
-        {/* Weighting & Filter Controls */}
-        <WeightSliders
-          semanticWeight={semanticWeight}
-          authorityWeight={authorityWeight}
-          topK={topK}
-          minAuthority={minAuthority}
-          remoteOnly={remoteOnly}
-          onChangeWeights={(sem, auth) => {
-            setSemanticWeight(sem);
-            setAuthorityWeight(auth);
-          }}
-          onChangeTopK={setTopK}
-          onChangeMinAuthority={setMinAuthority}
-          onChangeRemoteOnly={handleToggleRemoteOnly}
-          onReset={handleResetWeights}
-        />
-
-        {/* Results Grid Header */}
-        <div id="results-section" className="flex flex-col sm:flex-row sm:items-center justify-between gap-2.5 mb-4 scroll-mt-6">
-          <div className="flex items-center gap-2 flex-wrap">
-            <h3 className="font-display font-bold text-base sm:text-lg text-slate-900 dark:text-white">
-              Recommended Connections
-            </h3>
-            <span className="text-xs px-2 py-0.5 rounded-full bg-slate-200 dark:bg-slate-800 text-slate-700 dark:text-slate-300 font-medium">
-              {candidates.length} {candidates.length === 1 ? 'match' : 'matches'}
-            </span>
-            {Math.ceil(candidates.length / PAGE_SIZE) > 1 && (
-              <span className="text-xs px-2.5 py-0.5 rounded-full bg-blue-500/10 text-blue-700 dark:text-blue-300 border border-blue-500/20 font-medium">
-                Page {currentPage} of {Math.ceil(candidates.length / PAGE_SIZE)}
-              </span>
-            )}
-          </div>
-
-          <button
-            onClick={() => executeSearch(pitch)}
-            disabled={isLoading}
-            className="self-start sm:self-auto flex items-center gap-1.5 text-xs text-slate-500 dark:text-slate-400 hover:text-blue-600 dark:hover:text-blue-300 transition-colors cursor-pointer"
-          >
-            <RefreshCw className={`w-3.5 h-3.5 ${isLoading ? 'animate-spin' : ''}`} />
-            <span>Refresh Ranking</span>
-          </button>
-        </div>
-
-        {/* Error Alert */}
-        {error && (
-          <div className="p-4 rounded-xl bg-rose-500/10 border border-rose-500/20 text-rose-600 dark:text-rose-300 text-xs flex items-center gap-2.5 mb-6">
-            <AlertCircle className="w-4 h-4 shrink-0 text-rose-500" />
-            <span>{error}</span>
-          </div>
-        )}
-
-        {/* Loading Skeleton */}
-        {isLoading && candidates.length === 0 && (
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
-            {[1, 2, 3, 4, 5, 6].map((n) => (
-              <div key={n} className="glass-card rounded-2xl p-5 animate-pulse h-48 bg-slate-200/50 dark:bg-slate-900/40" />
-            ))}
-          </div>
-        )}
-
-        {/* Candidate Cards Grid */}
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
-          {candidates
-            .slice((currentPage - 1) * PAGE_SIZE, currentPage * PAGE_SIZE)
-            .map((candidate, idx) => {
-              const globalRank = (currentPage - 1) * PAGE_SIZE + idx + 1;
-              return (
-                <CandidateCard
-                  key={`${candidate.name}-${globalRank}`}
-                  candidate={candidate}
-                  rank={globalRank}
-                  onDraftDM={(c) => setSelectedCandidateForDM(c)}
-                />
-              );
-            })}
-        </div>
-
-        {/* Pagination Bar */}
-        {candidates.length > PAGE_SIZE && (
-          <div className="mt-8">
-            <Pagination
-              currentPage={currentPage}
-              totalPages={Math.ceil(candidates.length / PAGE_SIZE)}
-              totalItems={candidates.length}
-              pageSize={PAGE_SIZE}
-              onPageChange={(page) => {
-                setCurrentPage(page);
-                const el = document.getElementById('results-section');
-                if (el) {
-                  el.scrollIntoView({ behavior: 'smooth', block: 'start' });
-                }
+        {/* 2-Section Workspace Body */}
+        <div className="flex-1 min-h-0 grid grid-cols-1 lg:grid-cols-12 gap-5 items-stretch overflow-hidden pb-1">
+          {/* Left Column: Filters & Tuning */}
+          <div className="lg:col-span-5 xl:col-span-4 flex flex-col gap-2 lg:overflow-y-auto pr-1 pb-2">
+            {/* Pitch Search Bar */}
+            <PitchBar
+              onSearch={(p) => {
+                setPitch(p);
+                executeSearch(p);
               }}
+              isLoading={isLoading}
+              initialValue={pitch}
+            />
+
+            {/* Analytics & Session Status */}
+            <StatBanner
+              candidates={candidates}
+              totalIndexed={totalIndexed}
+              sessionId={sessionId}
+              secondsRemaining={secondsRemaining}
+            />
+
+            {/* Weighting & Filter Controls */}
+            <WeightSliders
+              semanticWeight={semanticWeight}
+              authorityWeight={authorityWeight}
+              topK={topK}
+              minAuthority={minAuthority}
+              remoteOnly={remoteOnly}
+              onChangeWeights={(sem, auth) => {
+                setSemanticWeight(sem);
+                setAuthorityWeight(auth);
+              }}
+              onChangeTopK={setTopK}
+              onChangeMinAuthority={setMinAuthority}
+              onChangeRemoteOnly={handleToggleRemoteOnly}
+              onReset={handleResetWeights}
             />
           </div>
-        )}
 
-        {/* Awaiting Upload State */}
-        {!isLoading && candidates.length === 0 && !sessionId && totalIndexed === 0 && (
-          <div className="glass-panel rounded-2xl p-6 sm:p-10 text-center max-w-lg mx-auto border border-blue-500/30 shadow-2xl shadow-blue-500/10">
-            <div className="w-12 h-12 sm:w-14 sm:h-14 rounded-2xl bg-blue-600/10 dark:bg-blue-600/20 border border-blue-500/30 flex items-center justify-center text-blue-600 dark:text-blue-400 mx-auto mb-4">
-              <Upload className="w-6 h-6 sm:w-7 sm:h-7" />
+          {/* Right Column: Recommended Connections */}
+          <div className="lg:col-span-7 xl:col-span-8 flex flex-col min-h-0 h-full glass-panel rounded-2xl p-4 sm:p-5 border border-slate-200/80 dark:border-slate-800/80 overflow-hidden">
+            {/* Results Header */}
+            <div id="results-section" className="flex items-center justify-between gap-2.5 pb-3 border-b border-slate-200/80 dark:border-slate-800/80 shrink-0">
+              <div className="flex items-center gap-2 flex-wrap">
+                <h3 className="font-display font-bold text-sm sm:text-base text-slate-900 dark:text-white">
+                  Recommended Connections
+                </h3>
+                <span className="text-xs px-2 py-0.5 rounded-full bg-slate-200 dark:bg-slate-800 text-slate-700 dark:text-slate-300 font-medium">
+                  {candidates.length} {candidates.length === 1 ? 'match' : 'matches'}
+                </span>
+                {Math.ceil(candidates.length / PAGE_SIZE) > 1 && (
+                  <span className="text-xs px-2.5 py-0.5 rounded-full bg-blue-500/10 text-blue-700 dark:text-blue-300 border border-blue-500/20 font-medium">
+                    Page {currentPage} of {Math.ceil(candidates.length / PAGE_SIZE)}
+                  </span>
+                )}
+              </div>
+
+              <button
+                onClick={() => executeSearch(pitch)}
+                disabled={isLoading}
+                className="flex items-center gap-1.5 text-xs text-slate-500 dark:text-slate-400 hover:text-blue-600 dark:hover:text-blue-300 transition-colors cursor-pointer"
+              >
+                <RefreshCw className={`w-3.5 h-3.5 ${isLoading ? 'animate-spin' : ''}`} />
+                <span className="hidden sm:inline">Refresh Ranking</span>
+              </button>
             </div>
-            <h3 className="font-display font-bold text-slate-900 dark:text-white text-lg sm:text-xl">Upload Your LinkedIn Network</h3>
-            <p className="text-xs sm:text-sm text-slate-600 dark:text-slate-400 mt-2 leading-relaxed">
-              Upload your exported <code className="text-blue-600 dark:text-blue-300 font-mono">Connections.csv</code> to begin ranking contacts by skill relevance and hiring authority. Your data is analyzed strictly in volatile RAM with zero disk persistence.
-            </p>
-            <button
-              onClick={() => setIsUploadOpen(true)}
-              className="mt-5 inline-flex items-center gap-2 px-5 sm:px-6 py-2.5 sm:py-3 bg-gradient-to-r from-blue-600 to-sky-600 hover:from-blue-500 hover:to-sky-500 text-white font-semibold text-xs sm:text-sm rounded-xl shadow-md shadow-blue-600/25 transition-all active:scale-95 cursor-pointer"
-            >
-              <Upload className="w-4 h-4" />
-              <span>Upload Connections.csv</span>
-            </button>
-          </div>
-        )}
 
-        {/* Empty Search Results State */}
-        {!isLoading && candidates.length === 0 && (sessionId || totalIndexed > 0) && !error && (
-          <div className="glass-panel rounded-2xl p-6 sm:p-12 text-center max-w-md mx-auto">
-            <Sparkles className="w-7 h-7 sm:w-8 sm:h-8 text-blue-500 dark:text-blue-400 mx-auto mb-3" />
-            <h3 className="font-display font-semibold text-slate-900 dark:text-white text-base">No matching connections found</h3>
-            <p className="text-xs text-slate-600 dark:text-slate-400 mt-1">
-              Try adjusting your pitch query or relaxing the minimum authority filter.
-            </p>
+            {/* Error Alert */}
+            {error && (
+              <div className="p-3 rounded-xl bg-rose-500/10 border border-rose-500/20 text-rose-600 dark:text-rose-300 text-xs flex items-center gap-2 my-2 shrink-0">
+                <AlertCircle className="w-4 h-4 shrink-0 text-rose-500" />
+                <span>{error}</span>
+              </div>
+            )}
+
+            {/* Scrollable Cards Area */}
+            <div className="flex-1 min-h-0 overflow-y-auto pr-1 sm:pr-2 py-3">
+              {/* Loading Skeleton */}
+              {isLoading && candidates.length === 0 && (
+                <div className="grid grid-cols-1 xl:grid-cols-2 gap-3.5">
+                  {[1, 2, 3, 4, 5, 6].map((n) => (
+                    <div key={n} className="glass-card rounded-xl p-4 animate-pulse h-40 bg-slate-200/50 dark:bg-slate-900/40" />
+                  ))}
+                </div>
+              )}
+
+              {/* Candidate Cards Grid */}
+              {candidates.length > 0 && (
+                <div className="grid grid-cols-1 xl:grid-cols-2 gap-3.5">
+                  {candidates
+                    .slice((currentPage - 1) * PAGE_SIZE, currentPage * PAGE_SIZE)
+                    .map((candidate, idx) => {
+                      const globalRank = (currentPage - 1) * PAGE_SIZE + idx + 1;
+                      return (
+                        <CandidateCard
+                          key={`${candidate.name}-${globalRank}`}
+                          candidate={candidate}
+                          rank={globalRank}
+                          onDraftDM={(c) => setSelectedCandidateForDM(c)}
+                        />
+                      );
+                    })}
+                </div>
+              )}
+
+              {/* Awaiting Upload State */}
+              {!isLoading && candidates.length === 0 && !sessionId && totalIndexed === 0 && (
+                <div className="h-full flex flex-col items-center justify-center text-center p-6 sm:p-10 my-auto">
+                  <div className="w-12 h-12 rounded-2xl bg-blue-600/10 dark:bg-blue-600/20 border border-blue-500/30 flex items-center justify-center text-blue-600 dark:text-blue-400 mx-auto mb-4">
+                    <Upload className="w-6 h-6" />
+                  </div>
+                  <h3 className="font-display font-bold text-slate-900 dark:text-white text-base sm:text-lg">Upload Your LinkedIn Network</h3>
+                  <p className="text-xs text-slate-600 dark:text-slate-400 mt-2 max-w-md mx-auto leading-relaxed">
+                    Upload your exported <code className="text-blue-600 dark:text-blue-300 font-mono">Connections.csv</code> to begin ranking contacts by skill relevance and hiring authority. Your data is analyzed strictly in volatile RAM with zero disk persistence.
+                  </p>
+                  <button
+                    onClick={() => setIsUploadOpen(true)}
+                    className="mt-4 inline-flex items-center gap-2 px-5 py-2.5 bg-gradient-to-r from-blue-600 to-sky-600 hover:from-blue-500 hover:to-sky-500 text-white font-semibold text-xs rounded-xl shadow-md shadow-blue-600/25 transition-all active:scale-95 cursor-pointer"
+                  >
+                    <Upload className="w-4 h-4" />
+                    <span>Upload Connections.csv</span>
+                  </button>
+                </div>
+              )}
+
+              {/* Empty Search Results State */}
+              {!isLoading && candidates.length === 0 && (sessionId || totalIndexed > 0) && !error && (
+                <div className="h-full flex flex-col items-center justify-center text-center p-6 sm:p-10 my-auto">
+                  <Sparkles className="w-7 h-7 text-blue-500 dark:text-blue-400 mx-auto mb-2.5" />
+                  <h3 className="font-display font-semibold text-slate-900 dark:text-white text-sm sm:text-base">No matching connections found</h3>
+                  <p className="text-xs text-slate-600 dark:text-slate-400 mt-1 max-w-sm">
+                    Try adjusting your pitch query or relaxing the minimum authority filter.
+                  </p>
+                </div>
+              )}
+            </div>
+
+            {/* Docked Pagination Bar */}
+            {candidates.length > PAGE_SIZE && (
+              <div className="pt-2.5 border-t border-slate-200/80 dark:border-slate-800/80 mt-auto shrink-0">
+                <Pagination
+                  currentPage={currentPage}
+                  totalPages={Math.ceil(candidates.length / PAGE_SIZE)}
+                  totalItems={candidates.length}
+                  pageSize={PAGE_SIZE}
+                  onPageChange={(page) => {
+                    setCurrentPage(page);
+                    const el = document.getElementById('results-section');
+                    if (el) {
+                      el.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+                    }
+                  }}
+                />
+              </div>
+            )}
           </div>
-        )}
+        </div>
       </section>
-
-      {/* Feature Grid: Capabilities Matrix */}
-      <FeatureGrid />
 
       {/* How It Works: 3-Step Pipeline */}
       <HowItWorks onOpenUpload={() => setIsUploadOpen(true)} />
 
-      {/* Personas / Use Cases Section */}
-      <PersonasSection />
+      {/* Feature Grid: Capabilities Matrix */}
+      <FeatureGrid />
 
-      {/* Transparent Comparison / Pricing Section with $0 Free & $10 Coming Soon Tier */}
+      {/* Transparent Comparison / Pricing Section */}
       <ComparisonSection onScrollToRecommender={scrollToRecommender} />
 
       {/* FAQ Section */}

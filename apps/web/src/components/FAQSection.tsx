@@ -44,12 +44,8 @@ export const FAQSection: React.FC = () => {
     <section id="faq" className="py-16 sm:py-24 relative">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12 items-start">
-          {/* Left Column: Heading & Callout */}
+          {/* Left Column: Heading */}
           <div className="lg:col-span-4">
-            <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-blue-500/10 text-blue-600 dark:text-blue-400 text-xs font-semibold mb-3 border border-blue-500/20">
-              <HelpCircle className="w-3.5 h-3.5" />
-              <span>Questions &amp; Answers</span>
-            </div>
             <h2 className="font-display font-extrabold text-2xl sm:text-4xl text-slate-900 dark:text-white tracking-tight">
               Frequently Asked{' '}
               <span className="bg-gradient-to-r from-blue-600 via-blue-500 to-sky-500 dark:from-blue-400 dark:via-sky-300 dark:to-blue-200 bg-clip-text text-transparent">
@@ -57,21 +53,8 @@ export const FAQSection: React.FC = () => {
               </span>
             </h2>
             <p className="mt-3 text-slate-600 dark:text-slate-400 text-xs sm:text-sm leading-relaxed">
-              Everything you need to know about our privacy-first vector ranking architecture, remote detection, and outreach ethics.
+              Common questions about search accuracy, data privacy, and outreach etiquette.
             </p>
-
-            <div className="mt-6 p-4 rounded-xl glass-panel border border-slate-200 dark:border-slate-800 text-xs text-slate-600 dark:text-slate-300">
-              <div className="flex items-center gap-2 font-semibold text-emerald-600 dark:text-emerald-400 mb-1">
-                <ShieldCheck className="w-4 h-4" />
-                <span>100% Client &amp; RAM Safety</span>
-              </div>
-              <p>
-                Have questions about your data security? Read our detailed{' '}
-                <a href="#terms" className="text-blue-600 dark:text-blue-400 font-semibold underline">
-                  Zero-Persistence Policy
-                </a>.
-              </p>
-            </div>
           </div>
 
           {/* Right Column: Accordion Items */}

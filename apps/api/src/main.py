@@ -10,42 +10,37 @@ from src.core.config import settings
 from src.core.session_manager import session_manager
 from src.services.embedding_service import embedding_service
 from src.services.heuristics_service import annotate_dataframe_with_heuristics
+from src.services.demo_data_service import generate_synthetic_demo_dataframe
 from src.routers import health, session, recommendations
 
 @asynccontextmanager
 async def lifespan(app: FastAPI):
     """
     Lifespan context manager that handles startup initialization and graceful shutdown.
-    Preloads SentenceTransformer weights and in-memory demo dataset once.
+    Preloads SentenceTransformer weights and in-memory synthetic demo dataset once.
     """
     print(f"[*] Starting {settings.app_name} v{settings.app_version}...")
     
     # 1. Warm up SentenceTransformer model
     embedding_service.load_model()
 
-    # 2. Preload anonymized demo dataset if available
-    parquet_file = Path(settings.demo_parquet_path)
-    if parquet_file.exists():
-        print(f"[*] Preloading demo dataset from {parquet_file}...")
-        try:
-            demo_df = pd.read_parquet(parquet_file)
-            demo_df = annotate_dataframe_with_heuristics(demo_df)
-            
-            # Precompute vectors in RAM for instant demo search
-            print(f"[*] Computing embeddings for {len(demo_df)} demo connection profiles...")
-            demo_embeddings = embedding_service.encode_documents(
-                demo_df["profile_doc"].tolist()
-            )
-            
-            app.state.demo_df = demo_df
-            app.state.demo_embeddings = demo_embeddings
-            print(f"[+] Successfully loaded {len(demo_df)} demo profiles into memory.")
-        except Exception as e:
-            print(f"[!] Warning: Could not initialize demo dataset: {e}")
-            app.state.demo_df = pd.DataFrame()
-            app.state.demo_embeddings = np.empty((0, 384))
-    else:
-        print(f"[!] Demo parquet not found at {parquet_file}. Operating in upload-only mode.")
+    # 2. Preload synthetic in-memory demo dataset (John Doe, Jane Doe, Janet Joe mock network)
+    print("[*] Generating synthetic in-memory demo dataset (mock profiles)...")
+    try:
+        demo_df = generate_synthetic_demo_dataframe()
+        demo_df = annotate_dataframe_with_heuristics(demo_df)
+        
+        # Precompute vectors in RAM for instant demo search
+        print(f"[*] Precomputing embeddings for {len(demo_df)} synthetic demo profiles...")
+        demo_embeddings = embedding_service.encode_documents(
+            demo_df["profile_doc"].tolist()
+        )
+        
+        app.state.demo_df = demo_df
+        app.state.demo_embeddings = demo_embeddings
+        print(f"[+] Successfully loaded {len(demo_df)} synthetic demo profiles into memory.")
+    except Exception as e:
+        print(f"[!] Warning: Could not initialize demo dataset: {e}")
         app.state.demo_df = pd.DataFrame()
         app.state.demo_embeddings = np.empty((0, 384))
 

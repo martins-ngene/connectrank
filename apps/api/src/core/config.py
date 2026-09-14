@@ -6,7 +6,6 @@ from pydantic import BaseModel
 
 BASE_DIR = Path(__file__).resolve().parent.parent.parent
 ROOT_DIR = BASE_DIR.parent.parent
-DEFAULT_DEMO_PARQUET = BASE_DIR / "data" / "demo_connections.parquet"
 
 # Automatically load environment variables from root or apps/api .env files
 try:
@@ -30,7 +29,6 @@ class Settings(BaseModel):
         "Engineered with strict zero-persistence in-memory storage for GDPR compliance."
     )
     model_name: str = os.getenv("MODEL_NAME", "sentence-transformers/all-MiniLM-L6-v2")
-    demo_parquet_path: str = os.getenv("DEMO_PARQUET_PATH", str(DEFAULT_DEMO_PARQUET))
     session_ttl_minutes: int = int(os.getenv("SESSION_TTL_MINUTES", "30"))
     max_upload_size_mb: int = int(os.getenv("MAX_UPLOAD_SIZE_MB", "15"))
     default_semantic_weight: float = 0.6

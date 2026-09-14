@@ -25,48 +25,48 @@ export const StatBanner: React.FC<StatBannerProps> = ({
   };
 
   return (
-    <div className="w-full max-w-4xl mx-auto grid grid-cols-2 sm:grid-cols-4 gap-3 mb-8">
+    <div className="w-full grid grid-cols-2 gap-1.5">
       {/* Stat 1: Profiles Analyzed */}
-      <div className="glass-panel p-3.5 rounded-xl border border-slate-200 dark:border-slate-800/80">
-        <div className="flex items-center gap-2 text-slate-500 dark:text-slate-400 text-xs mb-1">
-          <Users className="w-3.5 h-3.5 text-blue-500 dark:text-blue-400" />
-          <span>Network Indexed</span>
+      <div className="glass-panel p-1.5 px-2 rounded-lg border border-slate-200 dark:border-slate-800/80 flex items-center justify-between">
+        <div className="flex items-center gap-1.5 text-slate-500 dark:text-slate-400 text-[11px]">
+          <Users className="w-3 h-3 text-blue-500 dark:text-blue-400 shrink-0" />
+          <span className="truncate">Indexed</span>
         </div>
-        <div className="text-xl font-display font-bold text-slate-900 dark:text-white">
-          {totalIndexed.toLocaleString()} <span className="text-xs font-normal text-slate-500">profiles</span>
+        <div className="text-xs font-bold text-slate-900 dark:text-white">
+          {totalIndexed.toLocaleString()}
         </div>
       </div>
 
       {/* Stat 2: Decision Makers in Results */}
-      <div className="glass-panel p-3.5 rounded-xl border border-slate-200 dark:border-slate-800/80">
-        <div className="flex items-center gap-2 text-slate-500 dark:text-slate-400 text-xs mb-1">
-          <Crown className="w-3.5 h-3.5 text-amber-500 dark:text-amber-400" />
-          <span>Decision Makers</span>
+      <div className="glass-panel p-1.5 px-2 rounded-lg border border-slate-200 dark:border-slate-800/80 flex items-center justify-between">
+        <div className="flex items-center gap-1.5 text-slate-500 dark:text-slate-400 text-[11px]">
+          <Crown className="w-3 h-3 text-amber-500 dark:text-amber-400 shrink-0" />
+          <span className="truncate">Decision Makers</span>
         </div>
-        <div className="text-xl font-display font-bold text-amber-600 dark:text-amber-300">
-          {decisionMakersCount} <span className="text-xs font-normal text-slate-500">in top results</span>
+        <div className="text-xs font-bold text-amber-600 dark:text-amber-400">
+          {decisionMakersCount}
         </div>
       </div>
 
       {/* Stat 3: Privacy Mode */}
-      <div className="glass-panel p-3.5 rounded-xl border border-slate-200 dark:border-slate-800/80">
-        <div className="flex items-center gap-2 text-slate-500 dark:text-slate-400 text-xs mb-1">
-          <ShieldCheck className="w-3.5 h-3.5 text-emerald-500 dark:text-emerald-400" />
-          <span>Data Storage</span>
+      <div className="glass-panel p-1.5 px-2 rounded-lg border border-slate-200 dark:border-slate-800/80 flex items-center justify-between">
+        <div className="flex items-center gap-1.5 text-slate-500 dark:text-slate-400 text-[11px]">
+          <ShieldCheck className="w-3 h-3 text-emerald-500 dark:text-emerald-400 shrink-0" />
+          <span className="truncate">Storage</span>
         </div>
-        <div className="text-sm font-semibold text-emerald-600 dark:text-emerald-300 truncate">
-          0-Persistence RAM
+        <div className="text-[11px] font-semibold text-emerald-600 dark:text-emerald-300 truncate">
+          0-RAM
         </div>
       </div>
 
       {/* Stat 4: Session TTL / Mode */}
-      <div className="glass-panel p-3.5 rounded-xl border border-slate-200 dark:border-slate-800/80">
-        <div className="flex items-center gap-2 text-slate-500 dark:text-slate-400 text-xs mb-1">
-          <Clock className="w-3.5 h-3.5 text-cyan-600 dark:text-cyan-400" />
-          <span>Session State</span>
+      <div className="glass-panel p-1.5 px-2 rounded-lg border border-slate-200 dark:border-slate-800/80 flex items-center justify-between">
+        <div className="flex items-center gap-1.5 text-slate-500 dark:text-slate-400 text-[11px]">
+          <Clock className="w-3 h-3 text-cyan-600 dark:text-cyan-400 shrink-0" />
+          <span className="truncate">Session</span>
         </div>
-        <div className="text-sm font-semibold text-cyan-600 dark:text-cyan-300 truncate">
-          {sessionId && secondsRemaining ? formatMinutes(secondsRemaining) : totalIndexed > 0 ? 'Preloaded Demo' : 'Awaiting Upload'}
+        <div className="text-[11px] font-semibold text-cyan-600 dark:text-cyan-300 truncate">
+          {sessionId && secondsRemaining ? formatMinutes(secondsRemaining) : totalIndexed > 0 ? 'Demo' : 'Empty'}
         </div>
       </div>
     </div>

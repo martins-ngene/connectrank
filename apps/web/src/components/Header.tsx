@@ -233,7 +233,7 @@ export const Header: React.FC<HeaderProps> = ({
                 <GithubIcon className="w-4 h-4 shrink-0" />
                 <span>GitHub Repository</span>
               </div>
-              <span className="text-xs text-slate-400">&nearr;</span>
+              <span className="text-xs text-slate-400">&rarr;</span>
             </a>
           </div>
         </div>

@@ -1,5 +1,6 @@
-import React, { useState } from 'react';
-import { ShieldCheck, Upload, Trash2, FileText, Sun, Moon, Menu, X } from 'lucide-react';
+import React, { useState, useEffect, useRef } from 'react';
+import { Trash2, Sun, Moon, Menu, X } from 'lucide-react';
+import gsap from 'gsap';
 import { GithubIcon } from './GithubIcon';
 import { ConnectRankLogo } from './ConnectRankLogo';
 
@@ -8,9 +9,9 @@ interface HeaderProps {
   profileCount: number;
   isDark: boolean;
   onToggleTheme: () => void;
-  onOpenUpload: () => void;
+  onOpenUpload?: () => void;
   onPurgeSession: () => void;
-  onOpenTerms: () => void;
+  onOpenTerms?: () => void;
   isPurging: boolean;
 }
 
@@ -19,14 +20,50 @@ export const Header: React.FC<HeaderProps> = ({
   profileCount,
   isDark,
   onToggleTheme,
-  onOpenUpload,
   onPurgeSession,
-  onOpenTerms,
   isPurging,
 }) => {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
+  const drawerRef = useRef<HTMLDivElement>(null);
+  const linksRef = useRef<HTMLDivElement>(null);
+  const hamburgerIconRef = useRef<HTMLDivElement>(null);
 
   const closeMenu = () => setIsMobileMenuOpen(false);
+
+  useEffect(() => {
+    const isTestEnv = typeof process !== 'undefined' && process.env.NODE_ENV === 'test';
+    const prefersReducedMotion =
+      typeof window !== 'undefined' && window.matchMedia
+        ? window.matchMedia('(prefers-reduced-motion: reduce)').matches
+        : false;
+
+    if (isTestEnv || prefersReducedMotion) return;
+
+    if (hamburgerIconRef.current) {
+      gsap.fromTo(
+        hamburgerIconRef.current,
+        { rotate: isMobileMenuOpen ? -90 : 90, scale: 0.75 },
+        { rotate: 0, scale: 1, duration: 0.22, ease: 'back.out(2)' }
+      );
+    }
+
+    if (isMobileMenuOpen) {
+      if (drawerRef.current) {
+        gsap.fromTo(
+          drawerRef.current,
+          { opacity: 0, y: -10 },
+          { opacity: 1, y: 0, duration: 0.25, ease: 'power2.out' }
+        );
+      }
+      if (linksRef.current?.children) {
+        gsap.fromTo(
+          linksRef.current.children,
+          { opacity: 0, x: -8 },
+          { opacity: 1, x: 0, duration: 0.2, stagger: 0.035, ease: 'power2.out' }
+        );
+      }
+    }
+  }, [isMobileMenuOpen]);
 
   return (
     <header className="sticky top-0 z-50 w-full max-w-full overflow-x-clip glass-panel border-b border-slate-200/80 dark:border-slate-800/80 bg-white/80 dark:bg-slate-950/80 backdrop-blur-md transition-colors">
@@ -40,9 +77,6 @@ export const Header: React.FC<HeaderProps> = ({
             <div className="flex items-center gap-1.5 sm:gap-2">
               <span className="font-display font-bold text-base sm:text-lg text-slate-900 dark:text-white tracking-tight">
                 Connect<span className="bg-gradient-to-r from-blue-600 to-sky-500 bg-clip-text text-transparent">Rank</span>
-              </span>
-              <span className="hidden sm:inline-flex text-[10px] sm:text-xs font-semibold px-1.5 sm:px-2 py-0.5 rounded-full bg-blue-500/10 text-blue-600 dark:text-blue-400 border border-blue-500/20">
-                v1.0
               </span>
             </div>
           </div>
@@ -69,7 +103,7 @@ export const Header: React.FC<HeaderProps> = ({
         </nav>
 
         {/* Action Controls */}
-        <div className="flex items-center gap-1 sm:gap-2 shrink-0">
+        <div className="flex items-center gap-1.5 sm:gap-2 shrink-0">
           {/* GitHub Repo Button (Desktop/Tablet) */}
           <a
             href="https://github.com/martins-ngene/connectrank"
@@ -97,17 +131,6 @@ export const Header: React.FC<HeaderProps> = ({
             )}
           </button>
 
-          {/* Privacy & Terms (Desktop) */}
-          <button
-            onClick={onOpenTerms}
-            className="hidden sm:flex items-center gap-1.5 text-xs text-slate-600 dark:text-slate-300 hover:text-slate-900 dark:hover:text-white p-2 sm:px-2.5 sm:py-1.5 rounded-lg hover:bg-slate-100 dark:hover:bg-slate-800/60 transition-colors cursor-pointer"
-            title="View GDPR Privacy Policy & Terms"
-            aria-label="Privacy & Terms"
-          >
-            <FileText className="w-4 h-4 shrink-0" />
-            <span className="hidden xl:inline">Privacy</span>
-          </button>
-
           {/* Session Purge / Status */}
           {sessionId ? (
             <button
@@ -130,16 +153,6 @@ export const Header: React.FC<HeaderProps> = ({
             </div>
           )}
 
-          {/* Upload Button */}
-          <button
-            onClick={onOpenUpload}
-            className="flex items-center gap-1.5 sm:gap-2 text-xs sm:text-sm font-medium text-white bg-gradient-to-r from-blue-600 to-sky-600 hover:from-blue-500 hover:to-sky-500 px-2 sm:px-3.5 py-1.5 rounded-lg shadow-md shadow-blue-600/25 transition-all active:scale-95 cursor-pointer whitespace-nowrap"
-          >
-            <Upload className="w-3.5 h-3.5 sm:w-4 sm:h-4 shrink-0" />
-            <span className="hidden sm:inline">Upload CSV</span>
-            <span className="sm:hidden">Upload</span>
-          </button>
-
           {/* Mobile Hamburger Toggle Button */}
           <button
             onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
@@ -147,11 +160,13 @@ export const Header: React.FC<HeaderProps> = ({
             aria-label="Toggle mobile navigation menu"
             aria-expanded={isMobileMenuOpen}
           >
-            {isMobileMenuOpen ? (
-              <X className="w-4 h-4" />
-            ) : (
-              <Menu className="w-4 h-4" />
-            )}
+            <div ref={hamburgerIconRef} className="flex items-center justify-center">
+              {isMobileMenuOpen ? (
+                <X className="w-4 h-4" />
+              ) : (
+                <Menu className="w-4 h-4" />
+              )}
+            </div>
           </button>
         </div>
       </div>
@@ -159,22 +174,11 @@ export const Header: React.FC<HeaderProps> = ({
       {/* Mobile Dropdown Drawer */}
       {isMobileMenuOpen && (
         <div
-          className="lg:hidden border-t border-slate-200/80 dark:border-slate-800/80 bg-white/95 dark:bg-slate-950/95 backdrop-blur-xl px-4 py-3 space-y-2.5 shadow-xl animate-fadeIn"
+          ref={drawerRef}
+          className="lg:hidden border-t border-slate-200/80 dark:border-slate-800/80 bg-white/95 dark:bg-slate-950/95 backdrop-blur-xl px-4 py-3 space-y-2.5 shadow-xl"
           data-testid="mobile-nav-drawer"
         >
-          {/* Mobile Primary Action Button */}
-          <button
-            onClick={() => {
-              closeMenu();
-              onOpenUpload();
-            }}
-            className="w-full flex items-center justify-center gap-2 py-2.5 px-4 rounded-xl bg-gradient-to-r from-blue-600 to-sky-600 text-white text-sm font-semibold shadow-md shadow-blue-600/25 active:scale-98 transition-all cursor-pointer"
-          >
-            <Upload className="w-4 h-4 shrink-0" />
-            <span>Upload Connections CSV</span>
-          </button>
-
-          <div className="flex flex-col space-y-1 text-sm font-medium text-slate-700 dark:text-slate-200">
+          <div ref={linksRef} className="flex flex-col space-y-1 text-sm font-medium text-slate-700 dark:text-slate-200">
             <a
               href="#recommender"
               onClick={closeMenu}
@@ -218,52 +222,22 @@ export const Header: React.FC<HeaderProps> = ({
               <span>Frequently Asked Questions</span>
               <span className="text-xs text-slate-400">&rarr;</span>
             </a>
-          </div>
-
-          <div className="pt-2 border-t border-slate-200 dark:border-slate-800 flex items-center justify-between gap-2">
-            <button
-              onClick={() => {
-                closeMenu();
-                onOpenTerms();
-              }}
-              className="flex items-center gap-1.5 text-xs text-slate-600 dark:text-slate-400 hover:text-blue-600 dark:hover:text-white px-2 py-1.5 rounded-md hover:bg-slate-100 dark:hover:bg-slate-900 transition-colors"
-            >
-              <FileText className="w-3.5 h-3.5 shrink-0" />
-              <span>GDPR Privacy &amp; Terms</span>
-            </button>
-
             <a
               href="https://github.com/martins-ngene/connectrank"
               target="_blank"
               rel="noopener noreferrer"
               onClick={closeMenu}
-              className="flex items-center gap-1.5 text-xs text-slate-600 dark:text-slate-400 hover:text-blue-600 dark:hover:text-white px-2 py-1.5 rounded-md hover:bg-slate-100 dark:hover:bg-slate-900 transition-colors"
+              className="px-3 py-2 rounded-lg hover:bg-slate-100 dark:hover:bg-slate-900 transition-colors flex items-center justify-between"
             >
-              <GithubIcon className="w-3.5 h-3.5 shrink-0" />
-              <span>GitHub (v1.0)</span>
+              <div className="flex items-center gap-2">
+                <GithubIcon className="w-4 h-4 shrink-0" />
+                <span>GitHub Repository</span>
+              </div>
+              <span className="text-xs text-slate-400">&nearr;</span>
             </a>
           </div>
         </div>
       )}
-
-      {/* Mobile Sub-bar: Privacy & Status */}
-      <div className="md:hidden flex items-center justify-between px-3 py-1 bg-slate-100 dark:bg-slate-900/90 border-t border-slate-200 dark:border-slate-800/60 text-[11px] overflow-hidden">
-        <div className="flex items-center gap-1 text-emerald-600 dark:text-emerald-400 font-medium shrink-0">
-          <ShieldCheck className="w-3 h-3 text-emerald-500 shrink-0" />
-          <span className="truncate">Zero-Persistence RAM</span>
-        </div>
-        <div className="text-slate-500 dark:text-slate-400 truncate min-w-0 text-right ml-2">
-          {sessionId ? (
-            <span className="text-blue-600 dark:text-blue-300 font-medium truncate">Session: {profileCount} profiles</span>
-          ) : profileCount > 0 ? (
-            <span className="truncate">Demo: {profileCount} profiles</span>
-          ) : (
-            <span className="text-amber-600 dark:text-amber-400 truncate">Ready for Upload</span>
-          )}
-        </div>
-      </div>
     </header>
   );
 };
-
-

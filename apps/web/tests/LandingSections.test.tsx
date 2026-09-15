@@ -29,8 +29,7 @@ describe('HeroSection Component', () => {
     fireEvent.click(uploadBtn);
     expect(handleOpenUpload).toHaveBeenCalledTimes(1);
 
-    const githubLink = screen.getByRole('link', { name: /Star on GitHub/i });
-    expect(githubLink).toHaveAttribute('href', 'https://github.com/martins-ngene/connectrank');
+    expect(screen.queryByRole('link', { name: /Star on GitHub/i })).toBeNull();
   });
 });
 

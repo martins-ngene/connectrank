@@ -34,9 +34,12 @@ export const HowItWorks: React.FC<HowItWorksProps> = ({ onOpenUpload }) => {
   ];
 
   return (
-    <section id="how-it-works" className="py-16 sm:py-20 border-t border-slate-200/80 dark:border-slate-800/80 bg-slate-50/40 dark:bg-slate-900/20">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="text-center max-w-2xl mx-auto mb-12 sm:mb-14">
+    <section
+      id="how-it-works"
+      className="scroll-mt-16 min-h-[calc(100dvh-4rem)] flex flex-col justify-center py-20 sm:py-28 border-t border-slate-200/80 dark:border-slate-800/80 bg-slate-50/40 dark:bg-slate-900/20 relative"
+    >
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 w-full my-auto">
+        <div className="text-center max-w-2xl mx-auto mb-12 sm:mb-16">
           <h2 className="font-display font-extrabold text-2xl sm:text-4xl text-slate-900 dark:text-white tracking-tight">
             How ConnectRank{' '}
             <span className="bg-gradient-to-r from-blue-600 to-sky-600 dark:from-blue-400 dark:to-sky-300 bg-clip-text text-transparent">

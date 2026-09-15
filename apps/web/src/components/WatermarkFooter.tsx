@@ -4,17 +4,17 @@ import { GithubIcon } from './GithubIcon';
 import { ConnectRankLogo } from './ConnectRankLogo';
 
 interface WatermarkFooterProps {
-  onOpenUpload: () => void;
+  onOpenUpload?: () => void;
   onOpenTerms?: () => void;
   onScrollToRecommender: () => void;
 }
 
 export const WatermarkFooter: React.FC<WatermarkFooterProps> = ({
-  onOpenUpload,
+  onOpenTerms,
   onScrollToRecommender,
 }) => {
   return (
-    <footer className="relative border-t border-slate-200/80 dark:border-slate-800/80 pt-16 pb-12 bg-slate-100/50 dark:bg-slate-950 overflow-hidden">
+    <footer className="relative border-t border-slate-200/80 dark:border-slate-800/80 py-14 sm:py-16 bg-slate-100/50 dark:bg-slate-950 overflow-hidden">
       <div className="relative z-10 max-w-3xl mx-auto px-4 sm:px-6 text-center">
         {/* Brand Identity Group */}
         <div className="flex items-center justify-center gap-2.5 mb-3">
@@ -40,12 +40,6 @@ export const WatermarkFooter: React.FC<WatermarkFooterProps> = ({
           >
             Workspace
           </button>
-          <button
-            onClick={onOpenUpload}
-            className="hover:text-blue-600 dark:hover:text-blue-400 transition-colors cursor-pointer"
-          >
-            Upload Connections.csv
-          </button>
           <a href="#how-it-works" className="hover:text-blue-600 dark:hover:text-blue-400 transition-colors">
             How It Works
           </a>
@@ -55,6 +49,14 @@ export const WatermarkFooter: React.FC<WatermarkFooterProps> = ({
           <a href="#pricing" className="hover:text-blue-600 dark:hover:text-blue-400 transition-colors">
             Pricing
           </a>
+          {onOpenTerms && (
+            <button
+              onClick={onOpenTerms}
+              className="hover:text-blue-600 dark:hover:text-blue-400 transition-colors cursor-pointer"
+            >
+              Privacy &amp; Terms
+            </button>
+          )}
           <a
             href="https://github.com/martins-ngene/connectrank"
             target="_blank"

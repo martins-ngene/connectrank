@@ -1,6 +1,6 @@
-import React from 'react';
+import React, { useEffect, useRef } from 'react';
 import { ArrowRight, ChevronDown } from 'lucide-react';
-import { GithubIcon } from './GithubIcon';
+import gsap from 'gsap';
 
 interface HeroSectionProps {
   onOpenUpload: () => void;
@@ -11,18 +11,60 @@ export const HeroSection: React.FC<HeroSectionProps> = ({
   onOpenUpload,
   onScrollToRecommender,
 }) => {
+  const contentRef = useRef<HTMLDivElement>(null);
+  const glowRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    const isTestEnv = typeof process !== 'undefined' && process.env.NODE_ENV === 'test';
+    const prefersReducedMotion =
+      typeof window !== 'undefined' && window.matchMedia
+        ? window.matchMedia('(prefers-reduced-motion: reduce)').matches
+        : false;
+
+    if (isTestEnv || prefersReducedMotion) return;
+
+    if (contentRef.current) {
+      const elements = contentRef.current.children;
+      gsap.fromTo(
+        elements,
+        { opacity: 0, y: 24 },
+        {
+          opacity: 1,
+          y: 0,
+          duration: 0.8,
+          stagger: 0.12,
+          ease: 'power3.out',
+        }
+      );
+    }
+
+    if (glowRef.current) {
+      gsap.to(glowRef.current, {
+        scale: 1.15,
+        opacity: 0.85,
+        duration: 4,
+        repeat: -1,
+        yoyo: true,
+        ease: 'sine.inOut',
+      });
+    }
+  }, []);
+
   return (
     <section className="relative min-h-[calc(100dvh-4rem)] flex flex-col justify-between items-center pt-8 sm:pt-12 pb-6 sm:pb-8 overflow-hidden">
       {/* Subtle Background Glow */}
-      <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[350px] sm:w-[600px] h-[350px] sm:h-[600px] bg-gradient-to-tr from-blue-500/10 via-sky-500/8 to-blue-400/8 rounded-full blur-3xl pointer-events-none -z-10" />
+      <div
+        ref={glowRef}
+        className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[350px] sm:w-[600px] h-[350px] sm:h-[600px] bg-gradient-to-tr from-blue-500/10 via-sky-500/8 to-blue-400/8 rounded-full blur-3xl pointer-events-none -z-10"
+      />
 
       {/* Empty spacer for balanced flex-col justify-between */}
       <div className="hidden sm:block h-2" aria-hidden="true" />
 
       {/* Main Center Content */}
-      <div className="max-w-4xl mx-auto text-center px-4 my-auto">
+      <div ref={contentRef} className="max-w-4xl mx-auto text-center px-4 my-auto">
         {/* Hero Headline */}
-        <h1 className="font-display font-extrabold text-3xl sm:text-5xl md:text-6xl tracking-tight leading-[1.15] text-slate-900 dark:text-white animate-fade-in-up">
+        <h1 className="font-display font-extrabold text-3xl sm:text-5xl md:text-6xl tracking-tight leading-[1.15] text-slate-900 dark:text-white">
           Supercharge Your Network with{' '}
           <span className="bg-gradient-to-r from-blue-600 via-blue-500 to-sky-500 dark:from-blue-400 dark:via-sky-300 dark:to-blue-200 bg-clip-text text-transparent">
             Smart Outreach
@@ -30,12 +72,12 @@ export const HeroSection: React.FC<HeroSectionProps> = ({
         </h1>
 
         {/* Human-focused Sub-headline */}
-        <p className="mt-4 sm:mt-5 text-slate-600 dark:text-slate-300 text-sm sm:text-lg leading-relaxed max-w-2xl mx-auto font-normal animate-fade-in-up animate-delay-100">
+        <p className="mt-4 sm:mt-5 text-slate-600 dark:text-slate-300 text-sm sm:text-lg leading-relaxed max-w-2xl mx-auto font-normal">
           Find the right decision-makers, engineering leads, and peers in your LinkedIn network. Ranked by skill relevance and role seniority — processed privately in your browser session.
         </p>
 
         {/* Action CTAs */}
-        <div className="mt-8 sm:mt-10 flex flex-col sm:flex-row items-center justify-center gap-3.5 animate-fade-in-up animate-delay-200">
+        <div className="mt-8 sm:mt-10 flex flex-col sm:flex-row items-center justify-center gap-3.5">
           <button
             onClick={onScrollToRecommender}
             className="w-full sm:w-auto flex items-center justify-center gap-2 px-6 py-3.5 rounded-xl bg-gradient-to-r from-blue-600 to-sky-600 hover:from-blue-500 hover:to-sky-500 text-white font-semibold text-sm shadow-md shadow-blue-600/25 transition-all hover:scale-[1.02] active:scale-95 cursor-pointer"
@@ -50,21 +92,11 @@ export const HeroSection: React.FC<HeroSectionProps> = ({
           >
             <span>Upload Connections.csv</span>
           </button>
-
-          <a
-            href="https://github.com/martins-ngene/connectrank"
-            target="_blank"
-            rel="noopener noreferrer"
-            className="w-full sm:w-auto flex items-center justify-center gap-2 px-4 py-3.5 rounded-xl text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white border border-transparent hover:border-slate-300 dark:border-slate-800 transition-all text-sm font-medium hover:scale-[1.02]"
-          >
-            <GithubIcon className="w-4 h-4" />
-            <span>Star on GitHub</span>
-          </a>
         </div>
       </div>
 
       {/* Scroll Down Indicator */}
-      <div className="pt-6 animate-fade-in-up animate-delay-300">
+      <div className="pt-6">
         <button
           onClick={onScrollToRecommender}
           className="inline-flex flex-col items-center gap-1.5 text-xs text-slate-500 hover:text-blue-600 dark:text-slate-400 dark:hover:text-blue-400 transition-colors cursor-pointer group"

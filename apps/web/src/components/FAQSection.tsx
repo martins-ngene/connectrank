@@ -41,8 +41,11 @@ export const FAQSection: React.FC = () => {
   };
 
   return (
-    <section id="faq" className="py-16 sm:py-24 relative">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+    <section
+      id="faq"
+      className="scroll-mt-16 min-h-[calc(100dvh-4rem)] flex flex-col justify-center py-20 sm:py-28 relative border-t border-slate-200/80 dark:border-slate-800/80"
+    >
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 w-full my-auto">
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12 items-start">
           {/* Left Column: Heading */}
           <div className="lg:col-span-4">
